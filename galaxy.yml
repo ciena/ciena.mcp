@@ -1,0 +1,13 @@
+---
+namespace: ciena
+name: mcp
+version: 1.0.0
+readme: README.md
+authors:
+- Jeff Groom <jgroom@ciena.com>
+description: Ansible collection to operate a Ciena MCP server
+license_file: LICENSE
+tags: [ciena, saos, networking, ethernet, optical, tapi]
+dependencies: {}
+repository: https://github.com/ciena/ciena.mcp
+issues: https://github.com/ciena/ciena.mcp/issues
