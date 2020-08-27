@@ -4,5 +4,4 @@
 
 ### New Modules
 
-- saos10_facts
-- saos10_command
+- all

@@ -52,9 +52,7 @@ class HttpApi(HttpApiBase):
         self.connection._token = response_data["token"]
 
     def logout(self):
-        response, dummy = self.send_request(
-            "/tron/api/v1/logout", None, method="POST"
-        )
+        response, dummy = self.send_request("/tron/api/v1/logout", None, method="POST")
 
     def get_session_token(self):
         return self.connection._token

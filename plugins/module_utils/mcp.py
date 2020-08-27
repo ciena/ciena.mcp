@@ -7,17 +7,13 @@ from async_lru import alru_cache
 
 @alru_cache()
 async def open_session(
-    mcp_hostname=None,
-    mcp_username=None,
-    mcp_password=None,
-    validate_certs=False,
+    mcp_hostname=None, mcp_username=None, mcp_password=None, validate_certs=False,
 ):
     connector = aiohttp.TCPConnector(limit=20, ssl=validate_certs)
     async with aiohttp.ClientSession(
-        connector=connector, connector_owner=False,
-        headers={
-            "content-type": "application/json",
-        },
+        connector=connector,
+        connector_owner=False,
+        headers={"content-type": "application/json",},
     ) as session:
         async with session.post(
             "https://{hostname}/tron/api/v1/tokens".format(hostname=mcp_hostname),
