@@ -39,25 +39,77 @@ collections:
 
 ## Using this collection
 
-This collection includes [network resource modules](https://docs.ansible.com/ansible/latest/network/user_guide/network_resource_modules.html).
-
 ### Using modules from the Ciena MCP collection in your playbooks
 
-You can call modules by their Fully Qualified Collection Namespace (FQCN), such as `ciena.mcp.saos10_command`.
-The following example task replaces configuration changes in the existing configuration on a Ciena SAOS 10 network device, using the FQCN:
+You can call modules by their Fully Qualified Collection Namespace (FQCN), such as `ciena.mcp.resources`.
 
 ```yaml
 ---
-  - name: Execute SAOS 10 commands
-    ciena.saos10.saos10_command:
-      commands:
-      - software show
-  - name: Set port config
-    ciena.saos10.saos10_command:
-      commands:
-      - config
-      - oc-if:interfaces interface 2 config name 2 description myport
-      - exit
+- name: playbook get vars for lab localhost facts
+  import_playbook: lab_get_vars.yml
+  when: hostvars['localhost'].lab_vars is not defined
+- hosts:
+  - localhost
+  vars:
+    devices:
+    - 10.20.10.1
+    - 10.20.10.2
+    - 10.20.10.3
+    - 10.20.10.4
+    mcp_creds: &mcp_creds
+      mcp_hostname: 10.10.10.10
+      mcp_username: admin
+      mcp_password: adminpw
+  name: Enroll Devices in MCP
+  collections:
+  - ciena.mcp
+  gather_facts: false
+  tasks:
+  - name: list getNEConnectionProfiles
+    discovery_api_neprofiles:
+      <<: *mcp_creds
+      state: get
+  - name: createNEConnectionProfile
+    discovery_api_neprofiles:
+      <<: *mcp_creds
+      state: post
+      data:
+        type: neConnectionProfile
+        attributes:
+          name: saos10
+          profileDescription: saos10
+          typeGroup: "/typeGroups/PN10x"
+          isEnabled: true
+          isDefault: false
+          protocolEndpoints:
+            cli:
+              connection:
+                hostport: 22
+              authentication:
+                username: diag
+                password: ciena123
+            netconf:
+              connection:
+                hostport: 830
+              authentication:
+                username: diag
+                password: ciena123
+    register: connectionProfile
+  - name: debug
+    debug:
+      var: connectionProfile
+  - name: Create Management Session
+    loop: "{{ devices }}"
+    discovery_api_managementsessions:
+      <<: *mcp_creds
+      state: post
+      data:
+        attributes:
+          ipAddress: "{{ devices }}"
+          profile: "{{ connectionProfile.data.id }}"
+          resourcePartitionInfo: []
+          additionalIpAddresses: []
+        type: managementSessions
 ```
 
 ## Contributing to this collection
