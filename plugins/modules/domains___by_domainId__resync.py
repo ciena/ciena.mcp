@@ -113,10 +113,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/bpocore/market/api/v1/domains/{domainId}/resync".format(
-            **params
-        )
+    return "https://{mcp_hostname}/bpocore/market/api/v1/domains/{domainId}/resync".format(
+        **params
     )
 
 
@@ -126,11 +124,10 @@ async def entry_point(module, session):
 
 
 async def _post(params, session):
-    _url = (
-        "https://{mcp_hostname}/bpocore/market/api/v1/domains/{domainId}/resync".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/bpocore/market/api/v1/domains/{domainId}/resync".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.post(_url) as resp:
         content_types = [

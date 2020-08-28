@@ -184,10 +184,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
-            **params
-        )
+    return "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
+        **params
     )
 
 
@@ -197,11 +195,10 @@ async def entry_point(module, session):
 
 
 async def _delete(params, session):
-    _url = (
-        "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.delete(_url) as resp:
         content_types = [
@@ -220,11 +217,10 @@ async def _delete(params, session):
 
 
 async def _get(params, session):
-    _url = (
-        "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.get(_url) as resp:
         content_types = [
@@ -243,11 +239,10 @@ async def _get(params, session):
 
 
 async def _head(params, session):
-    _url = (
-        "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.head(_url) as resp:
         content_types = [
@@ -284,10 +279,8 @@ async def _patch(params, session):
     for i in accepted_fields:
         if params[i]:
             spec[i] = params[i]
-    _url = (
-        "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
-            **params
-        )
+    _url = "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
+        **params
     )
     async with session.patch(_url, json=spec) as resp:
         content_types = [
@@ -324,10 +317,8 @@ async def _put(params, session):
     for i in accepted_fields:
         if params[i]:
             spec[i] = params[i]
-    _url = (
-        "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
-            **params
-        )
+    _url = "https://{mcp_hostname}/bpocore/market/api/v1/sub-domains/{subDomainId}".format(
+        **params
     )
     async with session.put(_url, json=spec) as resp:
         content_types = [

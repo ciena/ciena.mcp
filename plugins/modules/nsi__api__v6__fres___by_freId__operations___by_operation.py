@@ -121,10 +121,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/nsi/api/v6/fres/{freId}/operations/{operation}".format(
-            **params
-        )
+    return "https://{mcp_hostname}/nsi/api/v6/fres/{freId}/operations/{operation}".format(
+        **params
     )
 
 
@@ -134,11 +132,10 @@ async def entry_point(module, session):
 
 
 async def _put(params, session):
-    _url = (
-        "https://{mcp_hostname}/nsi/api/v6/fres/{freId}/operations/{operation}".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/nsi/api/v6/fres/{freId}/operations/{operation}".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.put(_url) as resp:
         content_types = [

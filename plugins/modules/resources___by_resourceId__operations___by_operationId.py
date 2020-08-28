@@ -54,7 +54,7 @@ options:
     type: str
   operationId:
     description:
-    - Identifier of the operation to be queried
+    - Identifier of the operation to be updated
     type: str
   outputs:
     description:
@@ -216,12 +216,15 @@ async def entry_point(module, session):
 
 
 async def _get(params, session):
+    accepted_fields = ["resourceId"]
+    spec = {}
+    for i in accepted_fields:
+        if params[i]:
+            spec[i] = params[i]
     _url = "https://{mcp_hostname}/bpocore/market/api/v1/resources/{resourceId}/operations/{operationId}".format(
         **params
-    ) + gen_args(
-        params, IN_QUERY_PARAMETER
     )
-    async with session.get(_url) as resp:
+    async with session.get(_url, json=spec) as resp:
         content_types = [
             "application/json-patch+json",
             "application/vnd.api+json",
@@ -238,12 +241,15 @@ async def _get(params, session):
 
 
 async def _head(params, session):
+    accepted_fields = ["resourceId"]
+    spec = {}
+    for i in accepted_fields:
+        if params[i]:
+            spec[i] = params[i]
     _url = "https://{mcp_hostname}/bpocore/market/api/v1/resources/{resourceId}/operations/{operationId}".format(
         **params
-    ) + gen_args(
-        params, IN_QUERY_PARAMETER
     )
-    async with session.head(_url) as resp:
+    async with session.head(_url, json=spec) as resp:
         content_types = [
             "application/json-patch+json",
             "application/vnd.api+json",
@@ -271,6 +277,7 @@ async def _patch(params, session):
         "progress",
         "providerData",
         "reason",
+        "resourceId",
         "resourceStateConstraints",
         "revision",
         "title",
@@ -311,6 +318,7 @@ async def _put(params, session):
         "progress",
         "providerData",
         "reason",
+        "resourceId",
         "resourceStateConstraints",
         "revision",
         "title",

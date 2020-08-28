@@ -109,10 +109,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/discovery/api/v3/managementSessions/{sessionId}".format(
-            **params
-        )
+    return "https://{mcp_hostname}/discovery/api/v3/managementSessions/{sessionId}".format(
+        **params
     )
 
 
@@ -122,11 +120,10 @@ async def entry_point(module, session):
 
 
 async def _delete(params, session):
-    _url = (
-        "https://{mcp_hostname}/discovery/api/v3/managementSessions/{sessionId}".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/discovery/api/v3/managementSessions/{sessionId}".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.delete(_url) as resp:
         content_types = [
@@ -145,11 +142,10 @@ async def _delete(params, session):
 
 
 async def _get(params, session):
-    _url = (
-        "https://{mcp_hostname}/discovery/api/v3/managementSessions/{sessionId}".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/discovery/api/v3/managementSessions/{sessionId}".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.get(_url) as resp:
         content_types = [

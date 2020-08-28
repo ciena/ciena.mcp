@@ -49,7 +49,7 @@ options:
     type: str
   tagValue:
     description:
-    - Tag value being deleted
+    - Tag value being updated
     type: str
   value:
     description:

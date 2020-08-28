@@ -119,10 +119,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/nsi/api/v3/tpes/{tpeId}/userData/{userDataKey}".format(
-            **params
-        )
+    return "https://{mcp_hostname}/nsi/api/v3/tpes/{tpeId}/userData/{userDataKey}".format(
+        **params
     )
 
 
@@ -132,11 +130,10 @@ async def entry_point(module, session):
 
 
 async def _delete(params, session):
-    _url = (
-        "https://{mcp_hostname}/nsi/api/v3/tpes/{tpeId}/userData/{userDataKey}".format(
-            **params
-        )
-        + gen_args(params, IN_QUERY_PARAMETER)
+    _url = "https://{mcp_hostname}/nsi/api/v3/tpes/{tpeId}/userData/{userDataKey}".format(
+        **params
+    ) + gen_args(
+        params, IN_QUERY_PARAMETER
     )
     async with session.delete(_url) as resp:
         content_types = [
@@ -160,10 +157,8 @@ async def _put(params, session):
     for i in accepted_fields:
         if params[i]:
             spec[i] = params[i]
-    _url = (
-        "https://{mcp_hostname}/nsi/api/v3/tpes/{tpeId}/userData/{userDataKey}".format(
-            **params
-        )
+    _url = "https://{mcp_hostname}/nsi/api/v3/tpes/{tpeId}/userData/{userDataKey}".format(
+        **params
     )
     async with session.put(_url, json=spec) as resp:
         content_types = [

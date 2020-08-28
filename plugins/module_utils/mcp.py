@@ -13,7 +13,7 @@ async def open_session(
     async with aiohttp.ClientSession(
         connector=connector,
         connector_owner=False,
-        headers={"content-type": "application/json",},
+        headers={"content-type": "application/json"},
     ) as session:
         async with session.post(
             "https://{hostname}/tron/api/v1/tokens".format(hostname=mcp_hostname),

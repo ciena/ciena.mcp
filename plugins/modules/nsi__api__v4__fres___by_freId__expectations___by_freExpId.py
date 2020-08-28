@@ -117,10 +117,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/nsi/api/v4/fres/{freId}/expectations/{freExpId}".format(
-            **params
-        )
+    return "https://{mcp_hostname}/nsi/api/v4/fres/{freId}/expectations/{freExpId}".format(
+        **params
     )
 
 
@@ -135,10 +133,8 @@ async def _patch(params, session):
     for i in accepted_fields:
         if params[i]:
             spec[i] = params[i]
-    _url = (
-        "https://{mcp_hostname}/nsi/api/v4/fres/{freId}/expectations/{freExpId}".format(
-            **params
-        )
+    _url = "https://{mcp_hostname}/nsi/api/v4/fres/{freId}/expectations/{freExpId}".format(
+        **params
     )
     async with session.patch(_url, json=spec) as resp:
         content_types = [

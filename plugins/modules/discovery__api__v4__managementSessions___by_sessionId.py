@@ -112,10 +112,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/discovery/api/v4/managementSessions/{sessionId}".format(
-            **params
-        )
+    return "https://{mcp_hostname}/discovery/api/v4/managementSessions/{sessionId}".format(
+        **params
     )
 
 
@@ -130,10 +128,8 @@ async def _patch(params, session):
     for i in accepted_fields:
         if params[i]:
             spec[i] = params[i]
-    _url = (
-        "https://{mcp_hostname}/discovery/api/v4/managementSessions/{sessionId}".format(
-            **params
-        )
+    _url = "https://{mcp_hostname}/discovery/api/v4/managementSessions/{sessionId}".format(
+        **params
     )
     async with session.patch(_url, json=spec) as resp:
         content_types = [

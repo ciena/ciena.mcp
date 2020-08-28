@@ -155,10 +155,8 @@ async def main():
 
 
 def url(params):
-    return (
-        "https://{mcp_hostname}/nsi/api/v3/fres/{freId}/validationExpectation".format(
-            **params
-        )
+    return "https://{mcp_hostname}/nsi/api/v3/fres/{freId}/validationExpectation".format(
+        **params
     )
 
 
@@ -173,10 +171,8 @@ async def _put(params, session):
     for i in accepted_fields:
         if params[i]:
             spec[i] = params[i]
-    _url = (
-        "https://{mcp_hostname}/nsi/api/v3/fres/{freId}/validationExpectation".format(
-            **params
-        )
+    _url = "https://{mcp_hostname}/nsi/api/v3/fres/{freId}/validationExpectation".format(
+        **params
     )
     async with session.put(_url, json=spec) as resp:
         content_types = [
