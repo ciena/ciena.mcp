@@ -14,11 +14,17 @@ This collection has been tested against following Ansible versions: **>=2.9.10,<
 
 <!--start collection content-->
 
-### Modules
-Name | Description
---- | ---
-[ciena.saos10.saos10_command](https://github.com/ciena/ciena.saos10/blob/main/docs/saos10_command.md)|Run commands on remote devices running Ciena SAOS 10
-[ciena.saos10.saos10_facts](https://github.com/ciena/ciena.saos10/blob/main/docs/saos10_facts.md)|Collect facts from remote devices running Ciena SAOS 10
+### Supported APIs
+| Name                           | Description                                |
+| ------------------------------ | ------------------------------------------ |
+| [ciena.mcp.application_slices] | Handle resource of type application_slices |
+| [ciena.mcp.discovery]          | management sessions and neprofiles         |
+| [ciena.mcp.domains]            | domains data                               |
+| [ciena.mcp.mcpview]            | TAPI                                       |
+| [ciena.mcp.products]           | orchestration products                     |
+| [ciena.mcp.resources]          | orchestration resources                    |
+| [ciena.mcp.tapi_xxxx]          | TAPI                                       |
+| [ciena.mcp.nsi_api_fres]       | FREs                                       |
 
 <!--end collection content-->
 ## Installing this collection
