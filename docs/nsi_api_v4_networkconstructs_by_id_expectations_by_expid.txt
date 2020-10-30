@@ -1,0 +1,117 @@
+> NSI_API_V4_NETWORKCONSTRUCTS_BY_ID_EXPECTATIONS_BY_EXPID
+
+        Handle resource of type
+        nsi_api_v4_networkconstructs_by_id_expectations_by_expid
+
+OPTIONS (= is mandatory):
+
+- attributes
+        Expectation attributes to be kept by NSI.
+        Validate attributes are:
+         - `accessIdentifier' (str): AID of the device, i.e. for 6500
+        shelf : SHELF-n.
+         - `additionalAttributes' (dict): Various miscellaneous
+        attributes that do not necessarily belong in the parent
+        resource. Attributes are populated dynamically and therefore
+        cannot be documented here.
+         - `associationState' (str): Association state of the network
+        construct.
+         - `associationStateLastUpdatedTime' (str): Date at which we
+        last changed association state.
+         - `associationStateQualifier' (str): How the associationState
+        has been set.
+         - `associationStateQualifierReason' (str): Reason for going
+        into maintenance mode.
+         - `capabilitySpecRef' (str): Name of the file which contains
+        the constraint rules of the network device.
+         - `deviceType' (str): Device Type.
+         - `deviceVersion' (str): Device version (e.g. 6500 32-SLOT
+        OPTICAL)
+         - `endDate' (str): The scheduled end date and time of the
+        expectation, with RFC 3339 date-time format
+         - `geoLocation' (dict): The geography location of the device
+         - `ipAddress' (str): IP address of the network construct.
+         - `ipCommunicationDetails' (dict): IP communications data for
+        the network construct
+         - `l2Data' (list): It represents the L2 Configuration Data on
+        the NE.
+         - `longName' (str): Extended name of the Network Construct
+         - `macAddress' (str): MAC address of the device.
+         - `memberFunction' (str): Member function of the network
+        construct.
+         - `modelType' (str): The model type of network construct,
+        TPE, FRE.
+         - `name' (str): Name (e.g. TID) of the Network Construct
+         - `networkConstructType' (str): The type of network
+        construct. It is used to represent the physical hierarchy of a
+        network element.
+         - `numberOfShelves' (int): Number of shelves (primary +
+        member shelves in case of TIDc)
+         - `policies' (list): Policies to be applied to the entity.
+         - `resourcePartitionInfo' (list): It represents which
+        partition the NE belongs to.
+         - `resourceType' (str): Resource Type.
+         - `serialNumber' (str): Serial number (e.g. NNTMHQDP0001)
+         - `shelfType' (str): Shelf type of the network construct.
+         - `softwareImage' (str): Software image
+         - `softwareType' (str): Software type (e.g. OCP)
+         - `softwareVersion' (str): Software version running in the
+        device.
+         - `srlg' (list): Shared risk link group is used by the path
+        computation engine to ensure that the alternate links involved
+        in a service do not share the same shared risk link group.
+         - `startDate' (str): The scheduled start date and time of the
+        expectation, with RFC 3339 date-time format
+         - `subnetName' (str): Subnet name (e.g. ROADM1---ROADM2---
+        SUBNET)
+         - `typeGroup' (str): Resource adapter type group.
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- expId
+        Identifier of the Network Construct expectation to create or
+        update
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Identifier of the Network Construct under which to create the
+        expectation
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- relationships
+        Validate attributes are:
+         - `childrenNetworkConstruct' (dict): The one-to-many
+        relationship
+         - `concrete' (dict): The one-to-many relationship
+         - `concreteAssociations' (dict): The one-to-many relationship
+         - `equipmentIntent' (dict): The one-to-one relationship
+         - `groups' (dict): The one-to-many relationship
+         - `intent' (dict): The one-to-one relationship
+         - `parentNetworkConstruct' (dict): The one-to-one
+        relationship
+         - `physicalLocation' (dict): The one-to-one relationship
+         - `serviceIntent' (dict): The one-to-one relationship
+         - `srlg' (dict): The SRLGone-to-many relationship
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+- type
+        The network construct expectation type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

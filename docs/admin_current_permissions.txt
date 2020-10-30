@@ -1,0 +1,12 @@
+> ADMIN_CURRENT_PERMISSIONS
+
+        Handle resource of type admin_current_permissions
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

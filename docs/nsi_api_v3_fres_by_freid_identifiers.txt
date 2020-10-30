@@ -1,0 +1,19 @@
+> NSI_API_V3_FRES_BY_FREID_IDENTIFIERS
+
+        Handle resource of type nsi_api_v3_fres_by_freid_identifiers
+
+OPTIONS (= is mandatory):
+
+- freId
+        The FRE id
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

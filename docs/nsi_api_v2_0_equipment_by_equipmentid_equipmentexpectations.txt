@@ -1,0 +1,20 @@
+> NSI_API_V2_0_EQUIPMENT_BY_EQUIPMENTID_EQUIPMENTEXPECTATIONS
+
+        Handle resource of type
+        nsi_api_v2_0_equipment_by_equipmentid_equipmentexpectations
+
+OPTIONS (= is mandatory):
+
+- equipmentId
+        Equipment identifier
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

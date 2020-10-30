@@ -1,0 +1,35 @@
+> NSI_API_V3_TPES_BY_TPEID
+
+        Handle resource of type nsi_api_v3_tpes_by_tpeid
+
+OPTIONS (= is mandatory):
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded.  The allowed values are: expectations, tpePlanned,
+        tpeDiscovered
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get)[Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,13 @@
+> TAPI_DATA_CONTEXT_TOPOLOGY_CONTEXT_TOPOLOGY
+
+        Handle resource of type
+        tapi_data_context_topology_context_topology
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

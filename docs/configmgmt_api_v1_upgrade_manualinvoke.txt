@@ -1,0 +1,22 @@
+> CONFIGMGMT_API_V1_UPGRADE_MANUALINVOKE
+
+        Handle resource of type configmgmt_api_v1_upgrade_manualinvoke
+
+OPTIONS (= is mandatory):
+
+- networkConstructName
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- slotId
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

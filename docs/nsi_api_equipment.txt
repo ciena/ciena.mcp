@@ -1,0 +1,99 @@
+> NSI_API_EQUIPMENT
+
+        Handle resource of type nsi_api_equipment
+
+OPTIONS (= is mandatory):
+
+- data
+        The equipment data
+        Validate attributes are:
+         - `attributes' (dict): The equipment attributes
+         - `id' (str): The unique identifier for the equipment
+        resource
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict): The equipment relationships
+         - `type' (str): The equipment resource type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- equipmentExpectations.equipmentIntent.id
+        (Optional) Equipment Intent Identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        (Optional) Comma separated list of equipment identifiers to
+        retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: expectations,
+        equipmentDiscovered, equipmentPlanned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Resources related to equipment, such as
+        EquipmentExpectationData
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- limit
+        The size of a returned page. Defaulted to return 30 Equipment
+        at once.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- networkConstruct.id
+        (Optional) Network Construct identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

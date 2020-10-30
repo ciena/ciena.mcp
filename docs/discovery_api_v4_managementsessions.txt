@@ -1,0 +1,217 @@
+> DISCOVERY_API_V4_MANAGEMENTSESSIONS
+
+        Handle resource of type discovery_api_v4_managementsessions
+
+OPTIONS (= is mandatory):
+
+- aliasName
+        (Optional) Key that holds the alias name
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- aliasValue
+        (Optional) List of alias name values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- associationState
+        (Optional) List of the management session associationState.
+        The valid values are: GOA, LOA
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- associationStateQualifier
+        (Optional) List of associationStateQualifiers. The allowed
+        values are MANUAL, NETWORK, SYSTEM
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- associationStateQualifierReason
+        (Optional) Reason for putting a Management Session to
+        'inMaintenance'.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayAlternativeConnectionIPs
+        (Optional) List of comma seperated display alternative
+        connection IPs
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayAlternativeConnectionNames
+        (Optional) List of comma seperated display alternative
+        connection names
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayName
+        (Optional) List of device displayName values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayPartitions
+        (Optional) List of comma separated display partitions
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayPreferredConnectionName
+        (Optional) Name of preferred connection
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayState
+        (Optional) List of comma separated display states. The allowed
+        values are: Pending, Connecting, Not connected, Connected,
+        Failed
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        (Optional) Ip Address of management sessions
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        (Optional) The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- longName
+        (Optional) List of comma separated longName values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: resourceType, associationState, discoveryState,
+        displayState, typeGroup, profileName, resourcePartitionInfo,
+        shortResourceType
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        (Optional) List of comma separated name values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- profileId
+        (Optional) List of NE security connection profile identifiers
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- profileName
+        (Optional) List of comma separated profileName values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourcePartitionInfo
+        (Optional) List of comma separated resource partitions, 'none'
+        to search unpartitioned resource if user has sufficient
+        privilege
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourceType
+        (Optional) List of the management session resourceType
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied. Fields
+        require full path (e.g. data.attributes.name)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- shortResourceType
+        (Optional) List of the management session shortResourceType
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. Fields require full path (i.e. data.attributes.field).
+        A dash or negative sign before a field indicates descending
+        order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- states
+        (Optional) List of comma separated discoveryStates. <p> Valid
+        values are: <table><tr><td>PENDING</td><td> - prior to
+        enrollment</td></tr><tr><td>AUTO_DISCOVERED</td><td> - prior
+        to enrollment and added by the enrollment of another network
+        element</td></tr><tr><td>VALIDATING</td><td> - attempting to
+        communicate with the network
+        element</td></tr><tr><td>VALIDATING_FAILED</td><td> -
+        communication with the network element
+        failed</td></tr><tr><td>CONNECTING</td><td> - creating a
+        session to the network
+        element</td></tr><tr><td>POKING</td><td> - checking available
+        accesses to the network
+        element</td></tr><tr><td>CONNECTED</td><td> - session
+        established with network
+        element</td></tr><tr><td>DISCOVERING</td><td> - retrieving
+        session data from network
+        element</td></tr><tr><td>COMPLETED</td><td> - management
+        session is fully operational and connected to the network
+        element</td></tr><tr><td>DISCOVERY_RETRY</td><td> - failed to
+        retrieve session data from the network
+        element</td></tr><tr><td>CHANGE_SESSION</td><td> - attempting
+        to changing the active session to the network
+        element</td></tr><tr><td>DEENROLLING</td><td> - disconnecting
+        from the network element and removing the management
+        session</td></tr><tr><td>POKING</td><td> - obtaining
+        information from NE's other connection addresses for
+        reachability</td></tr></table>
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- typeGroup
+        (Optional) List of the management session typeGroup
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

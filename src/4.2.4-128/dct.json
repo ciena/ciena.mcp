@@ -1,0 +1,75 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "The Device Cut-Through provides interactive SSH terminals for use in the UI.  This API is for providing credentials so that BPI commands can be executed.",
+    "title": "Device Cut-Through",
+    "version": "1.0.0"
+  },
+  "basePath": "/dct/api",
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "credentials",
+      "description": "Add credentials for BPI commands"
+    }
+  ],
+  "paths": {
+    "/v1/bpi/credentials/": {
+      "post": {
+        "tags": ["credentials"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Add credentials for an IP address.",
+        "operationId": "CreateValue",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The credentials to be added.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Credentials"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Credentials successfully added."
+          },
+          "400": {
+            "description": "Failed to validate the request."
+          },
+          "500": {
+            "description": "Internal server error while processing the request."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Credentials": {
+      "description": "The credentials expected for BPI commands",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "ip": {
+              "type": "string",
+              "description": "foo"
+            },
+            "username": {
+              "type": "string",
+              "description": "foo"
+            },
+            "password": {
+              "type": "string",
+              "description": "foo"
+            }
+          }
+        }
+      }
+    }
+  }
+}

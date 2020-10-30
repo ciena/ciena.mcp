@@ -1,0 +1,31 @@
+> NSI_API_V4_PHYSICALLOCATIONS
+
+        Handle resource of type nsi_api_v4_physicallocations
+
+OPTIONS (= is mandatory):
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: expectations
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page. The default is 30
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,12 @@
+> REVELL_API_V2_SERVICETOPOLOGY
+
+        Handle resource of type revell_api_v2_servicetopology
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

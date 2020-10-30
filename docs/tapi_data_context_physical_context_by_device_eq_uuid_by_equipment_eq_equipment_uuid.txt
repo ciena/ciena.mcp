@@ -1,0 +1,27 @@
+> TAPI_DATA_CONTEXT_PHYSICAL_CONTEXT_BY_DEVICE_EQ_UUID_BY_EQUIPMENT_EQ_EQUIPMENT_UUID
+
+        Handle resource of type tapi_data_context_physical_context_by_
+        device_eq_uuid_by_equipment_eq_equipment_uuid
+
+OPTIONS (= is mandatory):
+
+- equipment-uuid
+        Id of equipment
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- uuid
+        Id of device
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

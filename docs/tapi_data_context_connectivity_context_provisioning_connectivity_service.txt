@@ -1,0 +1,13 @@
+> TAPI_DATA_CONTEXT_CONNECTIVITY_CONTEXT_PROVISIONING_CONNECTIVITY_SERVICE
+
+        Handle resource of type tapi_data_context_connectivity_context
+        _provisioning_connectivity_service
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

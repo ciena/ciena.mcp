@@ -1,0 +1,25 @@
+> NSI_API_NETWORKCONSTRUCTS_BY_ID_NETWORKCONSTRUCTPLANNED
+
+        Handle resource of type
+        nsi_api_networkconstructs_by_id_networkconstructplanned
+
+OPTIONS (= is mandatory):
+
+- id
+        identifier of Network Construct to be retrieved
+        Required with `state=['get', 'patch']'
+        Used by `state=['get', 'patch']'
+        [Default: (null)]
+        type: str
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: get, patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

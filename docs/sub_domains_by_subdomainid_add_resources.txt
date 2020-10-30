@@ -1,0 +1,26 @@
+> SUB_DOMAINS_BY_SUBDOMAINID_ADD_RESOURCES
+
+        Handle resource of type
+        sub_domains_by_subdomainid_add_resources
+
+OPTIONS (= is mandatory):
+
+- resources
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- subDomainId
+        Identifier of the subdomain to add the resources
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

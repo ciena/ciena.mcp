@@ -1,0 +1,261 @@
+> NSI_API_SEARCH_EQUIPMENT
+
+        Handle resource of type nsi_api_search_equipment
+
+OPTIONS (= is mandatory):
+
+- availabilityState
+        (Optional) List of Equipment availabilityState. The allowed
+        values are: PLANNED, AVAILABLE, UNVALIDATED, INUSE
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- cardType
+        (Optional) List of Equipment cardType
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- category
+        (Optional) List of Equipment category. The allowed values are:
+        rack, shelf, pluggable, standalone
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayAvailabilityState
+        (Optional) List of equipment displayAvailabilityState values.
+        The allowed values are: Planned, Unvalidated, Available, In
+        use
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayState
+        (Optional) List of equipment displayState values. The allowed
+        values are: IS, OOS, OOS-AU, OOS-MA, OOS-AUMA
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- endDateMax
+        (Optional) Maximum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- endDateMin
+        (Optional) Minimum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- equipmentExpectations.equipmentIntent.id
+        (Optional) Equipment Intent Identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        (Optional) List of equipment Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: expectations, planned,
+        discovered, networkConstructs, equipmentPlanned,
+        equipmentDiscovered
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- maintenanceMode
+        (Optional) List of Equipment maintenanceMode. The allowed
+        values are: true, false
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: specificationMismatch, state, availabilityState,
+        reservationState, maintenanceMode, cardType, category,
+        ncMacAddress, ncSubnetName, projectName,
+        displayAvailabilityState, displayState
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataQualifiers
+        (Optional) List of meta data options. The allowed values are:
+        absoluteTotals
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- neContactState
+        (Optional) List of neContactState. The allowed values are: IN,
+        OUT
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.id
+        (Optional) Network Construct identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.macAddress
+        (Optional) Network Construct macAddress
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.name
+        (Optional) Network Construct name
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.subnetName
+        (Optional) Network Construct subnetName
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- projectName
+        (Optional) Project name
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- reservationState
+        (Optional) List of Equipment reservationState. The allowed
+        values are: Unknown, Not reserved, Reserved for maintenance,
+        Reserved for facility, Reserved for reversion
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourceState
+        (Optional) List of resource states. By default, if no value
+        for this parameter is specified, root and unknown states are
+        filtered out. The allowed values are: root, planned,
+        discovered, plannedAndDiscovered, unknown
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied. Fields
+        require full path (e.g. data.attributes.siteName). If
+        provided, must also provide searchText parameter
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- shelf
+        (Optional) Comma separated list of equipment shelves
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- siteId
+        (Optional) Site Identifier for equipment
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- slot
+        (Optional) Comma separated list of equipment slots
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. Fields require full path (i.e. data.attributes.field).
+        A dash or negative sign before a field indicates descending
+        order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- specificationMismatch
+        (Optional) List of Equipment specificationMismatch. The
+        allowed values are: true, false
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMax
+        (Optional) Maximum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMin
+        (Optional) Minimum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- subShelf
+        (Optional) Comma separated list of equipment sub-shelves
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- subSlot
+        (Optional) Comma separated list of equipment sub-slots
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- subsubSlot
+        (Optional) Comma separated list of equipment sub-sub-slots
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

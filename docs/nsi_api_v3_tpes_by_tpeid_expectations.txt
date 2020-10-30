@@ -1,0 +1,30 @@
+> NSI_API_V3_TPES_BY_TPEID_EXPECTATIONS
+
+        Handle resource of type nsi_api_v3_tpes_by_tpeid_expectations
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict): Expectation attributes to be kept by
+        NSI.
+         - `id' (str): The unique identifier of the tpe expectation
+         - `relationships' (dict):
+         - `type' (str): The tpe expectation type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

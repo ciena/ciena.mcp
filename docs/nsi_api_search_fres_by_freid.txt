@@ -1,0 +1,36 @@
+> NSI_API_SEARCH_FRES_BY_FREID
+
+        Handle resource of type nsi_api_search_fres_by_freid
+
+OPTIONS (= is mandatory):
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freId
+        Identifier of the FRE to be retrieved
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: fres, tpes, networkConstructs,
+        equipment, expectations, frePlanned, freDiscovered, abstracts,
+        controllers
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

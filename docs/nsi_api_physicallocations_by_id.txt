@@ -1,0 +1,26 @@
+> NSI_API_PHYSICALLOCATIONS_BY_ID
+
+        Handle resource of type nsi_api_physicallocations_by_id
+
+OPTIONS (= is mandatory):
+
+- id
+        Identifier of the physical location
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: expectations
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

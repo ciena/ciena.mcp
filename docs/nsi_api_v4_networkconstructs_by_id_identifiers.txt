@@ -1,0 +1,20 @@
+> NSI_API_V4_NETWORKCONSTRUCTS_BY_ID_IDENTIFIERS
+
+        Handle resource of type
+        nsi_api_v4_networkconstructs_by_id_identifiers
+
+OPTIONS (= is mandatory):
+
+- id
+        The NC id
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

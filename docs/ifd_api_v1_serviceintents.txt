@@ -1,0 +1,49 @@
+> IFD_API_V1_SERVICEINTENTS
+
+        Handle resource of type ifd_api_v1_serviceintents
+
+OPTIONS (= is mandatory):
+
+- data
+        Resource to specify intent to design and fulfill one service.
+        Validate attributes are:
+         - `attributes' (dict): Attributes of the Service Intent
+        Request. All supported services are PointToPoint at this time.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- label
+        (Optional) Retrieve service intents with the specified service
+        user label
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- layerRates
+        (Optional) Retrieve service intents that operate at the given
+        layer rate(s)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- roadmLineName
+        (Optional) Retrieve service intents that utilize the named
+        ROADM Line
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- supportingServiceName
+        (Optional) Retrieve all client service intents for the
+        specified supporting (infrastructure) service name
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,64 @@
+> CONFIGMGMT_API_V1_PROFILES
+
+        Handle resource of type configmgmt_api_v1_profiles
+
+OPTIONS (= is mandatory):
+
+- imageLocation
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- name
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- neType
+        The NE Maintenance profiles by typeGroup to be retrieved.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- port
+        Used by `state=['post']'
+        [Default: (null)]
+        type: int
+
+- profileType
+        The NE Maintenance profiles by profile type to be retrieved.
+        Used by `state=['get', 'post']'
+        (Choices: backup_restore, upgrade)[Default: (null)]
+        type: str
+
+- protocolType
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- storageMethod
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- userName
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- userPassword
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

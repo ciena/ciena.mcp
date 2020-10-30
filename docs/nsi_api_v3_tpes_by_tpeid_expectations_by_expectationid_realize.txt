@@ -1,0 +1,27 @@
+> NSI_API_V3_TPES_BY_TPEID_EXPECTATIONS_BY_EXPECTATIONID_REALIZE
+
+        Handle resource of type
+        nsi_api_v3_tpes_by_tpeid_expectations_by_expectationid_realize
+
+OPTIONS (= is mandatory):
+
+- expectationId
+        TpeExpectation to realize
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

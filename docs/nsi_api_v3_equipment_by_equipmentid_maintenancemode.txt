@@ -1,0 +1,26 @@
+> NSI_API_V3_EQUIPMENT_BY_EQUIPMENTID_MAINTENANCEMODE
+
+        Handle resource of type
+        nsi_api_v3_equipment_by_equipmentid_maintenancemode
+
+OPTIONS (= is mandatory):
+
+- body
+        maintenanceMode value
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- equipmentId
+        Equipment identifier
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

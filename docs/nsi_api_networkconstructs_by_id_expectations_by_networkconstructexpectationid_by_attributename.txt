@@ -1,0 +1,41 @@
+> NSI_API_NETWORKCONSTRUCTS_BY_ID_EXPECTATIONS_BY_NETWORKCONSTRUCTEXPECTATIONID_BY_ATTRIBUTENAME
+
+        Handle resource of type nsi_api_networkconstructs_by_id_expect
+        ations_by_networkconstructexpectationid_by_attributename
+
+OPTIONS (= is mandatory):
+
+- attributeName
+        Name of attribute to update
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- body
+        The desired new value
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Identifier of the Network Construct whose expectation
+        attribute is to be updated
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectationId
+        Identifier of the expectation whose attribute is to be updated
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

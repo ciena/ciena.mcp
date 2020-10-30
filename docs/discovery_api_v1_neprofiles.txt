@@ -1,0 +1,34 @@
+> DISCOVERY_API_V1_NEPROFILES
+
+        Handle resource of type discovery_api_v1_neprofiles
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier for the NE Connection
+        Profile resource
+         - `type' (str): The NE Connection Profile resource type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- protocol
+        (Optional) Protocol
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- typeGroup
+        (Optional) Device Type Group
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

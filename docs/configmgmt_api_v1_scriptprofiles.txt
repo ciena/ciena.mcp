@@ -1,0 +1,26 @@
+> CONFIGMGMT_API_V1_SCRIPTPROFILES
+
+        Handle resource of type configmgmt_api_v1_scriptprofiles
+
+OPTIONS (= is mandatory):
+
+- file
+        The Input stream of the script profile to be uploaded.
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: file
+
+- profileName
+        Name of the script profile
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

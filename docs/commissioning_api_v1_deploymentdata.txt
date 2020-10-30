@@ -1,0 +1,25 @@
+> COMMISSIONING_API_V1_DEPLOYMENTDATA
+
+        Handle resource of type commissioning_api_v1_deploymentdata
+
+OPTIONS (= is mandatory):
+
+- data
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- projectname
+        Project Name of planned network.
+        Required with `state=['get', 'post']'
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

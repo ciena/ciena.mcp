@@ -1,0 +1,70 @@
+> APPLICATION_SLICES_BY_APPLICATIONSLICEID
+
+        Handle resource of type
+        application_slices_by_applicationsliceid
+
+OPTIONS (= is mandatory):
+
+- applicationSliceId
+        Identifier of the application slice to update
+        Required with `state=['delete', 'get', 'head', 'patch',
+        'put']'
+        Used by `state=['delete', 'get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- description
+        Description of the application slice
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- extendable
+        Whether the application slice is extendable
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: bool
+
+- holderTenantId
+        The id of the tenant holding the slice
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Unique ID of the application slice
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- isDefault
+        Whether the application slice is the default slice of the
+        owner tenant
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: bool
+
+- name
+        Name of the application slice
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- ownerTenantId
+        The id of the tenant owning the slice
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- parentId
+        The id of the parent application slice
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, head, patch, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

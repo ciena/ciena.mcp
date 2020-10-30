@@ -1,0 +1,28 @@
+> NSI_API_V3_NETWORKCONSTRUCTS_BY_ID_EXPECTATIONS_BY_NETWORKCONSTRUCTEXPECTATIONID
+
+        Handle resource of type nsi_api_v3_networkconstructs_by_id_exp
+        ectations_by_networkconstructexpectationid
+
+OPTIONS (= is mandatory):
+
+- id
+        Identifier of the Network Construct under which an expectation
+        is to be retrieved
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectationId
+        Identifier of the expectation to retrieve
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,25 @@
+> DISCOVERY_API_V4_MANAGEMENTSESSIONS_BY_SESSIONID
+
+        Handle resource of type
+        discovery_api_v4_managementsessions_by_sessionid
+
+OPTIONS (= is mandatory):
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- sessionId
+        The id of management session to be updated
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

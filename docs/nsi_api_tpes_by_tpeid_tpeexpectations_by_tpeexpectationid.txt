@@ -1,0 +1,27 @@
+> NSI_API_TPES_BY_TPEID_TPEEXPECTATIONS_BY_TPEEXPECTATIONID
+
+        Handle resource of type
+        nsi_api_tpes_by_tpeid_tpeexpectations_by_tpeexpectationid
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: delete, get)[Default: (null)]
+        type: str
+
+- tpeExpectationId
+        TPE expectation identifier
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

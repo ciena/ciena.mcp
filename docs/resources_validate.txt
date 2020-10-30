@@ -1,0 +1,133 @@
+> RESOURCES_VALIDATE
+
+        Handle resource of type resources_validate
+
+OPTIONS (= is mandatory):
+
+- autoClean
+        Free up any resources automatically upon any activation
+        failure
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- custom
+        Whether to perform custom validation in addition to built-in
+        schema and accessor validations
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- description
+        Detailed description of this resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- desiredOrchState
+        Desired orchestration state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- discovered
+        Is this resource discovered
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- full
+        Whether the request body represents a full resource
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- label
+        Textual label
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- nativeState
+        Native (type specific) state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- orchState
+        Current state of the resource in the orchestrator
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- orderId
+        If applicable, the order containing this resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- productId
+        The type of product for this resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- properties
+        Properties
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- providerData
+        Provider custom data
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- providerResourceId
+        Identifier of the resource in provider's context
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- reason
+        Reason for the orchestration state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- shared
+        Is resource shared?
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- sharingPermissionId
+        The sharing permission of the resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- subDomainId
+        Sub-domain ID
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- tags
+        Tags
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,20 @@
+> TAPI_DATA_CONTEXT_CONNECTIVITY_CONTEXT_BY_CONNECTION_EQ_UUID
+
+        Handle resource of type
+        tapi_data_context_connectivity_context_by_connection_eq_uuid
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- uuid
+        Id of connection
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

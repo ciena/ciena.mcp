@@ -1,0 +1,20 @@
+> CONFIGMGMT_API_V1_UPGRADE_SUSPEND
+
+        Handle resource of type configmgmt_api_v1_upgrade_suspend
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `type' (str):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

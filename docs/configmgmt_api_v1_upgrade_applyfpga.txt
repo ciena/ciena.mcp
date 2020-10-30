@@ -1,0 +1,22 @@
+> CONFIGMGMT_API_V1_UPGRADE_APPLYFPGA
+
+        Handle resource of type configmgmt_api_v1_upgrade_applyfpga
+
+OPTIONS (= is mandatory):
+
+- aid
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- networkConstructName
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

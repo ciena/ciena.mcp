@@ -1,0 +1,142 @@
+> NSI_API_V5_NETWORKCONSTRUCTS
+
+        Handle resource of type nsi_api_v5_networkconstructs
+
+OPTIONS (= is mandatory):
+
+- concrete
+        (Optional) Id of the concrete networkConstruct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier for the NetworkConstruct
+        resource
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict): The relationships of a network
+        construct
+         - `type' (str): The Network Construct resource type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- identifierKey
+        The identifier key list
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- identifierValue
+        The identifier value list
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: expectations, physicalLocation,
+        parentNetworkConstruct, networkConstructDiscovered,
+        networkConstructPlanned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Referenced resources (discovered, planned, expectations,
+        physical locations, or parent/child Network Constructs)
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- ipAddress
+        (Optional) Ip Address of Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- name
+        (Optional) List of device name values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.equipmentIntent.id
+        (Optional) The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.serviceIntent.id
+        (Optional) The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructType
+        (Optional) Network Construct type. The allowed values are:
+        networkElement, shelf, osrpNode, manual, branchingUnit,
+        submarineRepeater
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- physicalLocationId
+        (Optional) Physical location id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sessionId
+        (Optional) Management Session Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,139 @@
+> RESOURCE_PROVIDERS
+
+        Handle resource of type resource_providers
+
+OPTIONS (= is mandatory):
+
+- asyncProtocolVersion
+        Identifies the async protocol version supported by the
+        resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- description
+        Description of the resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- domainSettings
+        Domain level setting for the resource provider
+        Validate attributes are:
+         - `asyncDeviceTypes' (list): Specifies the Resource Type IDs
+        that use async discovery strategy
+         - `connection_status' (bool): Specifies if maintenance of
+        domain's connection status is supported
+         - `initial_discovery_status' (bool): Specifies if maintenance
+        of domain's initial discovery status is supported
+         - `metaInfoDiscoveryStrategy' (dict): Specifies the Domain
+        meta information polling strategy
+         - `minInterUpsertIntervalMs' (number): Specifies the minimal
+        inter-call interval bpocore should honor when upserting the
+        Domain
+         - `rpType' (dict): Specifies the RP Type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- domainType
+        Type of domain managed by the resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- id
+        Unique identifier to address the resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- lastUpsertTime
+        Last time the resource provider is upserted in the database
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The maximum number of elements to return in a single paged
+        request
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- offset
+        Requested offset within the total result set to be the first
+        element in the paged response
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- pageToken
+        String pagination token returned from a previous query that
+        encodes query information in order to optimize a
+        subsequent request for a page of results. The token includes
+        the limit and offset parameters for the next page, but one or
+        both can be included to override the encoded values
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- properties
+        Properties of the resource provider
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- protocolVersion
+        Identifies the protocol version supported by the resource
+        provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- providerId
+        Identifier of the resource provider in provider's context
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- relationships
+        Settings to declare how relationships should be identified for
+        resource types managed by this resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- resourceTypes
+        List of resource types managed by the resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: get, head, post)[Default: (null)]
+        type: str
+
+- title
+        Name of the resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- uri
+        Address to contact the resource provider
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

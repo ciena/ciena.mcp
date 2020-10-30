@@ -1,0 +1,189 @@
+> NSI_API_FRES
+
+        Handle resource of type nsi_api_fres
+
+OPTIONS (= is mandatory):
+
+- childFreId
+        The child FRE identifier to return its parents
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier for the FRE resource
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict):
+         - `type' (str): The FRE resource type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- endpoint.tpe.concrete
+        Concrete TPE identifier for endpoints
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- exclude
+        (Optional) A single given type to be excluded used in
+        conjunction with the `childFreId` parameter. The allowed
+        values are: actual, expectation
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.equipmentIntent.id
+        The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.intent.id
+        The intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.serviceIntent.id
+        The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freType
+        (Optional) FRE types in comma separated list. The allowed
+        values are: explicitRoute, explicitRouteGroup, snc, sncGroup
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- identifierKey
+        List of comma separated keys for an identifer object
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- identifierValue
+        List of comma separated values for an identifier object
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: tpes, expectations,
+        frePlanned, freDiscovered
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Resources related to a FRE, such as FreData, EndPointData,
+        TpeData, EquipmentData, EquipmentHolderData, FrePlannedData,
+        FreExpectationData, FreDiscoveredData,
+        ResiliencyControllerData, EncapsulatedResiliencyData
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- layerRate
+        (Optional) FRE layer rates in comma separated list. Only
+        applied when Network Construct identifier is provided. The
+        allowed values are: ETHERNET, OTU2, OTU4, OTSi, OMS, OS, PHY,
+        OTS, ODU2, ODU4, DSR, DSR_10GE, DSR_100GE, DSR_ETHERNET
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        (Optional) The size of a returned page. The default is 30
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- links
+        Links related to the resource
+        Validate attributes are:
+         - `current' (str): The current page of data
+         - `first' (str): The first page of data
+         - `last' (str): The last page of data
+         - `next' (str): The next page of data
+         - `prev' (str): The previous page of data
+         - `self' (str): A `self` member, whose value is a URL for the
+        relationship itself (a "relationship URL"). This URL allows
+        the client to directly manipulate the relationship. For
+        example, it would allow a client to remove an `author` from an
+        `article` without deleting the people resource itself.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- networkConstruct.id
+        Network Construct identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- roadmLineId
+        (Optional) Find services configured over a roadmline based on
+        the roadmline FRE identifier.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- signalContentType
+        (Optional) The identifier indicating type of parent to be
+        returned. If specified, parent matching the criteria will be
+        returned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier for endpoints
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

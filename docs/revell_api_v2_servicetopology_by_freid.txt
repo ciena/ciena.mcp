@@ -1,0 +1,27 @@
+> REVELL_API_V2_SERVICETOPOLOGY_BY_FREID
+
+        Handle resource of type revell_api_v2_servicetopology_by_freid
+
+OPTIONS (= is mandatory):
+
+- freId
+        Identifier of the FRE to be retrieved
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: fres, tpes, networkConstructs, equipment,
+        expectations, frePlanned, freDiscovered, abstracts
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

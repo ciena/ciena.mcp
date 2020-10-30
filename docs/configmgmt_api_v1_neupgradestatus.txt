@@ -1,0 +1,25 @@
+> CONFIGMGMT_API_V1_NEUPGRADESTATUS
+
+        Handle resource of type configmgmt_api_v1_neupgradestatus
+
+OPTIONS (= is mandatory):
+
+- ncid
+        Management session id of an NE.
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- operationtype
+        Operation type of job execution on NE.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

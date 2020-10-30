@@ -1,0 +1,27 @@
+> APPLICATION_SLICES_BY_APPLICATIONSLICEID_ADD_EXTENDED_SUB_DOMAINS
+
+        Handle resource of type application_slices_by_applicationslice
+        id_add_extended_sub_domains
+
+OPTIONS (= is mandatory):
+
+- applicationSliceId
+        Identifies the application slice for which extended subdomains
+        are to be added
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- subDomains
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+
+REQUIREMENTS:  python >= 3.6

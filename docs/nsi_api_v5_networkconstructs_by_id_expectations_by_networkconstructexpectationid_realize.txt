@@ -1,0 +1,28 @@
+> NSI_API_V5_NETWORKCONSTRUCTS_BY_ID_EXPECTATIONS_BY_NETWORKCONSTRUCTEXPECTATIONID_REALIZE
+
+        Handle resource of type nsi_api_v5_networkconstructs_by_id_exp
+        ectations_by_networkconstructexpectationid_realize
+
+OPTIONS (= is mandatory):
+
+- id
+        Identifier of the Network Construct under which the
+        expectation is to be realized
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectationId
+        Identifier of the expectation to realize
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

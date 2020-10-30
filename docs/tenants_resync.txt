@@ -1,0 +1,12 @@
+> TENANTS_RESYNC
+
+        Handle resource of type tenants_resync
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

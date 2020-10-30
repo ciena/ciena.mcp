@@ -1,0 +1,35 @@
+> NSI_API_V3_TPES_BY_TPEID_USERDATA_BY_USERDATAKEY
+
+        Handle resource of type
+        nsi_api_v3_tpes_by_tpeid_userdata_by_userdatakey
+
+OPTIONS (= is mandatory):
+
+- body
+        The desired userData value
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, put)[Default: (null)]
+        type: str
+
+- tpeId
+        Identifier to TPE under which to create or update the userData
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- userDataKey
+        The userData key that will be used to delete the potential
+        value
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

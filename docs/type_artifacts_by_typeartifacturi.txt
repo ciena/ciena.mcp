@@ -1,0 +1,19 @@
+> TYPE_ARTIFACTS_BY_TYPEARTIFACTURI
+
+        Handle resource of type type_artifacts_by_typeartifacturi
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+- typeArtifactUri
+        Identifier of the type artifact being queried
+        Required with `state=['get', 'head']'
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

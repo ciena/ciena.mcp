@@ -1,0 +1,32 @@
+> TAPI_DATA_CONTEXT_CONNECTIVITY_CONTEXT_PROVISIONING_BY_CONNECTIVITY_SERVICE_EQ_UUID_NAME
+
+        Handle resource of type tapi_data_context_connectivity_context
+        _provisioning_by_connectivity_service_eq_uuid_name
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- uuid
+        Id of connectivity-service
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- value
+        The value
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- value-name
+        The name of the value. The value need not have a name.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

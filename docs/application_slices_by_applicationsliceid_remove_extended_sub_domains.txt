@@ -1,0 +1,27 @@
+> APPLICATION_SLICES_BY_APPLICATIONSLICEID_REMOVE_EXTENDED_SUB_DOMAINS
+
+        Handle resource of type application_slices_by_applicationslice
+        id_remove_extended_sub_domains
+
+OPTIONS (= is mandatory):
+
+- applicationSliceId
+        Identifies the application slice for which subdomains are to
+        be added and/or removed
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- subDomains
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+
+REQUIREMENTS:  python >= 3.6

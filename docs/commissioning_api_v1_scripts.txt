@@ -1,0 +1,50 @@
+> COMMISSIONING_API_V1_SCRIPTS
+
+        Handle resource of type commissioning_api_v1_scripts
+
+OPTIONS (= is mandatory):
+
+- devicetype
+        Device type planned network i.e., 6500, Waveserver
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- format
+        Script format to be returned i.e., ztpScript, json, cli
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- nodename
+        Node name in a planned network
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- policyid
+        Policy id of commissioning policy to be used
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- projectname
+        Project Name of planned network
+        Required with `state=['delete', 'get', 'post']'
+        Used by `state=['delete', 'get', 'post']'
+        [Default: (null)]
+        type: str
+
+- shelfId
+        Shelf Id of the generated script e.g. Shelf number 0,1,2,11,21
+        etc or ALL
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

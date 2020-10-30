@@ -1,0 +1,93 @@
+> SUB_DOMAINS_BY_SUBDOMAINID
+
+        Handle resource of type sub_domains_by_subdomainid
+
+OPTIONS (= is mandatory):
+
+- applicationSlices
+        Set of application slices this sub-domain is in
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: list
+
+- assignable
+        Whether the sub-domain can be re-assigned
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: bool
+
+- decomposable
+        Whether the sub-domain can be decomposed
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: bool
+
+- description
+        Description of the sub-domain
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- domainId
+        ID of the domain this sub-domain belongs to
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- extendedApplicationSlices
+        Set of application slices for which this sub-domain acts as an
+        extended sub-domain
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: list
+
+- id
+        Unique ID of the sub-domain
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- isDefault
+        Whether this sub-domain is its domain's default sub-domain
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: bool
+
+- name
+        Name of the sub-domain
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- ownerTenantId
+        The ID of the owner tenant
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- parentId
+        The ID of the container sub-domain, if applicable
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- scope
+        Scope of the sub-domain
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, head, patch, put)[Default: (null)]
+        type: str
+
+- subDomainId
+        Identifier of the subdomain to update
+        Required with `state=['delete', 'get', 'head', 'patch',
+        'put']'
+        Used by `state=['delete', 'get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,97 @@
+> NSI_API_FRES_BY_FREID
+
+        Handle resource of type nsi_api_fres_by_freid
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier for the FRE resource
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict):
+         - `type' (str): The FRE resource type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freId
+        Identifier of the FRE to be retrieved
+        Required with `state=['delete', 'get', 'patch', 'put']'
+        Used by `state=['delete', 'get', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: fres, tpes, networkConstructs,
+        equipment, expectations, frePlanned, freDiscovered, abstracts,
+        controllers
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Resources related to a FRE, such as FreData, EndPointData,
+        TpeData, EquipmentData, EquipmentHolderData, FrePlannedData,
+        FreExpectationData, FreDiscoveredData,
+        ResiliencyControllerData, EncapsulatedResiliencyData
+        Used by `state=['put']'
+        [Default: (null)]
+        type: list
+
+- links
+        Links related to the resource
+        Validate attributes are:
+         - `current' (str): The current page of data
+         - `first' (str): The first page of data
+         - `last' (str): The last page of data
+         - `next' (str): The next page of data
+         - `prev' (str): The previous page of data
+         - `self' (str): A `self` member, whose value is a URL for the
+        relationship itself (a "relationship URL"). This URL allows
+        the client to directly manipulate the relationship. For
+        example, it would allow a client to remove an `author` from an
+        `article` without deleting the people resource itself.
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: delete, get, patch, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

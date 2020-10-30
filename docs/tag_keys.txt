@@ -1,0 +1,37 @@
+> TAG_KEYS
+
+        Handle resource of type tag_keys
+
+OPTIONS (= is mandatory):
+
+- autoIndexed
+        Are tag value for this key auto-indexed?
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- description
+        Textual description of tag key
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- key
+        Tag key
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

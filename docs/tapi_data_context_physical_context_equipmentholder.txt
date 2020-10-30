@@ -1,0 +1,25 @@
+> TAPI_DATA_CONTEXT_PHYSICAL_CONTEXT_EQUIPMENTHOLDER
+
+        Handle resource of type
+        tapi_data_context_physical_context_equipmentholder
+
+OPTIONS (= is mandatory):
+
+- page[number]
+        (Optional) The page to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: int
+
+- page[size]
+        (Optional) The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: int
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,118 @@
+> NSI_API_V3_NETWORKCONSTRUCTS
+
+        Handle resource of type nsi_api_v3_networkconstructs
+
+OPTIONS (= is mandatory):
+
+- aliasName
+        (Optional) Key that holds the subNet name
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- aliasValue
+        (Optional) List of subNet name values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- concrete
+        (Optional) Id of the concrete networkConstruct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: expectations, physicalLocation,
+        parentNetworkConstruct, networkConstructDiscovered,
+        networkConstructPlanned
+        Used by `state=['get']'
+        (Choices: expectations, networkConstructDiscovered,
+        networkConstructPlanned, parentNetworkConstruct,
+        physicalLocation)[Default: (null)]
+        type: str
+
+- ipAddress
+        (Optional) Ip Address of Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        (Optional) List of device name values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.equipmentIntent.id
+        (Optional) The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.serviceIntent.id
+        (Optional) The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructType
+        (Optional) Network Construct type
+        Used by `state=['get']'
+        (Choices: networkElement, osrpNode, shelf)[Default: (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- physicalLocationId
+        (Optional) Physical location id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied. Fields
+        require full path (e.g. data.attributes.name). If provided,
+        must also provide searchText parameter
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sessionId
+        (Optional) Management Session Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

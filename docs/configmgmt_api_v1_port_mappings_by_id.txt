@@ -1,0 +1,19 @@
+> CONFIGMGMT_API_V1_PORT_MAPPINGS_BY_ID
+
+        Handle resource of type configmgmt_api_v1_port_mappings_by_id
+
+OPTIONS (= is mandatory):
+
+- id
+        Pec code mapping definition id
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,212 @@
+> CONFIGMGMT_API_V1_SCHEDULES
+
+        Handle resource of type configmgmt_api_v1_schedules
+
+OPTIONS (= is mandatory):
+
+- additionalAttributes
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- configMgmtJobId
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- frequency
+        List of schedule frequencies, Allowed values ONCE, DAILY,
+        WEEKLY, MONTHLY
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- friday
+        Friday, Allowed values ON or OFF
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fromNextOperationTime
+        (Optional) Time of next operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fromRecentOperationTime
+        (Optional) Time of recent operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- lastExecutionTime
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: type, frequency, state, weekDays
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- monday
+        Monday, Allowed values ON or OFF
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        List of schedule names
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- nextExecutionTime
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- numberOfNEs
+        Used by `state=['post']'
+        [Default: (null)]
+        type: int
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- profileName
+        List of profile names
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- releaseNumber
+        List of releaseNumbers
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourcePartitionInfo
+        (Optional) Resource partition info
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- saturday
+        Saturdy, Allowed values ON or OFF
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- scheduleDetails
+        Validate attributes are:
+         - `scheduleFrequency' (str):
+         - `scheduleTime' (str):
+         - `scheduleWeeklyDays' (dict):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- scheduleId
+        List of schedule Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. A dash or negative sign before a field indicates
+        descending order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- sunday
+        Sunday, Allowed values ON or OFF
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- thursday
+        Thursday, Allowed values ON or OFF
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- toNextOperationTime
+        (Optional) Time of next operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- toRecentOperationTime
+        (Optional) Time of recent operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tuesday
+        Tuesday, Allowed values ON or OFF
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- type
+        List of schedule types
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- typeGroup
+        List of typeGroups
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- wednesday
+        Wednesday, Allowed values ON or OFF
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- weekDays
+        List of Schedule weekdays
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

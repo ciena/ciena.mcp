@@ -1,0 +1,21 @@
+> CONFIGMGMT_API_V1_UPGRADE_FPGAINVENTORY
+
+        Handle resource of type
+        configmgmt_api_v1_upgrade_fpgainventory
+
+OPTIONS (= is mandatory):
+
+- networkConstructName
+        Networkconstruct Name for which FPGA Inventory to be
+        retrieved.
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

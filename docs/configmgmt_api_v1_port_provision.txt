@@ -1,0 +1,72 @@
+> CONFIGMGMT_API_V1_PORT_PROVISION
+
+        Handle resource of type configmgmt_api_v1_port_provision
+
+OPTIONS (= is mandatory):
+
+- clientType
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- customerId
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- description
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- maxFrameSize
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- name
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- otn
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- port
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- rate
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- reSyncInventory
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- scriptFileProperties
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- shelf
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- slot
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

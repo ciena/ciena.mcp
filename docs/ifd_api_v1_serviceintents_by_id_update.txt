@@ -1,0 +1,28 @@
+> IFD_API_V1_SERVICEINTENTS_BY_ID_UPDATE
+
+        Handle resource of type ifd_api_v1_serviceintents_by_id_update
+
+OPTIONS (= is mandatory):
+
+- data
+        Resource to specify intent to design and fulfill one service.
+        Validate attributes are:
+         - `attributes' (dict): Attributes of the Service Intent
+        Request. All supported services are PointToPoint at this time.
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- id
+        The unique identifier of the service intent
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

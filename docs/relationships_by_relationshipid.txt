@@ -1,0 +1,19 @@
+> RELATIONSHIPS_BY_RELATIONSHIPID
+
+        Handle resource of type relationships_by_relationshipid
+
+OPTIONS (= is mandatory):
+
+- relationshipId
+        Identifier of the relationship being queried
+        Required with `state=['delete', 'get', 'head']'
+        Used by `state=['delete', 'get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, head)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

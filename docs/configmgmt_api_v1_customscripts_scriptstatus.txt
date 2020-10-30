@@ -1,0 +1,13 @@
+> CONFIGMGMT_API_V1_CUSTOMSCRIPTS_SCRIPTSTATUS
+
+        Handle resource of type
+        configmgmt_api_v1_customscripts_scriptstatus
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,44 @@
+> TAG_KEYS_BY_TAGKEY_TAG_VALUES
+
+        Handle resource of type tag_keys_by_tagkey_tag_values
+
+OPTIONS (= is mandatory):
+
+- description
+        Description of the meaning of a tag value
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- key
+        Tag key
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head, post)[Default: (null)]
+        type: str
+
+- tagKey
+        Tag key whose tag values are being requested
+        Required with `state=['get', 'head', 'post']'
+        Used by `state=['get', 'head', 'post']'
+        [Default: (null)]
+        type: str
+
+- value
+        Tag value
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,12 @@
+> CONFIGMGMT_API_V1_UPGRADESTATUS
+
+        Handle resource of type configmgmt_api_v1_upgradestatus
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

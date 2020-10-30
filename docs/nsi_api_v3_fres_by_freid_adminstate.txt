@@ -1,0 +1,26 @@
+> NSI_API_V3_FRES_BY_FREID_ADMINSTATE
+
+        Handle resource of type nsi_api_v3_fres_by_freid_adminstate
+
+OPTIONS (= is mandatory):
+
+- adminStateValue
+        The desired adminState value
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- freId
+        FRE identifier
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

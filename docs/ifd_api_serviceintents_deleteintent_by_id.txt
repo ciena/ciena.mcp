@@ -1,0 +1,20 @@
+> IFD_API_SERVICEINTENTS_DELETEINTENT_BY_ID
+
+        Handle resource of type
+        ifd_api_serviceintents_deleteintent_by_id
+
+OPTIONS (= is mandatory):
+
+- id
+        The unique identifier of the service intent
+        Required with `state=['delete']'
+        Used by `state=['delete']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

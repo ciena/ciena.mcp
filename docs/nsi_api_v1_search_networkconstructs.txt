@@ -1,0 +1,322 @@
+> NSI_API_V1_SEARCH_NETWORKCONSTRUCTS
+
+        Handle resource of type nsi_api_v1_search_networkconstructs
+
+OPTIONS (= is mandatory):
+
+- associationState
+        (Optional) List of networkConstruct associationStates. The
+        allowed values are: GOA, LOA
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- associationStateQualifier
+        (Optional) Association state qualifier. The allowed values
+        are: MANUAL, SYSTEM, NETWORK
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- concrete
+        (Optional) Id of the concrete networkConstruct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayAssociationState
+        (Optional) List of networkConstruct associationStates. The
+        allowed values are: Connected, Not connected
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayInventorySyncFailureReason
+        (Optional) List of networkConstruct inventory sync failure
+        reasons.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayName
+        (Optional) List of device displayName values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayResourceState
+        (Optional) List of networkConstruct syncStates. The allowed
+        values are: root, planned, discovered, unknown
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displaySyncState
+        (Optional) List of networkConstruct syncStates. The allowed
+        values are: planned, notSynchronized, synchronizing,
+        synchronized, failed, pending, deleting, timeout
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- endDateMax
+        (Optional) Maximum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- endDateMin
+        (Optional) Minimum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- geoDistanceQuery
+        (Optional) Filters on distance from a specified location; the
+        Geo distance query is formatted as follows:
+        <distance>:<latitude>:<longitude>
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        (Optional) List of networkConstruct Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- identifierKey
+        The identifier key list
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- identifierValue
+        The identifier value list
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: expectations,
+        physicalLocation, parentNetworkConstruct,
+        networkConstructDiscovered, networkConstructPlanned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        (Optional) Ip Address of Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- macAddress
+        (Optional) macAddress parameter used to filter results
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: resourceType, associationState, syncState,
+        networkConstructType, resourceState, softwareVersion,
+        displaySyncState, displayResourceState,
+        displayAssociationState, tags, subnetName,
+        associationStateQualifier, resourcePartitionInfo
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataQualifiers
+        (Optional) List of meta data options. The allowed values are:
+        absoluteTotals
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- modelType
+        (Optional) modelType parameter used to filter results
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        (Optional) List of device name values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- namedQuery
+        (Optional) Comma-separated named query id list; The allowed
+        values are: OADMCapabilityNodes, OADMCapabilityNodesV2
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.equipmentIntent.id
+        (Optional) The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.serviceIntent.id
+        (Optional) The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructType
+        (Optional) List of Network Construct types. The allowed values
+        are: networkElement, shelf, osrpNode, manual, branchingUnit,
+        submarineRepeater
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- physicalLocationId
+        (Optional) Physical location id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourcePartitionInfo
+        (Optional) List of resourcePartitionInfo
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourceState
+        (Optional) List of networkConstruct planning states. By
+        default, if no value for this parameter is specified, root and
+        unknown states are filtered out. The allowed values are: root,
+        planned, discovered, plannedAndDiscovered, unknown
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourceType
+        (Optional) List of networkConstruct resourceTypes
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- rrConfigured
+        (Optional) List of networkConstruct based on BGP
+        RRConfiguration.
+        Used by `state=['get']'
+        (Choices: false, true)[Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied. Fields
+        require full path (e.g. data.attributes.name)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sessionId
+        (Optional) List of Management Session Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- slteType
+        (Optional)  slteType parameter used to filter results. The
+        allowed values are: SLTE
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- softwareVersion
+        (Optional) List of networkConstruct software versions
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. Fields require full path (i.e. data.attributes.field).
+        A dash or negative sign before a field indicates descending
+        order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMax
+        (Optional) Maximum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMin
+        (Optional) Minimum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- subnetName
+        (Optional) The subnet name list
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- syncState
+        (Optional) List of networkConstruct syncStates. The allowed
+        values are: notSynchronized, synchronizing, synchronized,
+        failed, timeout, aborted, deleting, deleteFailed
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tags
+        (Optional) Allow filtering on NC tags. This parameter accepts
+        a list of comma separated strings
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- typeGroup
+        (Optional) List of networkConstruct typeGroups
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

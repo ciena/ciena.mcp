@@ -1,0 +1,128 @@
+> CONFIGMGMT_API_V2_PROFILES
+
+        Handle resource of type configmgmt_api_v2_profiles
+
+OPTIONS (= is mandatory):
+
+- imageLocation
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        (Optional) Ip Address of Network Construct
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: profileType, protocolType, storageMethod
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        List of profile names
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- port
+        The NE Maintenance profiles by port to be retrieved.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: int
+
+- profileId
+        List of profile Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- profileType
+        The NE Maintenance profiles by profile type to be retrieved.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- protocolType
+        The NE Maintenance profiles by protocol type to be retrieved.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- releaseNumber
+        The NE Maintenance upgrade profiles by release number to be
+        retrieved.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. A dash or negative sign before a field indicates
+        descending order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sshPort
+        The NE Maintenance profiles by sshPort to be retrieved.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: int
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- storageMethod
+        The NE Maintenance profiles by storage method to be retrieved.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- typeGroup
+        The NE Maintenance profiles by typeGroup to be retrieved.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- userName
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- userPassword
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

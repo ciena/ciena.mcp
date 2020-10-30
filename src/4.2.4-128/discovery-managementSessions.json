@@ -1,0 +1,1641 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Enroll, resync, de-enroll and discover network elements, also known as management sessions",
+    "version": "4.0",
+    "title": "Network element enrollment (management sessions)"
+  },
+  "tags": [
+    {
+      "name": "managementSessions",
+      "description": "Enroll, resync, de-enroll and retrieve the management sessions that represent the connections to the network elements<p>This non-versioned API is meant for use by an end-user as a pass-through to the latest version. WARNING - backwards compatibility is not guaranteed for non-versioned APIs."
+    },
+    {
+      "name": "managementSessions v3",
+      "description": "Enroll, resync, de-enroll and retrieve the management sessions that represent the connections to the network elements"
+    },
+    {
+      "name": "managementSessions v4",
+      "description": "Enroll, resync, de-enroll and retrieve the management sessions that represent the connections to the network elements"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/discovery/api/managementSessions": {
+      "get": {
+        "tags": ["managementSessions"],
+        "summary": "Get a list of  management sessions",
+        "description": "Retrieves a list of management sessions which represent the connections to the network elements<p>LATEST VERSION: V4",
+        "operationId": "getNetworkConstructs",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "states",
+            "in": "query",
+            "description": "(Optional) List of comma separated discoveryStates. <p> Valid values are: <table><tr><td>PENDING</td><td> - prior to enrollment</td></tr><tr><td>AUTO_DISCOVERED</td><td> - prior to enrollment and added by the enrollment of another network element</td></tr><tr><td>VALIDATING</td><td> - attempting to communicate with the network element</td></tr><tr><td>VALIDATING_FAILED</td><td> - communication with the network element failed</td></tr><tr><td>CONNECTING</td><td> - creating a session to the network element</td></tr><tr><td>POKING</td><td> - checking available accesses to the network element</td></tr><tr><td>CONNECTED</td><td> - session established with network element</td></tr><tr><td>DISCOVERING</td><td> - retrieving session data from network element</td></tr><tr><td>COMPLETED</td><td> - management session is fully operational and connected to the network element</td></tr><tr><td>DISCOVERY_RETRY</td><td> - failed to retrieve session data from the network element</td></tr><tr><td>CHANGE_SESSION</td><td> - attempting to changing the active session to the network element</td></tr><tr><td>DEENROLLING</td><td> - disconnecting from the network element and removing the management session</td></tr></table>",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of comma separated name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "longName",
+            "in": "query",
+            "description": "(Optional) List of comma separated longName values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "profileName",
+            "in": "query",
+            "description": "(Optional) List of comma separated profileName values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of management sessions",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasName",
+            "in": "query",
+            "description": "(Optional) Key that holds the alias name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasValue",
+            "in": "query",
+            "description": "(Optional) List of alias name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "(Optional) Offset for current index of data to return",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "(Optional) The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          },
+          {
+            "name": "typeGroup",
+            "in": "query",
+            "description": "(Optional) List of the management session typeGroup",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "(Optional) List of the management session resourceType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "shortResourceType",
+            "in": "query",
+            "description": "(Optional) List of the management session shortResourceType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "associationState",
+            "in": "query",
+            "description": "(Optional) List of the management session associationState. The valid values are: GOA, LOA",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "description": "(Optional) The searchable text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchFields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to search on. If none are specified, all supported fields are implied. Fields require full path (e.g. data.attributes.name)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields by which to sort the result. Fields require full path (i.e. data.attributes.field). A dash or negative sign before a field indicates descending order; by default ascending order is used",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "metaDataFields",
+            "in": "query",
+            "description": "(Optional) List of meta data to be included. The allowed values are: resourceType, associationState, discoveryState, displayState, typeGroup, profileName, resourcePartitionInfo, shortResourceType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayState",
+            "in": "query",
+            "description": "(Optional) List of comma separated display states. The allowed values are: Pending, Connecting, Not connected, Connected, Failed",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "(Optional) List of device displayName values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayPreferredConnectionName",
+            "in": "query",
+            "description": "(Optional) Name of preferred connection",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayPartitions",
+            "in": "query",
+            "description": "(Optional) List of comma separated display partitions",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayAlternativeConnectionIPs",
+            "in": "query",
+            "description": "(Optional) List of comma seperated display alternative connection IPs",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayAlternativeConnectionNames",
+            "in": "query",
+            "description": "(Optional) List of comma seperated display alternative connection names",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "profileId",
+            "in": "query",
+            "description": "(Optional) List of NE security connection profile identifiers",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "associationStateQualifier",
+            "in": "query",
+            "description": "(Optional) List of associationStateQualifiers. The allowed values are MANUAL, NETWORK, SYSTEM",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "associationStateQualifierReason",
+            "in": "query",
+            "description": "(Optional) Reason for putting a Management Session to 'inMaintenance'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourcePartitionInfo",
+            "in": "query",
+            "description": "(Optional) List of comma separated resource partitions, 'none' to search unpartitioned resource if user has sufficient privilege",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of management sessions filtered by any provided parameters",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionListRO"
+            }
+          },
+          "400": {
+            "description": "Bad request, usually caused by invalid values provided for a parameter",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval of management sessions failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["managementSessions"],
+        "summary": "Creates a new management Session and optionally triggers the enrollment",
+        "description": "<p>LATEST VERSION: V3<p>Upon success, code 201 is returned.<p>ProfileId can be obtained from creating a profile through discovery/api/v1/neprofiles.<p>The profile can optionally be specified by name using the profileName attribute.<p>The default discoveryState is PENDING, which is a pre-enrollment state used to prepare and stage the enrollment process.<p>To trigger an immediate enrollment you can provide an initial discoverySate of CONNECTING. This starts the enrollment process as the management session object is created. Optionally you can assign one or multiple partitions to the management session.<p>Example request:</p><pre style='font-size: smaller'><code class='json'>{\n    \"data\" : {\n        \"type\": \"managementSessions\",\n        \"attributes\": {\n            \"ipAddress\": \"1.1.1.1\",\n            \"additionalIpAddresses\": [\"1.1.1.2\"],\n            \"discoveryState\": \"CONNECTING\",\n            \"profile\": \"profileId\"\n            \"resourcePartitionInfo\": [\"Partition1\"]\n        }\n    }\n}\n</code></pre>",
+        "operationId": "postManagementSession",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "managementSession to create",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ManagementSession object is created.",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Resource Not Found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "422": {
+            "description": "No request body was provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/managementSessions/{sessionId}": {
+      "get": {
+        "tags": ["managementSessions"],
+        "summary": "Retrieves a management session by its corresponding id",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "getManagementSessionById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The 'id' of management session to be retrieved",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve  management session by the specified id",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["managementSessions"],
+        "summary": "Triggers the de-enrollment of a network element or deletes a pending enrollment",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "deleteManagementSession",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The 'id' of the management session to be deleted or de-enrolled",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "De-enrollment or deletion request was successful triggered",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "204": {
+            "description": "Management session has already been deleted"
+          },
+          "403": {
+            "description": "Deenrollment of auto-discovered management session is not allowed, or insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["managementSessions"],
+        "summary": "perform operations of update, connect or resync on a management session resource",
+        "description": "<p>LATEST VERSION: V4<p>Upon request accepted, code 202 is returned and the output consists of JSON objects representing current management session resource.<p>If NE state is Pending, then the supported operations are: replace (for updating IP address and/or additionalIpAddresses, and/or ne-profile and/or partition), enroll (to enroll NE), and replace + enroll (to update and enroll the NE).<p>If NE state is Connected/Failed, then the supported operations are: replace (to update or re-apply ne-profile, or to update partition), replace + reconnect (to replace IP address and/or additionalIpAddresses and reconnect), reconnect, and resync (to resynchronize the NE).<p>\"reconnect\" operation force reconnect NE at enrollment IP address.<p>A MCP user can force reconnect an enrolled GNE or RNE. When a GNE is force reconnected, its associated RNE is reconnected automatically. A pre-enrlled or auto discovered GNE is not able to be force reconnected.<p>If NE state is Auto_discovered, the supported operations are replace and replace + enroll.<p>Example request to change enrollment IP:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"ipAddress\" : \"10.1.1.1\",\n                \"additionalIpAddresses\": [\"1.1.1.2\"], (optional)\n                \"profile\" : \"300-200-100\" (optional)\n            }\n        },\n        {\n            \"op\" : \"reconnect\"\n        }\n    ]\n}\n</code></pre><p>Example request to change ne-profile:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"profile\" : \"300-200-100\"\n            }\n        }\n    ]\n}\n</code></pre><p>Example request to change partition:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"resourcePartitionInfo\" : \"Partition2\"\n            }\n        }\n    ]\n}\n</code></pre><p>Example request to resync:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"resync\"\n        }\n    ]\n}\n</code></pre><p>Example request to put NE in Maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"inMaintenance\"\n        }\n    ]\n}\n</code></pre><p>Example request to put NE out of Maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"outMaintenance\"\n        }\n    ]\n}\n</code></pre><p>Example request to enroll a pre-enrolled NE:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"enroll\"\n        }\n    ]\n}\n</code></pre><p>Example request to reconnect a NE:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"reconnect\"\n        }\n    ]\n}\n</code></pre><p>Example request to provide a reason when putting an NE under maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"inMaintenance\"\n            \"reason\" : \"example_reason\"\n        }\n    ]\n}\n</code></pre><p>Example request to provide a reason when putting an NE under maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"inMaintenance\"\n            \"attributes\" : {\n                \"associationStateQualifierReason\" : \"example_reason\"\n            }\n        }\n    ]\n}\n</code></pre>",
+        "operationId": "patchOperation",
+        "produces": ["application/json-patch+json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The id of management session to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given management session.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/v3/managementSessions": {
+      "get": {
+        "tags": ["managementSessions v3"],
+        "summary": "Get a list of  management sessions",
+        "description": "Retrieves a list of management sessions which represent the connections to the network elements",
+        "operationId": "getManagementSessions",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "states",
+            "in": "query",
+            "description": "(Optional) List of comma separated discoveryStates. <p> Valid values are: <table><tr><td>PENDING</td><td> - prior to enrollment</td></tr><tr><td>AUTO_DISCOVERED</td><td> - prior to enrollment and added by the enrollment of another network element</td></tr><tr><td>VALIDATING</td><td> - attempting to communicate with the network element</td></tr><tr><td>VALIDATING_FAILED</td><td> - communication with the network element failed</td></tr><tr><td>CONNECTING</td><td> - creating a session to the network element</td></tr><tr><td>POKING</td><td> - checking available accesses to the network element</td></tr><tr><td>CONNECTED</td><td> - session established with network element</td></tr><tr><td>DISCOVERING</td><td> - retrieving session data from network element</td></tr><tr><td>COMPLETED</td><td> - management session is fully operational and connected to the network element</td></tr><tr><td>DISCOVERY_RETRY</td><td> - failed to retrieve session data from the network element</td></tr><tr><td>CHANGE_SESSION</td><td> - attempting to changing the active session to the network element</td></tr><tr><td>DEENROLLING</td><td> - disconnecting from the network element and removing the management session</td></tr></table>",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of comma separated name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of management sessions",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasName",
+            "in": "query",
+            "description": "(Optional) Key that holds the alias name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasValue",
+            "in": "query",
+            "description": "(Optional) List of alias name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "(Optional) Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "(Optional) The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of management sessions filtered by any provided parameters",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionListRO"
+            }
+          },
+          "400": {
+            "description": "Bad request, usually caused by invalid values provided for a parameter",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval of management sessions failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": ["managementSessions v3"],
+        "summary": "Creates a new management Session and optionally triggers the enrollment",
+        "description": "Upon success, code 201 is returned.<p>ProfileId can be obtained from creating a profile through discovery/api/v1/neprofiles.<p>The profile can optionally be specified by name using the profileName attribute.<p>The default discoveryState is PENDING, which is a pre-enrollment state used to prepare and stage the enrollment process.<p>To trigger an immediate enrollment you can provide an initial discoverySate of CONNECTING. This starts the enrollment process as the management session object is created. Optionally you can assign one or multiple partitions to the management session.<p>Example request:</p><pre style='font-size: smaller'><code class='json'>{\n    \"data\" : {\n        \"type\": \"managementSessions\",\n        \"attributes\": {\n            \"ipAddress\": \"1.1.1.1\",\n            \"discoveryState\": \"CONNECTING\",\n            \"profile\": \"profileId\",\n            \"resourcePartitionInfo\": [\"Partition1\"]\n        }\n    }\n}\n</code></pre>",
+        "operationId": "postManagementSession",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "managementSession to create",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created the management session object",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "422": {
+            "description": "No request body was provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/v3/managementSessions/{sessionId}": {
+      "get": {
+        "tags": ["managementSessions v3"],
+        "summary": "Retrieves a management session by its corresponding id",
+        "description": "",
+        "operationId": "getManagementSessionBySessionId",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The 'id' of management session to be retrieved",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve management session by the specified id",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["managementSessions v3"],
+        "summary": "Triggers the de-enrollment of a network element or deletes a pending enrollment",
+        "description": "",
+        "operationId": "deleteManagementSession",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "identifier of Management Session to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "De-enrollment or deletion request was successful triggered",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "204": {
+            "description": "Management session has already been deleted"
+          },
+          "403": {
+            "description": "Deenrollment of auto-discovered management session is not allowed, or insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/v3/managementSessions/{sessionId}/discoveryState": {
+      "put": {
+        "tags": ["managementSessions v3"],
+        "summary": "Trigger the enrollment or resynchronization of a management session",
+        "description": "",
+        "operationId": "putEnroll",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The id of management session to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A string value of the discoveryState.  Valid values are:<table><tr><td>CONNECTING</td><td> - this will trigger the enrollment process, if the management has not been enrolled yet</td></tr><tr><td>DISCOVERING</td><td> - triggers the resynchronization/discovery of the management session</td></tr></table>Note: Surround values with quotes within parameter body",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request has been successfully accepted and triggered.",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Resource Not Found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "422": {
+            "description": "No request body was provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/discovery/api/v3/managementSessions/{sessionId}/ipAddress": {
+      "put": {
+        "tags": ["managementSessions v3"],
+        "summary": "Update the IP address of the pending management session",
+        "description": "",
+        "operationId": "putEnrollIP",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The id of management session to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A string value of the IpAddress",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request has been successfully accepted and triggered.",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Resource Not Found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "422": {
+            "description": "No request body was provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/discovery/api/v3/managementSessions/{sessionId}/neProfile": {
+      "put": {
+        "tags": ["managementSessions v3"],
+        "summary": "Update the NE connection profile id of the pending management session",
+        "description": "",
+        "operationId": "putEnrollNeProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The id of management session to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A string value of the NeProfile",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request has been successfully accepted and triggered.",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Resource Not Found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "422": {
+            "description": "No request body was provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/discovery/api/v4/managementSessions": {
+      "get": {
+        "tags": ["managementSessions v4"],
+        "summary": "Get a list of  management sessions",
+        "description": "Retrieves a list of management sessions which represent the connections to the network elements",
+        "operationId": "getManagementSessions",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "states",
+            "in": "query",
+            "description": "(Optional) List of comma separated discoveryStates. <p> Valid values are: <table><tr><td>PENDING</td><td> - prior to enrollment</td></tr><tr><td>AUTO_DISCOVERED</td><td> - prior to enrollment and added by the enrollment of another network element</td></tr><tr><td>VALIDATING</td><td> - attempting to communicate with the network element</td></tr><tr><td>VALIDATING_FAILED</td><td> - communication with the network element failed</td></tr><tr><td>CONNECTING</td><td> - creating a session to the network element</td></tr><tr><td>POKING</td><td> - checking available accesses to the network element</td></tr><tr><td>CONNECTED</td><td> - session established with network element</td></tr><tr><td>DISCOVERING</td><td> - retrieving session data from network element</td></tr><tr><td>COMPLETED</td><td> - management session is fully operational and connected to the network element</td></tr><tr><td>DISCOVERY_RETRY</td><td> - failed to retrieve session data from the network element</td></tr><tr><td>CHANGE_SESSION</td><td> - attempting to changing the active session to the network element</td></tr><tr><td>DEENROLLING</td><td> - disconnecting from the network element and removing the management session</td></tr><tr><td>POKING</td><td> - obtaining information from NE's other connection addresses for reachability</td></tr></table>",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of comma separated name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "longName",
+            "in": "query",
+            "description": "(Optional) List of comma separated longName values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "profileName",
+            "in": "query",
+            "description": "(Optional) List of comma separated profileName values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of management sessions",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasName",
+            "in": "query",
+            "description": "(Optional) Key that holds the alias name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasValue",
+            "in": "query",
+            "description": "(Optional) List of alias name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "(Optional) Offset for current index of data to return",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "(Optional) The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          },
+          {
+            "name": "typeGroup",
+            "in": "query",
+            "description": "(Optional) List of the management session typeGroup",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "(Optional) List of the management session resourceType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "shortResourceType",
+            "in": "query",
+            "description": "(Optional) List of the management session shortResourceType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "associationState",
+            "in": "query",
+            "description": "(Optional) List of the management session associationState. The valid values are: GOA, LOA",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "description": "(Optional) The searchable text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchFields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to search on. If none are specified, all supported fields are implied. Fields require full path (e.g. data.attributes.name)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields by which to sort the result. Fields require full path (i.e. data.attributes.field). A dash or negative sign before a field indicates descending order; by default ascending order is used",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "metaDataFields",
+            "in": "query",
+            "description": "(Optional) List of meta data to be included. The allowed values are: resourceType, associationState, discoveryState, displayState, typeGroup, profileName, resourcePartitionInfo, shortResourceType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayState",
+            "in": "query",
+            "description": "(Optional) List of comma separated display states. The allowed values are: Pending, Connecting, Not connected, Connected, Failed",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "(Optional) List of device displayName values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayPreferredConnectionName",
+            "in": "query",
+            "description": "(Optional) Name of preferred connection",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayPartitions",
+            "in": "query",
+            "description": "(Optional) List of comma separated display partitions",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayAlternativeConnectionIPs",
+            "in": "query",
+            "description": "(Optional) List of comma seperated display alternative connection IPs",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayAlternativeConnectionNames",
+            "in": "query",
+            "description": "(Optional) List of comma seperated display alternative connection names",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "profileId",
+            "in": "query",
+            "description": "(Optional) List of NE security connection profile identifiers",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "associationStateQualifier",
+            "in": "query",
+            "description": "(Optional) List of associationStateQualifiers. The allowed values are MANUAL, NETWORK, SYSTEM",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "associationStateQualifierReason",
+            "in": "query",
+            "description": "(Optional) Reason for putting a Management Session to 'inMaintenance'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourcePartitionInfo",
+            "in": "query",
+            "description": "(Optional) List of comma separated resource partitions, 'none' to search unpartitioned resource if user has sufficient privilege",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of management sessions filtered by any provided parameters",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionListRO"
+            }
+          },
+          "400": {
+            "description": "Bad request, usually caused by invalid values provided for a parameter",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval of management sessions failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/v4/managementSessions/{sessionId}": {
+      "patch": {
+        "tags": ["managementSessions v4"],
+        "summary": "perform operations of update, connect or resync on a management session resource",
+        "description": "<p>Upon request accepted, code 202 is returned and the output consists of JSON objects representing current management session resource.<p>If NE state is Pending, then the supported operations are: replace (for updating IP address and/or ne-profile and/or partition), enroll (to enroll NE), and replace + enroll (to update and enroll the NE).<p>If NE state is Connected/Failed, then the supported operations are: replace (to update or re-apply ne-profile, or to update partition), replace + reconnect (to replace IP address and reconnect), reconnect, and resync (to resynchronize the NE).<p>\"reconnect\" operation force reconnect NE at enrollment IP address.<p>A MCP user can force reconnect an enrolled GNE or RNE. When a GNE is force reconnected, its associated RNE is reconnected automatically. A pre-enrolled or auto discovered GNE is not able to be force reconnected.<p>If NE state is Auto_discovered, the supported operations are replace and replace + enroll.<p>Example request to change enrollment IP:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"ipAddress\" : \"10.1.1.1\",\n                \"profile\" : \"300-200-100\" (optional)\n            }\n        },\n        {\n            \"op\" : \"reconnect\"\n        }\n    ]\n}\n</code></pre><p>Example request to change ne-profile:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"profile\" : \"300-200-100\"\n            }\n        }\n    ]\n}\n</code></pre><p>Example request to change partition:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"resourcePartitionInfo\" : \"Partition2\"\n            }\n        }\n    ]\n}\n</code></pre><p>Example request to resync:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"resync\"\n        }\n    ]\n}\n</code></pre><p>Example request to put NE in Maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"inMaintenance\"\n        }\n    ]\n}\n</code></pre><p>Example request to put NE out of Maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"outMaintenance\"\n        }\n    ]\n}\n</code></pre><p>Example request to enroll a pre-enrolled NE:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"enroll\"\n        }\n    ]\n}\n</code></pre><p>Example request to reconnect a NE:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"reconnect\"\n        }\n    ]\n}\n</code></pre><p>Example request to provide a reason when putting an NE under maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"inMaintenance\"\n            \"reason\" : \"example_reason\"\n        }\n    ]\n}\n</code></pre><p>Example request to provide a reason when putting an NE under maintenance:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"inMaintenance\"\n            \"attributes\" : {\n                \"associationStateQualifierReason\" : \"example_reason\"\n            }\n        }\n    ]\n}\n</code></pre>",
+        "operationId": "patchOperation",
+        "produces": ["application/json-patch+json"],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "The id of management session to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given management session.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/ManagementSessionRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AdditionalAttributesRO": {
+      "type": "object"
+    },
+    "AggregationBucketRO": {
+      "type": "object",
+      "properties": {
+        "bucketKey": {
+          "type": "string",
+          "description": "The key of the aggregation criteria"
+        },
+        "bucketValue": {
+          "type": "string",
+          "description": "The result of the aggregation"
+        },
+        "subAggregations": {
+          "description": "The aggregated data based on a requested aggregation name and criteria",
+          "$ref": "#/definitions/AggregationRO"
+        }
+      }
+    },
+    "AggregationRO": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the aggregation"
+        },
+        "buckets": {
+          "type": "array",
+          "description": "Aggregation results for different criteria",
+          "items": {
+            "$ref": "#/definitions/AggregationBucketRO"
+          }
+        }
+      }
+    },
+    "ErrorRO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code"
+        },
+        "title": {
+          "type": "string",
+          "description": "Error title"
+        },
+        "detail": {
+          "type": "string",
+          "description": "Error details"
+        },
+        "source": {
+          "description": "Error source",
+          "$ref": "#/definitions/ErrorSourceRO"
+        }
+      }
+    },
+    "ErrorSourceRO": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "type": "string",
+          "description": "JSON Pointer to the associated entity in the request document"
+        },
+        "parameter": {
+          "type": "string",
+          "description": "URI query parameter that caused the error"
+        }
+      }
+    },
+    "ErrorsRO": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "description": "A list of errors",
+          "items": {
+            "$ref": "#/definitions/ErrorRO"
+          }
+        }
+      }
+    },
+    "LinksRO": {
+      "type": "object",
+      "properties": {
+        "self": {
+          "type": "string",
+          "format": "uri",
+          "description": "A `self` member, whose value is a URL for the relationship itself (a \"relationship URL\"). This URL allows the client to directly manipulate the relationship. For example, it would allow a client to remove an `author` from an `article` without deleting the people resource itself."
+        },
+        "first": {
+          "type": "string",
+          "format": "uri",
+          "description": "The first page of data"
+        },
+        "last": {
+          "type": "string",
+          "format": "uri",
+          "description": "The last page of data"
+        },
+        "prev": {
+          "type": "string",
+          "format": "uri",
+          "description": "The previous page of data"
+        },
+        "next": {
+          "type": "string",
+          "format": "uri",
+          "description": "The next page of data"
+        },
+        "current": {
+          "type": "string",
+          "format": "uri",
+          "description": "The current page of data"
+        }
+      }
+    },
+    "ManagementSessionAttributesRO": {
+      "type": "object",
+      "properties": {
+        "displayData": {
+          "$ref": "#/definitions/ManagementSessionDisplayDataRO"
+        },
+        "ipAddress": {
+          "type": "string",
+          "description": "the manual enrollment address of the management session. An auto enrolled NE (such as RNE) has no enrollment address."
+        },
+        "typeGroup": {
+          "type": "string",
+          "description": "Resource adapter type group."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name (e.g. TID) of the Network Construct"
+        },
+        "longName": {
+          "type": "string",
+          "description": "Extended name of the Network Construct"
+        },
+        "profile": {
+          "type": "string",
+          "description": "Id of the NE-Security profile."
+        },
+        "profileName": {
+          "type": "string",
+          "description": "Name of the NE-Security profile"
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Resource Type."
+        },
+        "discoveryState": {
+          "type": "string",
+          "description": "Discovery state of the management session.\n PENDING is the state of staging.\n AUTO_DISCOVERED is the state of being auto discovered but not connected.\n VALIDATING is the state setting up a session;\n VALIDATING_FAILED, failed to setup a session;\n CONNECTING, connecting a session to NE;\n CONNECTED, session connected.\n DISCOVERING, in progress of shallow discovery;\n COMPLETED, shallow discovery completed.\n DISCOVERY_RETRY, shallow discovery failed.\n CHANGE_SESSION, in progress of change active session.\n DERENROLLING, in progress of deenrolling NE.",
+          "enum": [
+            "PENDING",
+            "AUTO_DISCOVERED",
+            "VALIDATING",
+            "VALIDATING_FAILED",
+            "CONNECTING",
+            "CONNECTED",
+            "DISCOVERING",
+            "COMPLETED",
+            "DISCOVERY_RETRY",
+            "CHANGE_SESSION",
+            "RECONNECT",
+            "CONFLICT_NAME",
+            "DEENROLLING",
+            "DISCONNECTED",
+            "FAILED_CONNECT",
+            "FAILED_DISCOVERY",
+            "POKING"
+          ]
+        },
+        "enrollmentTime": {
+          "type": "string",
+          "description": "Date when the management session is enrolled."
+        },
+        "created": {
+          "type": "string",
+          "description": "Date when the management session is created."
+        },
+        "lastResyncTime": {
+          "type": "string",
+          "description": "Date when the management session is resync last time."
+        },
+        "associationState": {
+          "type": "string",
+          "description": "Association state of the management session.",
+          "enum": ["GOA", "LOA"]
+        },
+        "associationStateQualifier": {
+          "type": "string",
+          "description": "How the associationState has been set.",
+          "enum": ["MANUAL", "SYSTEM", "NETWORK"]
+        },
+        "associationStateQualifierReason": {
+          "type": "string",
+          "description": "Reason for going into maintenance mode."
+        },
+        "associationStateLastUpdatedTime": {
+          "type": "string",
+          "description": "Date at which we last changed association state."
+        },
+        "failReason": {
+          "type": "string",
+          "description": "Failure Reason when processing this network construct."
+        },
+        "pokeCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Number of times this network construct was poked."
+        },
+        "pokeInterval": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The delay between pokes."
+        },
+        "lastPokeTime": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The last time this network construct was poked."
+        },
+        "failureUpdatedTime": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount of time it took to fail to update"
+        },
+        "managementAddresses": {
+          "type": "array",
+          "description": "public IPs addresses of the NE's shelves. The management session connects to the NE at one of the management addresses.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sessionType": {
+          "type": "string",
+          "description": "type of management session type",
+          "enum": ["gatewayNE", "remoteNE", "subtendedDevice"]
+        },
+        "onPreferredGNE": {
+          "type": "boolean",
+          "description": "indicate that the NE is connected through the preferred connection.",
+          "default": false
+        },
+        "connectionAddress": {
+          "type": "string",
+          "description": "active connection address to the NE."
+        },
+        "preferredConnectionAddress": {
+          "description": "The attributes data model of discovery management control access",
+          "$ref": "#/definitions/ManagementSessionConnectionAttributesRO"
+        },
+        "additionalIpAddresses": {
+          "type": "array",
+          "description": "additional IP addresses to the NE.",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "alternateConnectionAddresses": {
+          "type": "array",
+          "description": "alternate access IPs addresses to the NE.",
+          "items": {
+            "$ref": "#/definitions/ManagementSessionConnectionAttributesRO"
+          }
+        },
+        "connectionStates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ManagementSessionEndpointStateRO"
+          }
+        },
+        "resourcePartitionInfo": {
+          "type": "array",
+          "description": "Resource partitioning info.",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "additionalAttributes": {
+          "$ref": "#/definitions/AdditionalAttributesRO"
+        }
+      }
+    },
+    "ManagementSessionConnectionAttributesRO": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Connection address of the NE"
+        },
+        "cost": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Connection cost of the address (optional)"
+        }
+      }
+    },
+    "ManagementSessionDataRO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the NetworkConstruct resource"
+        },
+        "type": {
+          "type": "string",
+          "description": "The management session resource type",
+          "enum": ["managementSessions"]
+        },
+        "attributes": {
+          "$ref": "#/definitions/ManagementSessionAttributesRO"
+        },
+        "relationships": {
+          "description": "The relationships of a managmemnt session",
+          "$ref": "#/definitions/ManagementSessionRelationshipsRO"
+        }
+      }
+    },
+    "ManagementSessionDisplayDataRO": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "Name of the Management Session"
+        },
+        "displayState": {
+          "type": "string",
+          "description": "Discovery state of the management session",
+          "enum": [
+            "PENDING",
+            "CONNECTING",
+            "CONNECTED",
+            "FAILED",
+            "NOT_CONNECTED"
+          ]
+        },
+        "displayPreferredConnectionName": {
+          "type": "string",
+          "description": "Preferred connection name of the Management Session"
+        },
+        "displayPartitions": {
+          "type": "object",
+          "description": "Partition names of the management session"
+        },
+        "displayAlternativeConnectionIPs": {
+          "type": "object",
+          "description": "Alternative connection IPs of the management session"
+        },
+        "displayAlternativeConnectionNames": {
+          "type": "object",
+          "description": "Alternative connection names of the management session"
+        },
+        "profileName": {
+          "type": "string",
+          "description": "Name of the NE profile"
+        },
+        "shortResourceType": {
+          "type": "string",
+          "description": "Short Resource Type. If resourceType is 'Waveserver' or 'Waveserver Ai', shortResourceType is 'WS'. If resourceType is 'SubCom', shortResourceType is 'TEMS'. Otherwise, the value of resourceType and shortResourceType are the same."
+        }
+      }
+    },
+    "ManagementSessionEndpointStateRO": {
+      "type": "object",
+      "properties": {
+        "protocolType": {
+          "type": "string",
+          "description": "The type of protocol used to connect to the network construct (e.g. TL1, SNMP, CLI, etc.)"
+        },
+        "connectionState": {
+          "type": "string",
+          "description": "Connection state of the endpoint."
+        }
+      }
+    },
+    "ManagementSessionListRO": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "description": "A metadata object that contains non-standard meta information",
+          "$ref": "#/definitions/MetaDataRO"
+        },
+        "links": {
+          "description": "Links related to the resource",
+          "$ref": "#/definitions/LinksRO"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ManagementSessionDataRO"
+          }
+        }
+      }
+    },
+    "ManagementSessionPatchOperationRO": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "supported operation on management session resources",
+          "enum": [
+            "replace",
+            "enroll",
+            "reconnect",
+            "resync",
+            "useNewEnrollmentFlow",
+            "useOldEnrollmentFlow",
+            "changeToPending",
+            "inMaintenance",
+            "outMaintenance"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for putting a Management Session to inMaintenance mode."
+        },
+        "syncComponent": {
+          "type": "string",
+          "description": "type of component to be synced. Only to be used when op=resync",
+          "enum": ["ALL_COMPONENT", "INVENTORY", "ALARM"]
+        },
+        "attributes": {
+          "$ref": "#/definitions/ManagementSessionAttributesRO"
+        }
+      }
+    },
+    "ManagementSessionPatchRO": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ManagementSessionPatchOperationRO"
+          }
+        }
+      }
+    },
+    "ManagementSessionRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ManagementSessionDataRO"
+        }
+      }
+    },
+    "ManagementSessionRelationshipsRO": {
+      "type": "object",
+      "properties": {
+        "preferredGateway": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "alternativeGateways": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "extendedSessions": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        }
+      }
+    },
+    "MetaDataRO": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The total number of entities in the data"
+        },
+        "aggregations": {
+          "type": "array",
+          "description": "The aggregated data based on a requested aggregation name and criteria",
+          "items": {
+            "$ref": "#/definitions/AggregationRO"
+          }
+        }
+      }
+    },
+    "OneToManyRelationshipRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "The one-to-many relationship",
+          "items": {
+            "$ref": "#/definitions/RelationshipDataRO"
+          }
+        }
+      }
+    },
+    "OneToOneRelationshipRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "The relationship type and identifier",
+          "$ref": "#/definitions/RelationshipDataRO"
+        }
+      }
+    },
+    "RelationshipDataRO": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The relationship resource type"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the referenced resource."
+        }
+      }
+    }
+  }
+}

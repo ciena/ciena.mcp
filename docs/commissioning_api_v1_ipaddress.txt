@@ -1,0 +1,24 @@
+> COMMISSIONING_API_V1_IPADDRESS
+
+        Handle resource of type commissioning_api_v1_ipaddress
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- subnet
+        Subnet
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tid
+        tid or Target Identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

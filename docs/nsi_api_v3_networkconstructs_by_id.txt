@@ -1,0 +1,39 @@
+> NSI_API_V3_NETWORKCONSTRUCTS_BY_ID
+
+        Handle resource of type nsi_api_v3_networkconstructs_by_id
+
+OPTIONS (= is mandatory):
+
+- fields
+        (Optional) Response filter
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        identifier of Network Construct to be retrieved
+        Required with `state=['delete', 'get', 'patch']'
+        Used by `state=['delete', 'get', 'patch']'
+        [Default: (null)]
+        type: str
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: expectations, physicalLocation,
+        parentNetworkConstruct, childNetworkConstructs,
+        networkConstructDiscovered, networkConstructPlanned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: delete, get, patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

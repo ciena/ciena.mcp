@@ -1,0 +1,21 @@
+> AUDIT_CONFIGURATION
+
+        Handle resource of type audit_configuration
+
+OPTIONS (= is mandatory):
+
+- enable
+        Enable/Disable the addition of the HTTP body in the Audit Logs
+        for every API
+        request and response entering and leaving the system.
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

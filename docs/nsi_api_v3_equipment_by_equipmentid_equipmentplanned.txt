@@ -1,0 +1,43 @@
+> NSI_API_V3_EQUIPMENT_BY_EQUIPMENTID_EQUIPMENTPLANNED
+
+        Handle resource of type
+        nsi_api_v3_equipment_by_equipmentid_equipmentplanned
+
+OPTIONS (= is mandatory):
+
+- data
+        The equipment planned data
+        Validate attributes are:
+         - `attributes' (dict): The equipment planned attributes that
+        are set by REST API and used to validate the expectation
+         - `id' (str): The unique identifier for the planned equipment
+         - `relationships' (dict): The equipment planned relationships
+         - `type' (str): The equipment resource type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- equipmentId
+        The id of the Equipment to be updated
+        Required with `state=['get', 'patch', 'put']'
+        Used by `state=['get', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- included
+        Side loaded relationship resources
+        Used by `state=['put']'
+        [Default: (null)]
+        type: list
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: get, patch, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

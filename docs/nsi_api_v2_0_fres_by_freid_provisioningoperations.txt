@@ -1,0 +1,32 @@
+> NSI_API_V2_0_FRES_BY_FREID_PROVISIONINGOPERATIONS
+
+        Handle resource of type
+        nsi_api_v2_0_fres_by_freid_provisioningoperations
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict): The FreProvisioningOperation
+        attributes
+         - `id' (str): The unique identifier for the
+        FreProvisioningOperation
+         - `relationships' (dict):
+         - `type' (str): The provisioningOperation resource type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- freId
+        FRE identifier
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

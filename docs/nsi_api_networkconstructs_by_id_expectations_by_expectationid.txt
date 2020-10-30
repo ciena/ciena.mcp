@@ -1,0 +1,32 @@
+> NSI_API_NETWORKCONSTRUCTS_BY_ID_EXPECTATIONS_BY_EXPECTATIONID
+
+        Handle resource of type
+        nsi_api_networkconstructs_by_id_expectations_by_expectationid
+
+OPTIONS (= is mandatory):
+
+- expectationId
+        The id of the expectation to be updated
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- id
+        The id of the network construct to be updated
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

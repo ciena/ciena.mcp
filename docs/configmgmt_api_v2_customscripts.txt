@@ -1,0 +1,82 @@
+> CONFIGMGMT_API_V2_CUSTOMSCRIPTS
+
+        Handle resource of type configmgmt_api_v2_customscripts
+
+OPTIONS (= is mandatory):
+
+- description
+        The custom scripts by description to be retrieved.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: protocolType, typeGroup
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- protocolType
+        The custom scripts by protocol type to be retrieved.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- scriptId
+        List of customScript Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- scriptName
+        List of custom scripts names
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. A dash or negative sign before a field indicates
+        descending order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- typeGroup
+        The custom scripts by typeGroup to be retrieved.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

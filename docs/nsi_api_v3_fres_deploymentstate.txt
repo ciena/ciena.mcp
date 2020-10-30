@@ -1,0 +1,32 @@
+> NSI_API_V3_FRES_DEPLOYMENTSTATE
+
+        Handle resource of type nsi_api_v3_fres_deploymentstate
+
+OPTIONS (= is mandatory):
+
+- deploymentStateValue
+        The desired deployment state value
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.serviceIntent.id
+        The service intent Id. Mutually exclusive with freId
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- freId
+        Top-level FRE Identifier. Mutually exclusive with
+        freExpectations.serviceIntent.id
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

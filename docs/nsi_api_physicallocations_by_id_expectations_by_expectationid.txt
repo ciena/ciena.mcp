@@ -1,0 +1,28 @@
+> NSI_API_PHYSICALLOCATIONS_BY_ID_EXPECTATIONS_BY_EXPECTATIONID
+
+        Handle resource of type
+        nsi_api_physicallocations_by_id_expectations_by_expectationid
+
+OPTIONS (= is mandatory):
+
+- expectationId
+        Identifier of the expectation to retrieve
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+- id
+        Identifier of the physical location under which an expectation
+        is to be retrieved
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

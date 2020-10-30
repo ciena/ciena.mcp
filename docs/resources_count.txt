@@ -1,0 +1,39 @@
+> RESOURCES_COUNT
+
+        Handle resource of type resources_count
+
+OPTIONS (= is mandatory):
+
+- domainId
+        Identifier of the domain whose resources should be counted
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- exactTypeId
+        Identifier of the exact resource type whose resources should
+        be counted. This can only be specified by master tenant.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- limit
+        Optional parameter indicating maximum number to count. If the
+        actual number is greater than the specified limit, the result
+        will be shown as bounded.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- productId
+        Identifier of the product whose resources should be counted
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

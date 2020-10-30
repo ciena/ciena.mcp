@@ -1,0 +1,20 @@
+> CONFIGMGMT_API_V1_PROFILES_ASSOCIATIONS_BY_PROFILEID
+
+        Handle resource of type
+        configmgmt_api_v1_profiles_associations_by_profileid
+
+OPTIONS (= is mandatory):
+
+- profileId
+        The ftp profile id for which associations to be retrieved.
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

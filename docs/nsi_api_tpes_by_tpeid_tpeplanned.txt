@@ -1,0 +1,30 @@
+> NSI_API_TPES_BY_TPEID_TPEPLANNED
+
+        Handle resource of type nsi_api_tpes_by_tpeid_tpeplanned
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict): These attributes are set by REST API
+        to be used to validate the expectation.
+         - `id' (str): The unique identifier of the planned tpe
+         - `relationships' (dict):
+         - `type' (str): The tpe planned type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: get, put)[Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier
+        Required with `state=['get', 'put']'
+        Used by `state=['get', 'put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

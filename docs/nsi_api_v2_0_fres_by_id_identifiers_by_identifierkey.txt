@@ -1,0 +1,28 @@
+> NSI_API_V2_0_FRES_BY_ID_IDENTIFIERS_BY_IDENTIFIERKEY
+
+        Handle resource of type
+        nsi_api_v2_0_fres_by_id_identifiers_by_identifierkey
+
+OPTIONS (= is mandatory):
+
+- id
+        Identifier of the FRE under which to create or update the
+        identifier
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- identifierKey
+        Key of the identifier to create or update
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

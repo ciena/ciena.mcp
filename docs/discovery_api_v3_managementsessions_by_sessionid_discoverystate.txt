@@ -1,0 +1,32 @@
+> DISCOVERY_API_V3_MANAGEMENTSESSIONS_BY_SESSIONID_DISCOVERYSTATE
+
+        Handle resource of type discovery_api_v3_managementsessions_by
+        _sessionid_discoverystate
+
+OPTIONS (= is mandatory):
+
+- body
+        A string value of the discoveryState.  Valid values
+        are:<table><tr><td>CONNECTING</td><td> - this will trigger the
+        enrollment process, if the management has not been enrolled
+        yet</td></tr><tr><td>DISCOVERING</td><td> - triggers the
+        resynchronization/discovery of the management
+        session</td></tr></table>Note: Surround values with quotes
+        within parameter body
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- sessionId
+        The id of management session to be retrieved
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

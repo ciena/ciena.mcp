@@ -1,0 +1,46 @@
+> CONFIGMGMT_API_V1_CUSTOMSCRIPTS
+
+        Handle resource of type configmgmt_api_v1_customscripts
+
+OPTIONS (= is mandatory):
+
+- description
+        description of custom script
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- file
+        The Input stream of the custom script file to be uploaded.
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: file
+
+- protocolType
+        Protocol type of the custom script file
+        Required with `state=['get', 'post']'
+        Used by `state=['get', 'post']'
+        (Choices: cli, netconf, tl1)[Default: (null)]
+        type: str
+
+- scriptName
+        Name of the custom script
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- typeGroup
+        TypeGroup for which this custom script file is uploaded
+        Required with `state=['get', 'post']'
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

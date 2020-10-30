@@ -1,0 +1,17 @@
+> CONFIGMGMT_API_V1_UPGRADE_STOP
+
+        Handle resource of type configmgmt_api_v1_upgrade_stop
+
+OPTIONS (= is mandatory):
+
+- networkConstructNames
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

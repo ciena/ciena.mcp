@@ -1,0 +1,123 @@
+> RESOURCES_BY_RESOURCEID_OPERATIONS_BY_OPERATIONID
+
+        Handle resource of type
+        resources_by_resourceid_operations_by_operationid
+
+OPTIONS (= is mandatory):
+
+- createdAt
+        When the operation was created
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- description
+        Description of the operation
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- executionGroup
+        Execution group of the operation
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Unique identifier for the operation
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- inputs
+        Inputs of the operation
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: dict
+
+- interface
+        ID of the interface
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- operationId
+        Identifier of the operation to be queried
+        Required with `state=['get', 'head', 'patch', 'put']'
+        Used by `state=['get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- outputs
+        Outputs of the operation
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: dict
+
+- progress
+        Describes any progress towards completion that the operation
+        has made
+        Validate attributes are:
+         - `arr' (list):
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: dict
+
+- providerData
+        Provider custom data
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: dict
+
+- reason
+        Reason for the operation state
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- resourceId
+        Identifier of the resource whose operations will be queried
+        Required with `state=['get', 'head', 'patch', 'put']'
+        Used by `state=['get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- resourceStateConstraints
+        Constraints of the resource state for this operation to
+        execute
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: dict
+
+- revision
+        Strictly increasing revision number, incremented every update
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: int
+
+- state
+        (Choices: get, head, patch, put)[Default: (null)]
+        type: str
+
+- title
+        Title of the operation
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- updatedAt
+        When the operation was last updated
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

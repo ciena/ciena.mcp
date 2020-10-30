@@ -1,0 +1,5045 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Retrieve, plan and modify network constructs resources",
+    "version": "1.0",
+    "title": "Network elements (constructs)"
+  },
+  "tags": [
+    {
+      "name": "000 - nsiapinetworkConstructs",
+      "description": "Retrieve, plan, and manage the network construct resources<p/>&nbsp;&nbsp;&nbsp;&nbsp;This non-versioned API is meant for use by an end-user as a pass-through to the latest version. WARNING - backwards compatibility is not guaranteed for non-versioned APIs."
+    },
+    {
+      "name": "994 - nsiapiv6networkConstructs",
+      "description": "Retrieve, plan, and manage the network construct resources (version 6)"
+    },
+    {
+      "name": "995 - nsiapiv5networkConstructs",
+      "description": "Retrieve, plan, and manage the network construct resources (version 5)"
+    },
+    {
+      "name": "996 - nsiapiv4networkConstructs",
+      "description": "Retrieve, plan, and manage the network construct resources (version 4)"
+    },
+    {
+      "name": "997 - nsiapiv3networkConstructs",
+      "description": "Retrieve, plan, and manage the network construct resources (version 3)"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/nsi/api/networkConstructs": {
+      "get": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Get list of discovered Network Construct(s) satisfying the query parameters",
+        "description": "<p>LATEST VERSION: V6\nDiscovered Network Constructs returned as a JSON list of Network Construct objects. \nNote: When querying using identifiers, the supported syntax is as follows: \n   ?identifierKey=key1,key2,...&identifierValue=value1,value2,... \nFor instance, \n   ?identifierKey=subnetName&identifierValue=PV0438A---PV0428D---SUBNET<p>Only one of the following parameters can be specified:<ul><li>name<li>ipAddress<li>identifierKey + identifierValue<li>sessionId<li>networkConstructExpectations.equipmentIntent.id<li>networkConstructExpectations.serviceIntent.id<li>physicalLocationId<li>networkConstructType<li>concrete</ul>",
+        "operationId": "getNetworkConstructs",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of device name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of Network Construct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "query",
+            "description": "The identifier key list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "identifierValue",
+            "in": "query",
+            "description": "The identifier value list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "description": "(Optional) Management Session Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.equipmentIntent.id",
+            "in": "query",
+            "description": "(Optional) The equipment intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.serviceIntent.id",
+            "in": "query",
+            "description": "(Optional) The service intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "query",
+            "description": "(Optional) Physical location id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructType",
+            "in": "query",
+            "description": "(Optional) Network Construct type. The allowed values are: networkElement, shelf, osrpNode, manual, branchingUnit, submarineRepeater",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "concrete",
+            "in": "query",
+            "description": "(Optional) Id of the concrete networkConstruct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page. The default is 30",
+            "required": false,
+            "type": "string",
+            "default": "30"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Network Constructs",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructListRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve all network elements"
+          },
+          "500": {
+            "description": "Retrieval of network constructs failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Creates or updates network construct with only userData and/or networkConstructType",
+        "description": "Upon success, code 201 is returned and the output consists of JSON objects representing the Network Construct.<p>All the attributes other than identifiers, userData and networkConstructType will be ignored.</p><p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n    \"data\" : {\n        \"type\": \"networkConstructs\",\n        \"attributes\": {\n            \"identifiers\": [\n                {\n                    \"siteName\": \"clli1\",\n                    \"projectName\": \"projectName1\"\n                },\n                {\n                    \"projectName\": \"projectName1\"\n                }\n            ]\n        }\n    }\n}\n</code></pre><p>LATEST VERSION: V5<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postNetworkConstruct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an NC provided with userData and physical location",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct user data has been replaced on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "201": {
+            "description": "Network construct has been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}": {
+      "get": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Retrieves a Network Construct given its corresponding identifier.",
+        "description": "<p>LATEST VERSION: V4<p>Network Construct returned as a JSON SingleManagedElement object",
+        "operationId": "getNetworkConstruct",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identifier of Network Construct to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, childNetworkConstructs, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Retrieval failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Deletes a specific network construct",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "deleteNCById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Network Construct to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "204": {
+            "description": "Deleted NC successfully."
+          },
+          "400": {
+            "description": "The specified NC either has enrolled or has expectations.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to delete specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Failed to delete NC.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Performs update operations on a network construct resource",
+        "description": "<p>LATEST VERSION: V3<p>Upon request accepted, code 202 is returned and the output consists of JSON objects representing current network construct resource. The \"replace\" operation is used to replace the entire attribute with the new value provided. The deprecated \"update\" operation will update or add to the existing attribute. The \"delete\" operation will delete the entire attribute, or delete specific keys if a list is provided. The \"add\" operation will add values or update key-value pairs  to the existing attribute.<p>Example requests:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n               \"userData\" : {\n                   \"userDataKey\" : \"userDataValue\"\n               }\n            }\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"add\",\n            \"attributes\" : {\n               \"userData\" : {\n                   \"userDataKey\" : \"userDataValue\"\n               }\n            }\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"delete\",\n            \"attribute\" : \"userData\"\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"delete\",\n            \"attribute\" : \"userData\",\n            \"keys\" : [ \"key1\", \"key2\" ]\n        }\n    ]\n}\n</code></pre>",
+        "operationId": "patchOperation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the network construct to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given network construct.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/expectations": {
+      "post": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Create an NC Expectation given the nc id",
+        "description": "<p>LATEST VERSION: V3<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"id\":\"4312c715-32cc-4d63-8e26-9b79db379e4b::NC_EXP\",\n  \"type\":\"networkConstructExpectations\",\n  \"relationships\": {\n    \"equipmentIntent\": {\n      \"data\": { \n        \"type\": \"equipmentIntents\", \n        \"id\": \"4312c715-32cc-4d63-8e26-9b79db379e4b::EQP_INT\" \n      }\n    }\n  }\n}</code></pre> +<p>Network construct expectations support an auto-delete on de-enroll policy. To apply the policy, add it to the network construct expectation attributes. See example below:</p><pre style='font-size: smaller'><code class='json'>{\n  ...\n  \"attributes\": {\n    \"policies\": [\n      {\n        \"type\": \"lifecycle\",\n        \"policy\": \"autoDeleteOnDeEnroll\"\n      }\n    ]\n  }\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postNCExpectations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which to create the expectation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an NC expectation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructExpectationDataRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Network construct expectations have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "The specified NC or expectation cannot be accessed by the user because partition conflicts",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/expectations/{expId}": {
+      "put": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Create or update an NC Expectation given the nc id",
+        "description": "<p>LATEST VERSION: V4<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"id\":\"4312c715-32cc-4d63-8e26-9b79db379e4b::NC_EXP\",\n  \"type\":\"networkConstructExpectations\",\n  \"relationships\": {\n    \"equipmentIntent\": {\n      \"data\": { \n        \"type\": \"equipmentIntents\", \n        \"id\": \"4312c715-32cc-4d63-8e26-9b79db379e4b::EQP_INT\" \n      }\n    }\n  }\n}</code></pre> +<p>Network construct expectations support an auto-delete on de-enroll policy. To apply the policy, add it to the network construct expectation attributes. See example below:</p><pre style='font-size: smaller'><code class='json'>{\n  ...\n  \"attributes\": {\n    \"policies\": [\n      {\n        \"type\": \"lifecycle\",\n        \"policy\": \"autoDeleteOnDeEnroll\"\n      }\n    ]\n  }\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "putNCExpectations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which to create the expectation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expId",
+            "in": "path",
+            "description": "Identifier of the Network Construct expectation to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an NC expectation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructExpectationDataRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Network construct expectation has been created or updated",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "The specified NC or expectation cannot be accessed by the user because partition conflicts",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/expectations/{expectationId}": {
+      "patch": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Performs update operations on a network construct expectation",
+        "description": "<p>LATEST VERSION: V3<p>Example requests:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"ipCommunicationDetails\": {\n                    \"ipv4Infrastructure\": {\n                        \"dhcpRelayAgent\": {\n                            \"enable\" : true,\n                            \"serverIp\": \"19.117.63.126\"\n                        },\n                        \"dhcpclient\": true,\n                        \"stackEnabled\": true,\n                        \"gateway\": {\n                            \"overRide\": true,\n                            \"access\": \"accessString\",\n                            \"config\": \"configString\"\n                        },\n                        \"ospfRouter\": {\n                            \"routerId\": \"19.117.63.126\",\n                            \"areaBorderRouter\": \"RFC2328\",\n                            \"areaSystemBorderRouter\": \"OFF\",\n                            \"area\": \"19.117.63.126\"\n                        }\n                    },\n                    \"ipv6Infrastructure\": {\n                        \"dhcpRelayAgent\": {\n                            \"enable\" : true,\n                            \"serverIp\": \"19.117.63.126\"\n                        },\n                        \"dhcpclient\": true,\n                        \"stackEnabled\": true,\n                        \"gateway\": {\n                            \"overRide\": true,\n                            \"access\": \"accessString\",\n                            \"config\": \"configString\"\n                        },\n                        \"ospfRouter\": {\n                            \"routerId\": \"19.117.63.126\",\n                            \"areaBorderRouter\": \"RFC2328\",\n                            \"area\": \"19.117.63.126\"\n                        }\n                    },\n                    \"iisisInfrastructure\": {\n                        \"l1priority\": 15,\n                        \"l2priority\": 17,\n                        \"routerLevel\": \"19.117.63.126\",\n                        \"routerlevelsummarisition\": \"routerlevelsummarisition\"\n                    },\n                    \"interfaceDetails\": [\n                        {\n                            \"name\": \"name\",\n                            \"ipv4\": {\n                                \"ip\": \"19.117.63.126\",\n                                \"defaultGateway\" : \"19.117.63.126\",\n                                \"subnetMask\": \"19.117.63.126\",\n                                \"dhcpRelayAgent\": true,\n                                \"ospfcircuit\": [\n                                    {\n                                        \"networkArea\": \"19.117.63.126\",\n                                        \"cost\": 200,\n                                        \"carrier\": \"carrier\",\n                                        \"identifier\" : \"ID\"\n                                    }\n                                ]\n                            },\n                            \"ipv6\" : [\n                                {\n                                    \"ip\": \"19.117.63.126\",\n                                    \"defaultGateway\": \"19.117.63.126\",\n                                    \"prefix\": \"19.117.63.126\",\n                                    \"ospfcircuit\": [\n                                        {\n                                            \"networkArea\": \"19.117.63.126\",\n                                            \"cost\": 300,\n                                            \"carrier\": \"carrierv6\",\n                                            \"identifier\": \"identifier\"\n                                        }\n                                    ]\n                                }\n                            ],\n                            \"iisis\": {\n                                \"circuit\": true\n                            }\n                        }\n                    ]\n                }\n            }\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"delete\",\n            \"attribute\" : \"ipCommunicationDetails\"\n        }\n    ]\n}\n</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "patchExpectation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the network construct to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expectationId",
+            "in": "path",
+            "description": "The id of the expectation to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given network construct.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/expectations/{networkConstructExpectationId}": {
+      "get": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Retrieve an NC Expectation given the nc id and expectation id",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "getNCExpectationById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which an expectation is to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved NC Expectation successfully.",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructExpectationRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified NC Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Delete an NC Expectation given the nc id and expectation id",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "deleteNCExpectationById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose expectation is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted NC Expectation successfully."
+          },
+          "400": {
+            "description": "Invalid value specified for Attribute {attribute_name} value {attribute_value}",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete NC Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/expectations/{networkConstructExpectationId}/realize": {
+      "post": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Realize an NC Expectation given the ncId and expectationId",
+        "description": "",
+        "operationId": "realizeNetworkConstruct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which the expectation is to be realized",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to realize",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Realized NC Expectation successfully."
+          },
+          "204": {
+            "description": "Expectation was not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified NC Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/expectations/{networkConstructExpectationId}/{attributeName}": {
+      "put": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Update to an existing NC Expectation",
+        "description": "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updateNCExpectationAttributeValue",
+        "consumes": ["text/plain"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose expectation attribute is to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation whose attribute is to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "attributeName",
+            "in": "path",
+            "description": "Name of attribute to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The desired new value",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct expectation has been update on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "The specified NC or expectation cannot be accessed by the user because partition conflicts",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/identifiers": {
+      "put": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Creates or updates a REST identifier on a Network Construct",
+        "description": "<p>LATEST VERSION: V4<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updateNCIdentifier",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NC id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "identifierRO",
+            "description": "The NC identifier JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the NC identifier for a given NC",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "201": {
+            "description": "Successfully created a new NC identifier for the given NC",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Deletes a REST identifier on a Network Construct",
+        "description": "<p>LATEST VERSION: V4",
+        "operationId": "deleteNCIdentifier",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NC id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "identifierRO",
+            "description": "The identifier JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the NC identifier"
+          },
+          "400": {
+            "description": "Bad parameters were passed, please check the identifier object for errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist or their was error processing information",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/identifiers/{identifierKey}": {
+      "put": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Creates or updates an NC UserData Identifier to a given network construct",
+        "description": "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updateNCIdentifiersByKey",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which to create or update the identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "identifier",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct userData identifier have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Delete an userData Identifier from a  given network construct",
+        "description": "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "deleteNCIdentifiers",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose identifier is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "204": {
+            "description": "Deleted network construct userData - identifier successfully."
+          },
+          "404": {
+            "description": "The specified network construct or userData - identifier does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete network construct userData - identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/networkConstructPlanned": {
+      "get": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Retrieves a Network Construct planned for the given identifier",
+        "description": "Network Construct planned returned as a JSON SingleManagedElement object",
+        "operationId": "getNetworkConstructPlan",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identifier of Network Construct to be retrieved",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPlannedRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve specified Network Construct",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Performs L2 Nole Role assignment operation on a network construct resource",
+        "description": "Upon request accepted, code 202 is returned and the output consists of JSON objects representing current network construct resource. The \"replace\" operation is used to replace the L2 Node Role and Routing capabilities <p>Example requests:</p> <pre style='font-size: smaller'><code class='json'> {\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n               \"L2Data\" : [{\n                   \"shelf\" : -1.0,\n                   \"eqptGrp\" : -1.0,\n                   \"l2NodeRole\" : AN,\n                   \"l2NodeRoutingCapabilities\" : {\n                   \"properties\" : {\n                       \"isBGPEnabled\" : true,\n                       \"isMPLSEnabled\" : true,\n                       \"isQiQEnabled\" : true,\n                       \"isRSVPTEEnabled\" : false,\n                   }\n                   }\n               }]\n            }\n            \"relationships\" : {\n                    \"manualSRLG : { }\n            }\n        }\n    ]\n}\n</code></pre>",
+        "operationId": "patchPlannedNC",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the network construct to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given network construct.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/networkConstructs/{id}/physicalLocation/{physicalLocationId}": {
+      "put": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Updates an NC physical location",
+        "description": "<p>LATEST VERSION: V4<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updateNCPhysicalLocation",
+        "consumes": ["text/plain"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Network Construct under which to create or update the physical location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "path",
+            "description": "Id of physical location to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The desired physical location value",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct physical location have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to update specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": ["000 - nsiapinetworkConstructs"],
+        "summary": "Delete a physical location from a given network construct",
+        "description": "<p>LATEST VERSION: V4",
+        "operationId": "deletePhysicalLocationFromNC",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose physical location is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "path",
+            "description": "physicalLocationId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted network construct physical location successfully."
+          },
+          "403": {
+            "description": "Forbidden to update specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified network construct or physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/networkConstructs": {
+      "get": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Get list of discovered Network Construct(s) satisfying the query parameters",
+        "description": "Discovered Network Constructs returned as a JSON list of Network Construct objects. \nNote: When querying using identifiers, the supported syntax is as follows: \n   ?identifiers[field1+field2+...]=value1+value2+... \nFor instance, \n   ?identifiers[clli+projectId]=ABC123+XYZ ",
+        "operationId": "getNetworkConstructs",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of device name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of Network Construct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasName",
+            "in": "query",
+            "description": "(Optional) Key that holds the subNet name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "aliasValue",
+            "in": "query",
+            "description": "(Optional) List of subNet name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "description": "(Optional) Management Session Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.equipmentIntent.id",
+            "in": "query",
+            "description": "(Optional) The equipment intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.serviceIntent.id",
+            "in": "query",
+            "description": "(Optional) The service intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "expectations",
+              "physicalLocation",
+              "parentNetworkConstruct",
+              "networkConstructDiscovered",
+              "networkConstructPlanned"
+            ]
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "query",
+            "description": "(Optional) Physical location id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructType",
+            "in": "query",
+            "description": "(Optional) Network Construct type",
+            "required": false,
+            "type": "string",
+            "enum": ["networkElement", "shelf", "osrpNode"]
+          },
+          {
+            "name": "concrete",
+            "in": "query",
+            "description": "(Optional) Id of the concrete networkConstruct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "description": "(Optional) The searchable text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchFields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to search on. If none are specified, all supported fields are implied. Fields require full path (e.g. data.attributes.name). If provided, must also provide searchText parameter",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Network Constructs",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructListRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve all network elements"
+          },
+          "500": {
+            "description": "Retrieval of network constructs failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/nsi/api/v3/networkConstructs/{id}": {
+      "get": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Retrieves a Network Construct given its corresponding identifier",
+        "description": "Network Construct returned as a JSON SingleManagedElement object",
+        "operationId": "getNetworkConstruct",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identifier of Network Construct to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) Response filter",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, childNetworkConstructs, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Deletes a specific network construct",
+        "description": "",
+        "operationId": "deleteNCById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Network Construct to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "204": {
+            "description": "Deleted NC successfully."
+          },
+          "400": {
+            "description": "The specified NC either has enrolled or has expectations.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to delete specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Failed to delete NC.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Performs update operations on a network construct resource",
+        "description": "Upon request accepted, code 202 is returned and the output consists of JSON objects representing current network construct resource. The \"replace\" operation is used to replace the entire attribute with the new value provided. The deprecated \"update\" operation will update or add to the existing attribute. The \"delete\" operation will delete the entire attribute, or delete specific keys if a list is provided. The \"add\" operation will add values or update key-value pairs  to the existing attribute.<p>Example requests:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n               \"userData\" : {\n                   \"userDataKey\" : \"userDataValue\"\n               }\n            }\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"add\",\n            \"attributes\" : {\n               \"userData\" : {\n                   \"userDataKey\" : \"userDataValue\"\n               }\n            }\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"delete\",\n            \"attribute\" : \"userData\"\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"delete\",\n            \"attribute\" : \"userData\",\n            \"keys\" : [ \"key1\", \"key2\" ]\n        }\n    ]\n}\n</code></pre>",
+        "operationId": "patchOperation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the network construct to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given network construct.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/networkConstructs/{id}/expectations": {
+      "post": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Create an NC Expectation given the nc id",
+        "description": "<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"id\":\"4312c715-32cc-4d63-8e26-9b79db379e4b::NC_EXP\",\n  \"type\":\"networkConstructExpectations\",\n  \"relationships\": {\n    \"equipmentIntent\": {\n      \"data\": { \n        \"type\": \"equipmentIntents\", \n        \"id\": \"4312c715-32cc-4d63-8e26-9b79db379e4b::EQP_INT\" \n      }\n    }\n  }\n}</code></pre><p>Network construct expectations support an auto-delete on de-enroll policy. To apply the policy, add it to the network construct expectation attributes. See example below:</p><pre style='font-size: smaller'><code class='json'>{\n  ...\n  \"attributes\": {\n    \"policies\": [\n      {\n        \"type\": \"lifecycle\",\n        \"policy\": \"autoDeleteOnDeEnroll\"\n      }\n    ]\n  }\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postNCExpectations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which to create the expectation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an NC expectation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructExpectationDataRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Network construct expectations have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified NC",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/networkConstructs/{id}/expectations/{expectationId}": {
+      "patch": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Performs update operations on a network construct expectation",
+        "description": "<p>Example requests:</p><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n                \"ipCommunicationDetails\": {\n                    \"ipv4Infrastructure\": {\n                        \"dhcpRelayAgent\": {\n                            \"enable\" : true,\n                            \"serverIp\": \"19.117.63.126\"\n                        },\n                        \"dhcpclient\": true,\n                        \"stackEnabled\": true,\n                        \"gateway\": {\n                            \"overRide\": true,\n                            \"access\": \"accessString\",\n                            \"config\": \"configString\"\n                        },\n                        \"ospfRouter\": {\n                            \"routerId\": \"19.117.63.126\",\n                            \"areaBorderRouter\": \"RFC2328\",\n                            \"areaSystemBorderRouter\": \"OFF\",\n                            \"area\": \"19.117.63.126\"\n                        }\n                    },\n                    \"ipv6Infrastructure\": {\n                        \"dhcpRelayAgent\": {\n                            \"enable\" : true,\n                            \"serverIp\": \"19.117.63.126\"\n                        },\n                        \"dhcpclient\": true,\n                        \"stackEnabled\": true,\n                        \"gateway\": {\n                            \"overRide\": true,\n                            \"access\": \"accessString\",\n                            \"config\": \"configString\"\n                        },\n                        \"ospfRouter\": {\n                            \"routerId\": \"19.117.63.126\",\n                            \"areaBorderRouter\": \"RFC2328\",\n                            \"area\": \"19.117.63.126\"\n                        }\n                    },\n                    \"iisisInfrastructure\": {\n                        \"l1priority\": 15,\n                        \"l2priority\": 17,\n                        \"routerLevel\": \"19.117.63.126\",\n                        \"routerlevelsummarisition\": \"routerlevelsummarisition\"\n                    },\n                    \"interfaceDetails\": [\n                        {\n                            \"name\": \"name\",\n                            \"ipv4\": {\n                                \"ip\": \"19.117.63.126\",\n                                \"defaultGateway\" : \"19.117.63.126\",\n                                \"subnetMask\": \"19.117.63.126\",\n                                \"dhcpRelayAgent\": true,\n                                \"ospfcircuit\": [\n                                    {\n                                        \"networkArea\": \"19.117.63.126\",\n                                        \"cost\": 200,\n                                        \"carrier\": \"carrier\",\n                                        \"identifier\" : \"ID\"\n                                    }\n                                ]\n                            },\n                            \"ipv6\" : [\n                                {\n                                    \"ip\": \"19.117.63.126\",\n                                    \"defaultGateway\": \"19.117.63.126\",\n                                    \"prefix\": \"19.117.63.126\",\n                                    \"ospfcircuit\": [\n                                        {\n                                            \"networkArea\": \"19.117.63.126\",\n                                            \"cost\": 300,\n                                            \"carrier\": \"carrierv6\",\n                                            \"identifier\": \"identifier\"\n                                        }\n                                    ]\n                                }\n                            ],\n                            \"iisis\": {\n                                \"circuit\": true\n                            }\n                        }\n                    ]\n                }\n            }\n        }\n    ]\n}\n</code></pre><pre style='font-size: smaller'><code class='json'>{\n    \"operations\" : [\n        {\n            \"op\" : \"delete\",\n            \"attribute\" : \"ipCommunicationDetails\"\n        }\n    ]\n}\n</code></pre>",
+        "operationId": "patchExpectation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the network construct to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expectationId",
+            "in": "path",
+            "description": "The id of the expectation to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given network construct.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/networkConstructs/{id}/expectations/{networkConstructExpectationId}": {
+      "get": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Retrieve an NC Expectation given the nc id and expectation id",
+        "description": "",
+        "operationId": "getNCExpectationById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which an expectation is to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved NC Expectation successfully.",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructExpectationRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified NC Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Delete an NC Expectation given the nc id and expectation id",
+        "description": "",
+        "operationId": "deleteNCExpectationById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose expectation is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted NC Expectation successfully."
+          },
+          "400": {
+            "description": "Invalid value specified for Attribute {attribute_name} value {attribute_value}",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete NC Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/networkConstructs/{id}/expectations/{networkConstructExpectationId}/{attributeName}": {
+      "put": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Update to an existing NC Expectation",
+        "description": "",
+        "operationId": "updateNCExpectationAttributeValue",
+        "consumes": ["text/plain"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose expectation attribute is to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation whose attribute is to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "attributeName",
+            "in": "path",
+            "description": "Name of attribute to update, allowable values: name, ipAddress and shelfType ",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The desired new value",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct expectation has been update on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified NC",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/networkConstructs/{id}/identifiers/{identifierKey}": {
+      "put": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Creates or updates an NC UserData Identifier to a given network construct",
+        "description": "",
+        "operationId": "updateNCIdentifiers",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which to create or update the identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "identifier",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct userData identifier have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Delete an userData Identifier from a  given network construct",
+        "description": "",
+        "operationId": "deleteNCIdentifiers",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose identifier is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted network construct userData - identifier successfully."
+          },
+          "404": {
+            "description": "The specified network construct or userData - identifier does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete network construct userData - identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/networkConstructs/{id}/networkConstructPlanned": {
+      "get": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Retrieves a Network Construct planned for the given identifier",
+        "description": "Network Construct planned returned as a JSON SingleManagedElement object",
+        "operationId": "getNetworkConstructPlan",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identifier of Network Construct to be retrieved",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPlannedRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to retrieve specified Network Construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Retrieval failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["997 - nsiapiv3networkConstructs"],
+        "summary": "Performs L2 Node Role assignment operation and updates the Physical location on a network construct resource",
+        "description": "Upon request accepted, code 202 is returned and the output consists of JSON objects representing current network construct resource. The \"replace\" operation is used to replace the L2 Node Role and Routing capabilities <p>Example requests:</p> <pre style='font-size: smaller'><code class='json'> {\n    \"operations\" : [\n        {\n            \"op\" : \"replace\",\n            \"attributes\" : {\n               \"L2Data\" : [{\n                   \"shelf\" : -1.0,\n                   \"eqptGrp\" : -1.0,\n                   \"l2NodeRole\" : AN,\n                   \"l2NodeRoutingCapabilities\" : {\n                   \"properties\" : {\n                       \"isBGPEnabled\" : true,\n                       \"isMPLSEnabled\" : true,\n                       \"isQiQEnabled\" : true,\n                       \"isRSVPTEEnabled\" : false,\n                   }\n                   }\n               }]\n            }\n            \"relationships\" : {\n                    \"manualSRLG : { },\n                    \"physicalLocation : {                        \"data\" : {\n                         \"type\" : physicalLocation,\n                         \"id\" : pl1\n                         }\n                       }\n            }\n        }\n    ]\n}\n</code></pre>",
+        "operationId": "patchPlannedNC",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the network construct to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A patch request to the given network construct.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructPatchRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "202": {
+            "description": "The request is accepted and is being handled on backend server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Insufficient permission",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v4/networkConstructs": {
+      "get": {
+        "tags": ["996 - nsiapiv4networkConstructs"],
+        "summary": "Get list of discovered Network Construct(s) satisfying the query parameters",
+        "description": "Discovered Network Constructs returned as a JSON list of Network Construct objects. \nNote: When querying using identifiers, the supported syntax is as follows: \n   ?identifierKey=key1,key2,...&identifierValue=value1,value2,... \nFor instance, \n   ?identifierKey=subnetName&identifierValue=PV0438A---PV0428D---SUBNET",
+        "operationId": "getNetworkConstructs",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct Ids",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchText",
+            "in": "query",
+            "description": "(Optional) The searchable text",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchFields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to search on. If none are specified, all supported fields are implied. Fields require full path (e.g. data.attributes.name)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourceState",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct planning states. By default, if no value for this parameter is specified, root and unknown states are filtered out. The allowed values are: root, planned, discovered, plannedAndDiscovered, unknown",
+            "required": false,
+            "type": "string",
+            "default": "planned,discovered,plannedAndDiscovered"
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "description": "(Optional) List of Management Session Ids",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.equipmentIntent.id",
+            "in": "query",
+            "description": "(Optional) The equipment intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.serviceIntent.id",
+            "in": "query",
+            "description": "(Optional) The service intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "query",
+            "description": "(Optional) Physical location id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of device name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "(Optional) List of device displayName values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "query",
+            "description": "The identifier key list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "identifierValue",
+            "in": "query",
+            "description": "The identifier value list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "concrete",
+            "in": "query",
+            "description": "(Optional) Id of the concrete networkConstruct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "modelType",
+            "in": "query",
+            "description": "(Optional) modelType parameter used to filter results",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of Network Construct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructType",
+            "in": "query",
+            "description": "(Optional) List of Network Construct types. The allowed values are: networkElement, shelf, osrpNode",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct resourceTypes",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "associationState",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct associationStates. The allowed values are: GOA, LOA",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "syncState",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct syncStates. The allowed values are: notSynchronized, synchronizing, synchronized, failed, aborted, deleting, deleteFailed",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "softwareVersion",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct software versions",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "displaySyncState",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct syncStates. The allowed values are: planned, notSynchronized, synchronizing, synchronized, failed, pending, deleting",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "subnetName",
+            "in": "query",
+            "description": "(Optional) The subnet name list",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "macAddress",
+            "in": "query",
+            "description": "(Optional) macAddress parameter used to filter results",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "typeGroup",
+            "in": "query",
+            "description": "(Optional) List of networkConstruct typeGroups",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "slteType",
+            "in": "query",
+            "description": "(Optional)  slteType parameter used to filter results. The allowed values are: SLTE",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourcePartitionInfo",
+            "in": "query",
+            "description": "(Optional) List of resourcePartitionInfo",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "(Optional) Allow filtering on NC tags. This parameter accepts a list of comma separated strings",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields by which to sort the result. Fields require full path (i.e. data.attributes.field). A dash or negative sign before a field indicates descending order; by default ascending order is used",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "(Optional) Offset for current index of data to return",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          },
+          {
+            "name": "metaDataFields",
+            "in": "query",
+            "description": "(Optional) List of meta data to be included. The allowed values are: resourceType, associationState, syncState, networkConstructType, resourceState, softwareVersion, displaySyncState, tags",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Network Constructs",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructListRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve all network elements"
+          },
+          "500": {
+            "description": "Retrieval of network constructs failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/nsi/api/v4/networkConstructs/{id}": {
+      "get": {
+        "tags": ["996 - nsiapiv4networkConstructs"],
+        "summary": "Retrieves a Network Construct given its corresponding identifier",
+        "description": "Network Construct returned as a JSON SingleManagedElement object",
+        "operationId": "getNetworkConstruct",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "identifier of Network Construct to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) Response filter",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, childNetworkConstructs, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "403": {
+            "description": "Forbidden to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve specified Managed Network Construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Retrieval failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v4/networkConstructs/{id}/expectations/{expId}": {
+      "put": {
+        "tags": ["996 - nsiapiv4networkConstructs"],
+        "summary": "Create or update an NC Expectation given the nc id",
+        "description": "<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"id\":\"4312c715-32cc-4d63-8e26-9b79db379e4b::NC_EXP\",\n  \"type\":\"networkConstructExpectations\",\n  \"relationships\": {\n    \"equipmentIntent\": {\n      \"data\": { \n        \"type\": \"equipmentIntents\", \n        \"id\": \"4312c715-32cc-4d63-8e26-9b79db379e4b::EQP_INT\" \n      }\n    }\n  }\n}</code></pre><p>Network construct expectations support an auto-delete on de-enroll policy. To apply the policy, add it to the network construct expectation attributes. See example below:</p><pre style='font-size: smaller'><code class='json'>{\n  ...\n  \"attributes\": {\n    \"policies\": [\n      {\n        \"type\": \"lifecycle\",\n        \"policy\": \"autoDeleteOnDeEnroll\"\n      }\n    ]\n  }\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "putNCExpectations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which to create the expectation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expId",
+            "in": "path",
+            "description": "Identifier of the Network Construct expectation to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an NC expectation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructExpectationDataRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Network construct expectation has been created or updated",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v4/networkConstructs/{id}/identifiers": {
+      "put": {
+        "tags": ["996 - nsiapiv4networkConstructs"],
+        "summary": "Puts or updates a REST identifier on a Network Construct",
+        "description": "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updateNCIdentifier",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NC id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "identifierRO",
+            "description": "The NC identifier JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the NC identifier for a given NC",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "201": {
+            "description": "Successfully created a new NC identifier for the given NC",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["996 - nsiapiv4networkConstructs"],
+        "summary": "Deletes a REST identifier on a Network Construct",
+        "description": "",
+        "operationId": "deleteNCIdentifier",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NC id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "identifierRO",
+            "description": "The identifier JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unsuccessfully deleted the NC identifier"
+          },
+          "204": {
+            "description": "Successfully deleted the NC identifier"
+          },
+          "400": {
+            "description": "Bad parameters were passed, please check the identifier object for errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to access specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist or their was error processing information",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v4/networkConstructs/{id}/physicalLocation/{physicalLocationId}": {
+      "put": {
+        "tags": ["996 - nsiapiv4networkConstructs"],
+        "summary": "Updates an NC physical location",
+        "description": "",
+        "operationId": "updateNCPhysicalLocation",
+        "consumes": ["text/plain"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Network Construct under which to create or update the physical location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "path",
+            "description": "Id of physical location to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The desired physical location value",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct physical location have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "403": {
+            "description": "Forbidden to update specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified network construct does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": ["996 - nsiapiv4networkConstructs"],
+        "summary": "Delete a physical location from a  given network construct",
+        "description": "",
+        "operationId": "deletePhysicalLocationFromNC",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct whose physical location is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "path",
+            "description": "physicalLocationId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted network construct physical location successfully."
+          },
+          "403": {
+            "description": "Forbidden to update specified network construct",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "The specified network construct or physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v5/networkConstructs": {
+      "get": {
+        "tags": ["995 - nsiapiv5networkConstructs"],
+        "summary": "Get list of discovered Network Construct(s) satisfying the query parameters",
+        "description": "Discovered Network Constructs returned as a JSON list of Network Construct objects. \nNote: When querying using identifiers, the supported syntax is as follows: \n   ?identifierKey=key1,key2,...&identifierValue=value1,value2,... \nFor instance, \n   ?identifierKey=subnetName&identifierValue=PV0438A---PV0428D---SUBNET<p>Only one of the following parameters can be specified:<ul><li>name<li>ipAddress<li>identifierKey + identifierValue<li>sessionId<li>networkConstructExpectations.equipmentIntent.id<li>networkConstructExpectations.serviceIntent.id<li>physicalLocationId<li>networkConstructType<li>concrete</ul>",
+        "operationId": "getNetworkConstructsV5",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of device name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of Network Construct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "query",
+            "description": "The identifier key list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "identifierValue",
+            "in": "query",
+            "description": "The identifier value list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "description": "(Optional) Management Session Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.equipmentIntent.id",
+            "in": "query",
+            "description": "(Optional) The equipment intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.serviceIntent.id",
+            "in": "query",
+            "description": "(Optional) The service intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "query",
+            "description": "(Optional) Physical location id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructType",
+            "in": "query",
+            "description": "(Optional) Network Construct type. The allowed values are: networkElement, shelf, osrpNode, manual, branchingUnit, submarineRepeater",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "concrete",
+            "in": "query",
+            "description": "(Optional) Id of the concrete networkConstruct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Network Constructs",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructListRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve all network elements"
+          },
+          "500": {
+            "description": "Retrieval of network constructs failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": ["995 - nsiapiv5networkConstructs"],
+        "summary": "Creates or updates network construct with only userData and/or networkConstructType",
+        "description": "Upon success, code 201 is returned and the output consists of JSON objects representing the Network Construct.<p>All the attributes other than identifiers, userData and networkConstructType will be ignored.</p><p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n    \"data\" : {\n        \"type\": \"networkConstructs\",\n        \"attributes\": {\n            \"identifiers\": [\n                {\n                    \"siteName\": \"clli1\",\n                    \"projectName\": \"projectName1\"\n                },\n                {\n                    \"projectName\": \"projectName1\"\n                }\n            ]\n        }\n    }\n}\n</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postNetworkConstruct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an NC provided with userData and physical location",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network construct user data has been replaced on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "201": {
+            "description": "Network construct has been created on the server",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v5/networkConstructs/{id}/expectations/{networkConstructExpectationId}/realize": {
+      "post": {
+        "tags": ["995 - nsiapiv5networkConstructs"],
+        "summary": "Realize an NC Expectation given the ncId and expectationId",
+        "description": "",
+        "operationId": "realizeNetworkConstruct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the Network Construct under which the expectation is to be realized",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to realize",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Realized NC Expectation successfully."
+          },
+          "204": {
+            "description": "Expectation was not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified NC does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified NC Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v6/networkConstructs": {
+      "get": {
+        "tags": ["994 - nsiapiv6networkConstructs"],
+        "summary": "Get list of discovered Network Construct(s) satisfying the query parameters",
+        "description": "Discovered Network Constructs returned as a JSON list of Network Construct objects. \nNote: When querying using identifiers, the supported syntax is as follows: \n   ?identifierKey=key1,key2,...&identifierValue=value1,value2,... \nFor instance, \n   ?identifierKey=subnetName&identifierValue=PV0438A---PV0428D---SUBNET<p>Only one of the following parameters can be specified:<ul><li>name<li>ipAddress<li>identifierKey + identifierValue<li>sessionId<li>networkConstructExpectations.equipmentIntent.id<li>networkConstructExpectations.serviceIntent.id<li>physicalLocationId<li>networkConstructType<li>concrete</ul>",
+        "operationId": "getNetworkConstructsV6",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "(Optional) List of device name values",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "(Optional) Ip Address of Network Construct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "query",
+            "description": "The identifier key list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "identifierValue",
+            "in": "query",
+            "description": "The identifier value list",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "sessionId",
+            "in": "query",
+            "description": "(Optional) Management Session Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.equipmentIntent.id",
+            "in": "query",
+            "description": "(Optional) The equipment intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructExpectations.serviceIntent.id",
+            "in": "query",
+            "description": "(Optional) The service intent Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "physicalLocationId",
+            "in": "query",
+            "description": "(Optional) Physical location id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "networkConstructType",
+            "in": "query",
+            "description": "(Optional) Network Construct type. The allowed values are: networkElement, shelf, osrpNode, manual, branchingUnit, submarineRepeater",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "concrete",
+            "in": "query",
+            "description": "(Optional) Id of the concrete networkConstruct",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page. The default is 30",
+            "required": false,
+            "type": "string",
+            "default": "30"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations, physicalLocation, parentNetworkConstruct, networkConstructDiscovered, networkConstructPlanned",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Network Constructs",
+            "schema": {
+              "$ref": "#/definitions/NetworkConstructListRO"
+            }
+          },
+          "400": {
+            "description": "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve all network elements"
+          },
+          "500": {
+            "description": "Retrieval of network constructs failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AdditionalAttributesRO": {
+      "type": "object"
+    },
+    "AggregationBucketRO": {
+      "type": "object",
+      "properties": {
+        "bucketKey": {
+          "type": "string",
+          "description": "The key of the aggregation criteria"
+        },
+        "bucketValue": {
+          "type": "string",
+          "description": "The result of the aggregation"
+        },
+        "absoluteTotal": {
+          "type": "string",
+          "description": "The unfiltered total number of entities in the data"
+        },
+        "subAggregations": {
+          "description": "The aggregated data based on a requested aggregation name and criteria",
+          "$ref": "#/definitions/AggregationRO"
+        }
+      }
+    },
+    "AggregationRO": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the aggregation"
+        },
+        "buckets": {
+          "type": "array",
+          "description": "Aggregation results for different criteria",
+          "items": {
+            "$ref": "#/definitions/AggregationBucketRO"
+          }
+        }
+      }
+    },
+    "ArpRemoteRO": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The ID resource type"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the referenced resource"
+        }
+      }
+    },
+    "AttributePoliciesRO": {
+      "type": "object",
+      "properties": {
+        "defaultAttributeSourcePolicy": {
+          "type": "string",
+          "description": "Source of attribute.",
+          "enum": ["plannedOverDiscovered", "discoveredOverPlanned"]
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttributePolicyOverrideRO"
+          }
+        }
+      }
+    },
+    "AttributePolicyOverrideRO": {
+      "type": "object",
+      "properties": {
+        "attributeName": {
+          "type": "string",
+          "description": "Attribute path(e.g. attribute.customerCode or relationship.endpoints)"
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["plannedOverDiscovered", "discoveredOverPlanned"]
+          }
+        },
+        "attributeSource": {
+          "type": "string",
+          "description": "Attribute source, in case it has the value from some other references, (e.g. attributes.srlg is relationships.srlgs.id"
+        }
+      }
+    },
+    "AttributesRO": {
+      "type": "object",
+      "properties": {
+        "carrier": {
+          "type": "string",
+          "description": "Identifies the overhead bytes the circuit is applicable for"
+        },
+        "cktdefmetric": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Integer 1-63 which defins the circuit default metric"
+        },
+        "l2only": {
+          "type": "string",
+          "description": "Values of ON/OFF controls level 2 only"
+        },
+        "npsoverride": {
+          "type": "string",
+          "description": "Supported values DUAL, IPONLY, OSIONLY, LAN_OSIONLY, OFF"
+        },
+        "threewayhs": {
+          "type": "string",
+          "description": "Values of ON/OFF control three way handshake"
+        }
+      }
+    },
+    "BgpPackageRO": {
+      "type": "object",
+      "properties": {
+        "as": {
+          "type": "integer",
+          "format": "int64",
+          "description": "AS number assigned to the Node/EquipmentGroup"
+        },
+        "routerId": {
+          "type": "string",
+          "description": "Router Id configured on the Node."
+        },
+        "rrConfig": {
+          "description": "Holds RR Configuration.",
+          "$ref": "#/definitions/RRConfigRO"
+        }
+      }
+    },
+    "ClientToClientRO": {
+      "type": "object",
+      "properties": {
+        "intraCluster": {
+          "type": "string",
+          "description": "A flag to check if cluster is intra-cluster.",
+          "enum": ["enabled", "disabled"]
+        }
+      }
+    },
+    "ClusterRO": {
+      "type": "object",
+      "properties": {
+        "clusterId": {
+          "type": "string",
+          "description": "Id of this Cluster."
+        },
+        "clientToClient": {
+          "description": "Holds information about ClientToClient Reflection.",
+          "$ref": "#/definitions/ClientToClientRO"
+        }
+      }
+    },
+    "DhcpRelayAgentRO": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Disable the DHCP relay agent",
+          "default": false
+        },
+        "serverIp": {
+          "type": "string",
+          "description": "The IP address the relay agent should forward to"
+        }
+      }
+    },
+    "DhcpRelayAgentRO_": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Disable the DHCP relay agent",
+          "default": false
+        },
+        "serverIp": {
+          "type": "string",
+          "description": "The IP address the relay agent should forward to"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "errorCode": {
+          "type": "string"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "errorDescription": {
+          "type": "string"
+        },
+        "msgAttributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "meta": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "ErrorRO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code"
+        },
+        "title": {
+          "type": "string",
+          "description": "Error title"
+        },
+        "detail": {
+          "type": "string",
+          "description": "Error details"
+        },
+        "source": {
+          "description": "Error source",
+          "$ref": "#/definitions/ErrorSourceRO"
+        }
+      }
+    },
+    "ErrorSourceRO": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "type": "string",
+          "description": "JSON Pointer to the associated entity in the request document"
+        },
+        "parameter": {
+          "type": "string",
+          "description": "URI query parameter that caused the error"
+        }
+      }
+    },
+    "Errors": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "ErrorsRO": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "description": "A list of errors",
+          "items": {
+            "$ref": "#/definitions/ErrorRO"
+          }
+        }
+      }
+    },
+    "GatewayRO": {
+      "type": "object",
+      "properties": {
+        "overRide": {
+          "type": "boolean",
+          "description": "Override the default definition of the gateway",
+          "default": false
+        },
+        "access": {
+          "type": "string",
+          "description": "Defines the type of Gateway ie. 6500 V4 values are: ARP, NAT, OSPF, STATIC, PRIVATEIP"
+        },
+        "config": {
+          "type": "string",
+          "description": "Configuration of Gateway as standalone or redundant."
+        }
+      }
+    },
+    "GatewayRO_": {
+      "type": "object",
+      "properties": {
+        "overRide": {
+          "type": "boolean",
+          "description": "Override the default definition of the gateway",
+          "default": false
+        },
+        "access": {
+          "type": "string",
+          "description": "Defines the type of Gateway ie. 6500 V6 values are:NDPROXY, OSPFV3, STATIC"
+        },
+        "config": {
+          "type": "string",
+          "description": "Configuration of Gateway as standalone or redundant."
+        }
+      }
+    },
+    "GeoLocationRO": {
+      "type": "object",
+      "properties": {
+        "zone": {
+          "type": "string",
+          "description": "Zone of the device location"
+        },
+        "longitude": {
+          "type": "string",
+          "description": "Longitude of the device location"
+        },
+        "latitude": {
+          "type": "string",
+          "description": "Latitude of the device location"
+        }
+      }
+    },
+    "IPCommunicationDetailsRO": {
+      "type": "object",
+      "properties": {
+        "ipv4Infrastructure": {
+          "$ref": "#/definitions/Ipv4InfrastructureRO"
+        },
+        "ipv6Infrastructure": {
+          "$ref": "#/definitions/Ipv6InfrastructureRO"
+        },
+        "iisisInfrastructure": {
+          "description": "IISIS Router Details",
+          "$ref": "#/definitions/IisisInfrastructureRO"
+        },
+        "sldd": {
+          "description": "Attributes for capturing SLDD details",
+          "$ref": "#/definitions/SlddRO"
+        },
+        "interfaceDetails": {
+          "type": "array",
+          "description": "List of comms interfaces and their attributes.",
+          "items": {
+            "$ref": "#/definitions/InterfaceIPAttributesRO"
+          }
+        }
+      }
+    },
+    "IdentifierRO": {
+      "type": "object"
+    },
+    "IisisInfrastructureRO": {
+      "type": "object",
+      "properties": {
+        "l1priority": {
+          "type": "integer",
+          "format": "int32",
+          "description": "1-127, 64 is default"
+        },
+        "l2priority": {
+          "type": "integer",
+          "format": "int32",
+          "description": "1-127, 64 is default"
+        },
+        "routerLevel": {
+          "type": "string",
+          "description": "Level 1 or Level 2 router, default is Level 1"
+        },
+        "routerlevelsummarisition": {
+          "type": "string",
+          "description": "Whether routes or route summaries are redistributed"
+        }
+      }
+    },
+    "IisisRO": {
+      "type": "object",
+      "properties": {
+        "circuit": {
+          "type": "boolean",
+          "description": "IISIS circuit exists on the interface",
+          "default": false
+        },
+        "attributes": {
+          "description": "Attributes for an IISIS circuit",
+          "$ref": "#/definitions/AttributesRO"
+        }
+      }
+    },
+    "InterfaceIPAttributesRO": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the interface the IP communications details are associated with"
+        },
+        "topology": {
+          "$ref": "#/definitions/TopologyRO"
+        },
+        "ipv4": {
+          "$ref": "#/definitions/Ipv4RO"
+        },
+        "ipv6": {
+          "type": "array",
+          "description": "List IPV6 Addresses for an interface.",
+          "items": {
+            "$ref": "#/definitions/Ipv6RO"
+          }
+        },
+        "iisis": {
+          "$ref": "#/definitions/IisisRO"
+        }
+      }
+    },
+    "Ipv4InfrastructureRO": {
+      "type": "object",
+      "properties": {
+        "dhcpRelayAgent": {
+          "description": "DHCP Relay agent attributes.",
+          "$ref": "#/definitions/DhcpRelayAgentRO"
+        },
+        "dhcpclient": {
+          "type": "boolean",
+          "description": "Indicates if the DHCP client is enabled",
+          "default": false
+        },
+        "stackEnabled": {
+          "type": "boolean",
+          "description": "Indicates if IPV4 is enabled",
+          "default": false
+        },
+        "gateway": {
+          "description": "Gateway Details of the network construct",
+          "$ref": "#/definitions/GatewayRO"
+        },
+        "arpRemotes": {
+          "type": "array",
+          "description": "Defines the list of shelves/network elements this shelf should ARP for.",
+          "items": {
+            "$ref": "#/definitions/ArpRemoteRO"
+          }
+        },
+        "ospfRouter": {
+          "description": "OSPF Router Details",
+          "$ref": "#/definitions/OspfRouterRO"
+        }
+      }
+    },
+    "Ipv4RO": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string",
+          "description": "Value of IP address, can be either a V4 "
+        },
+        "defaultGateway": {
+          "type": "string",
+          "description": "The next hope router IP, can be a V4 address"
+        },
+        "subnetMask": {
+          "type": "string",
+          "description": "The mask which is applied on the interface, an IPV4 mask"
+        },
+        "proxyArp": {
+          "type": "string",
+          "description": "Turns proxy ARP on or off for port. Default is OFF"
+        },
+        "dhcpRelayAgent": {
+          "type": "boolean",
+          "description": "Defines if the interface is a V4 DHCP relay agent, must be off for unnumbered interfaces",
+          "default": false
+        },
+        "ospfcircuit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OspfcircuitRO"
+          }
+        }
+      }
+    },
+    "Ipv6InfrastructureRO": {
+      "type": "object",
+      "properties": {
+        "dhcpRelayAgent": {
+          "description": "DHCP Relay agent attributes.",
+          "$ref": "#/definitions/DhcpRelayAgentRO_"
+        },
+        "dhcpclient": {
+          "type": "boolean",
+          "description": "Indicates if the DHCP client is enabled",
+          "default": false
+        },
+        "stackEnabled": {
+          "type": "boolean",
+          "description": "Indicates if IPV4 is enabled",
+          "default": false
+        },
+        "gateway": {
+          "description": "Gateway Details of the network construct",
+          "$ref": "#/definitions/GatewayRO_"
+        },
+        "ospfRouter": {
+          "description": "OSPF Router Details",
+          "$ref": "#/definitions/OspfRouterRO_"
+        }
+      }
+    },
+    "Ipv6RO": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string",
+          "description": "Value of IP address, can be either a V6 address, should support all formats of V6 address"
+        },
+        "defaultGateway": {
+          "type": "string",
+          "description": "The next hope router IP, can be a V6 address, should support all formats of V6 address"
+        },
+        "prefix": {
+          "type": "string",
+          "description": "The prefix which is applied on the interface, an IPV6 prefix"
+        },
+        "ospfcircuit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OspfcircuitRO_"
+          }
+        }
+      }
+    },
+    "L2DataRO": {
+      "type": "object",
+      "properties": {
+        "shelf": {
+          "type": "string"
+        },
+        "eqptGrp": {
+          "type": "string",
+          "description": "The group ID obtained from RTRV-EQPTGRP for the SAOS card on which the entity resides"
+        },
+        "switchFabricType": {
+          "type": "string",
+          "description": "Optional field.  It represents a switch fabric where XC (PTKOTN on S-series), CTM (PTKOTN on T-series)",
+          "enum": [
+            "XC",
+            "CTM",
+            "EMOTR",
+            "PTS",
+            "EMOTR_STANDARD",
+            "EMOTR_EXTENDED"
+          ]
+        },
+        "loopbackAddresses": {
+          "type": "array",
+          "description": "The loopback addresses in the NE.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "staticTunnelLabelRange": {
+          "description": "Describes a Range attribute",
+          "$ref": "#/definitions/RangeRO"
+        },
+        "dynamicLabelRange": {
+          "description": "Describes a Range attribute",
+          "$ref": "#/definitions/RangeRO"
+        },
+        "staticVcLabelRange": {
+          "description": "Describes a Range attribute",
+          "$ref": "#/definitions/RangeRO"
+        },
+        "mgmtVlans": {
+          "type": "array",
+          "description": "mgmtVlans in the NE.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "benchmarkMacs": {
+          "type": "array",
+          "description": "Benchmark MAC addresses in the NE.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cosProfileNames": {
+          "type": "array",
+          "description": "CoS profiles in the NE.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cftProfileNames": {
+          "type": "array",
+          "description": "CFT profiles in the NE.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bgpPackage": {
+          "description": "This package stores BGP information.",
+          "$ref": "#/definitions/BgpPackageRO"
+        },
+        "l2NodeRole": {
+          "type": "string",
+          "description": "L2 Node Role.",
+          "enum": ["AN", "AGN", "NID"]
+        },
+        "l2NodeRoutingCapabilities": {
+          "description": "Describes L2 Routing capabilities of the node",
+          "$ref": "#/definitions/L2NodeRoutingCapabilitiesRO"
+        },
+        "fgiSpecsRefList": {
+          "type": "array",
+          "description": "A list of Forwarding Group assignments.  Each assignment costs of the fGNane, FGVersion, and FGInstance.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "externalFgiSpecsRefList": {
+          "type": "array",
+          "description": "A list of External Forwarding Group assignments.  Each assignment costs of the fGNane, FGVersion, and FGInstance.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tunnelFgiSpecsRefList": {
+          "type": "array",
+          "description": "A list of Tunnel Forwarding Group assignments.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "L2NodeRoutingCapabilitiesRO": {
+      "type": "object",
+      "properties": {
+        "isBGPEnabled": {
+          "type": "boolean",
+          "description": "true, if BGP protocol is enabled on this L2 node.",
+          "default": false
+        },
+        "isMPLSEnabled": {
+          "type": "boolean",
+          "description": "true, if MPLS protocol is enabled on this L2 node.",
+          "default": false
+        },
+        "isQiQEnabled": {
+          "type": "boolean",
+          "description": "true , if QiQ protocol is enabled on this L2 node.",
+          "default": false
+        },
+        "isRSVPTEEnabled": {
+          "type": "boolean",
+          "description": "true , if RSVP-TE protocol is enabled on this L2 node.",
+          "default": false
+        }
+      }
+    },
+    "LinksRO": {
+      "type": "object",
+      "properties": {
+        "self": {
+          "type": "string",
+          "format": "uri",
+          "description": "A `self` member, whose value is a URL for the relationship itself (a \"relationship URL\"). This URL allows the client to directly manipulate the relationship. For example, it would allow a client to remove an `author` from an `article` without deleting the people resource itself."
+        },
+        "first": {
+          "type": "string",
+          "format": "uri",
+          "description": "The first page of data"
+        },
+        "last": {
+          "type": "string",
+          "format": "uri",
+          "description": "The last page of data"
+        },
+        "prev": {
+          "type": "string",
+          "format": "uri",
+          "description": "The previous page of data"
+        },
+        "next": {
+          "type": "string",
+          "format": "uri",
+          "description": "The next page of data"
+        },
+        "current": {
+          "type": "string",
+          "format": "uri",
+          "description": "The current page of data"
+        }
+      }
+    },
+    "MetaDataRO": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The total number of entities in the data"
+        },
+        "absoluteTotal": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The unfiltered total number of entities in the data"
+        },
+        "aggregations": {
+          "type": "array",
+          "description": "The aggregated data based on a requested aggregation name and criteria",
+          "items": {
+            "$ref": "#/definitions/AggregationRO"
+          }
+        },
+        "missingReferences": {
+          "type": "boolean",
+          "description": "boolean detailing if the GET FRE tree has any missing references",
+          "default": false
+        },
+        "missingReferenceIds": {
+          "type": "array",
+          "description": "The list of missing resource IDs",
+          "items": {
+            "$ref": "#/definitions/RelationshipDataRO"
+          }
+        },
+        "filtered": {
+          "type": "boolean",
+          "description": "Flags whether the current object is filtered using `fields` query param or not",
+          "default": false
+        }
+      }
+    },
+    "NetworkConstructAttributesRO": {
+      "type": "object",
+      "properties": {
+        "displayData": {
+          "$ref": "#/definitions/NetworkConstructDisplayDataRO"
+        },
+        "identifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IdentifierRO"
+          }
+        },
+        "userData": {
+          "description": "User data",
+          "$ref": "#/definitions/UserDataRO"
+        },
+        "syncState": {
+          "$ref": "#/definitions/SyncStateRO"
+        },
+        "resourceState": {
+          "type": "string",
+          "description": "Nsi Resource State.",
+          "enum": [
+            "root",
+            "planned",
+            "discovered",
+            "plannedAndDiscovered",
+            "unknown"
+          ]
+        },
+        "policies": {
+          "description": "Policies for attributes.",
+          "$ref": "#/definitions/AttributePoliciesRO"
+        },
+        "tags": {
+          "type": "array",
+          "description": "A list of tags for a given NC.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ipAddress": {
+          "type": "string",
+          "description": "IP address of the network construct."
+        },
+        "typeGroup": {
+          "type": "string",
+          "description": "Resource adapter type group."
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Resource Type."
+        },
+        "deviceType": {
+          "type": "string",
+          "description": "Device Type."
+        },
+        "softwareVersion": {
+          "type": "string",
+          "description": "Software version running in the device."
+        },
+        "accessIdentifier": {
+          "type": "string",
+          "description": "AID of the device, i.e. for 6500 shelf : SHELF-n."
+        },
+        "macAddress": {
+          "type": "string",
+          "description": "MAC address of the device."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name (e.g. TID) of the Network Construct"
+        },
+        "longName": {
+          "type": "string",
+          "description": "Extended name of the Network Construct"
+        },
+        "geoLocation": {
+          "description": "The geography location of the device",
+          "$ref": "#/definitions/GeoLocationRO"
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "Serial number (e.g. NNTMHQDP0001)"
+        },
+        "deviceVersion": {
+          "type": "string",
+          "description": "Device version (e.g. 6500 32-SLOT OPTICAL)"
+        },
+        "softwareType": {
+          "type": "string",
+          "description": "Software type (e.g. OCP)"
+        },
+        "softwareImage": {
+          "type": "string",
+          "description": "Software image"
+        },
+        "subnetName": {
+          "type": "string",
+          "description": "Subnet name (e.g. ROADM1---ROADM2---SUBNET)"
+        },
+        "numberOfShelves": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of shelves (primary + member shelves in case of TIDc)"
+        },
+        "memberFunction": {
+          "type": "string",
+          "description": "Member function of the network construct.",
+          "enum": ["ILA", "DGE", "ROADM"]
+        },
+        "shelfType": {
+          "type": "string",
+          "description": "Shelf type of the network construct.",
+          "enum": ["ILA", "DGE"]
+        },
+        "capabilitySpecRef": {
+          "type": "string",
+          "description": "Name of the file which contains the constraint rules of the network device."
+        },
+        "modelType": {
+          "type": "string",
+          "description": "The model type of network construct, TPE, FRE.",
+          "enum": ["controlPlane", "regenService", "resiliency"]
+        },
+        "networkConstructType": {
+          "type": "string",
+          "description": "The type of network construct. It is used to represent the physical hierarchy of a network element.",
+          "enum": [
+            "networkElement",
+            "shelf",
+            "osrpNode",
+            "manual",
+            "branchingUnit",
+            "submarineRepeater",
+            "unknown"
+          ]
+        },
+        "l2Data": {
+          "type": "array",
+          "description": "It represents the L2 Configuration Data on the NE.",
+          "items": {
+            "$ref": "#/definitions/L2DataRO"
+          }
+        },
+        "additionalAttributes": {
+          "description": "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+          "$ref": "#/definitions/AdditionalAttributesRO"
+        },
+        "resourcePartitionInfo": {
+          "type": "array",
+          "description": "It represents which partition the NE belongs to.",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "associationState": {
+          "type": "string",
+          "description": "Association state of the network construct.",
+          "enum": ["GOA", "LOA"]
+        },
+        "associationStateQualifier": {
+          "type": "string",
+          "description": "How the associationState has been set.",
+          "enum": ["MANUAL", "SYSTEM", "NETWORK"]
+        },
+        "associationStateQualifierReason": {
+          "type": "string",
+          "description": "Reason for going into maintenance mode."
+        },
+        "associationStateLastUpdatedTime": {
+          "type": "string",
+          "description": "Date at which we last changed association state."
+        },
+        "ipCommunicationDetails": {
+          "description": "IP communications data for the network construct",
+          "$ref": "#/definitions/IPCommunicationDetailsRO"
+        },
+        "srlg": {
+          "type": "array",
+          "description": "Shared risk link group is used by the path computation engine to ensure that the alternate links involved in a service do not share the same shared risk link group.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "NetworkConstructDataRO": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "description": "A metadata object that contains non-standard meta information",
+          "$ref": "#/definitions/ResourceMetaDataRO"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the NetworkConstruct resource"
+        },
+        "type": {
+          "type": "string",
+          "description": "The Network Construct resource type",
+          "enum": ["networkConstructs"]
+        },
+        "attributes": {
+          "$ref": "#/definitions/NetworkConstructAttributesRO"
+        },
+        "relationships": {
+          "description": "The relationships of a network construct",
+          "$ref": "#/definitions/NetworkConstructRelationshipsRO"
+        }
+      }
+    },
+    "NetworkConstructDisplayDataRO": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "Name (e.g. TID) of the Network Construct"
+        },
+        "displayIpAddress": {
+          "type": "string",
+          "description": "IP address used for expectations."
+        },
+        "displayMACAddress": {
+          "type": "string",
+          "description": "MAC address used for expectations."
+        },
+        "displaySyncState": {
+          "type": "string",
+          "enum": [
+            "PLANNED",
+            "NOT_SYNCHRONIZED",
+            "SYNCHRONIZING",
+            "SYNCHRONIZED",
+            "FAILED",
+            "PENDING",
+            "DELETING",
+            "TIMEOUT",
+            "AUDIT_PENDING",
+            "AUDITING"
+          ]
+        },
+        "displayResourceState": {
+          "type": "string",
+          "description": "Resource state of the network construct"
+        },
+        "displayInventorySyncFailureReason": {
+          "type": "string",
+          "description": "Used to display inventory sync failure reason."
+        },
+        "displayAssociationState": {
+          "type": "string",
+          "description": "Used to display the association state of the network construct"
+        },
+        "displayPhysicalLocationName": {
+          "type": "string",
+          "description": "Used to display the name of the discovered physical location it's related to."
+        },
+        "displayMapSiteName": {
+          "type": "string",
+          "description": "Used to display the name of the physical location it's related to based on the location data the map is using."
+        }
+      }
+    },
+    "NetworkConstructExpectationAttributesRO": {
+      "type": "object",
+      "properties": {
+        "policies": {
+          "type": "array",
+          "description": "Policies to be applied to the entity.",
+          "items": {
+            "type": "object"
+          }
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The scheduled start date and time of the expectation, with RFC 3339 date-time format"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The scheduled end date and time of the expectation, with RFC 3339 date-time format"
+        },
+        "ipAddress": {
+          "type": "string",
+          "description": "IP address of the network construct."
+        },
+        "typeGroup": {
+          "type": "string",
+          "description": "Resource adapter type group."
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Resource Type."
+        },
+        "deviceType": {
+          "type": "string",
+          "description": "Device Type."
+        },
+        "softwareVersion": {
+          "type": "string",
+          "description": "Software version running in the device."
+        },
+        "accessIdentifier": {
+          "type": "string",
+          "description": "AID of the device, i.e. for 6500 shelf : SHELF-n."
+        },
+        "macAddress": {
+          "type": "string",
+          "description": "MAC address of the device."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name (e.g. TID) of the Network Construct"
+        },
+        "longName": {
+          "type": "string",
+          "description": "Extended name of the Network Construct"
+        },
+        "geoLocation": {
+          "description": "The geography location of the device",
+          "$ref": "#/definitions/GeoLocationRO"
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "Serial number (e.g. NNTMHQDP0001)"
+        },
+        "deviceVersion": {
+          "type": "string",
+          "description": "Device version (e.g. 6500 32-SLOT OPTICAL)"
+        },
+        "softwareType": {
+          "type": "string",
+          "description": "Software type (e.g. OCP)"
+        },
+        "softwareImage": {
+          "type": "string",
+          "description": "Software image"
+        },
+        "subnetName": {
+          "type": "string",
+          "description": "Subnet name (e.g. ROADM1---ROADM2---SUBNET)"
+        },
+        "numberOfShelves": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of shelves (primary + member shelves in case of TIDc)"
+        },
+        "memberFunction": {
+          "type": "string",
+          "description": "Member function of the network construct.",
+          "enum": ["ILA", "DGE", "ROADM"]
+        },
+        "shelfType": {
+          "type": "string",
+          "description": "Shelf type of the network construct.",
+          "enum": ["ILA", "DGE"]
+        },
+        "capabilitySpecRef": {
+          "type": "string",
+          "description": "Name of the file which contains the constraint rules of the network device."
+        },
+        "modelType": {
+          "type": "string",
+          "description": "The model type of network construct, TPE, FRE.",
+          "enum": ["controlPlane", "regenService", "resiliency"]
+        },
+        "networkConstructType": {
+          "type": "string",
+          "description": "The type of network construct. It is used to represent the physical hierarchy of a network element.",
+          "enum": [
+            "networkElement",
+            "shelf",
+            "osrpNode",
+            "manual",
+            "branchingUnit",
+            "submarineRepeater",
+            "unknown"
+          ]
+        },
+        "l2Data": {
+          "type": "array",
+          "description": "It represents the L2 Configuration Data on the NE.",
+          "items": {
+            "$ref": "#/definitions/L2DataRO"
+          }
+        },
+        "additionalAttributes": {
+          "description": "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+          "$ref": "#/definitions/AdditionalAttributesRO"
+        },
+        "resourcePartitionInfo": {
+          "type": "array",
+          "description": "It represents which partition the NE belongs to.",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "associationState": {
+          "type": "string",
+          "description": "Association state of the network construct.",
+          "enum": ["GOA", "LOA"]
+        },
+        "associationStateQualifier": {
+          "type": "string",
+          "description": "How the associationState has been set.",
+          "enum": ["MANUAL", "SYSTEM", "NETWORK"]
+        },
+        "associationStateQualifierReason": {
+          "type": "string",
+          "description": "Reason for going into maintenance mode."
+        },
+        "associationStateLastUpdatedTime": {
+          "type": "string",
+          "description": "Date at which we last changed association state."
+        },
+        "ipCommunicationDetails": {
+          "description": "IP communications data for the network construct",
+          "$ref": "#/definitions/IPCommunicationDetailsRO"
+        },
+        "srlg": {
+          "type": "array",
+          "description": "Shared risk link group is used by the path computation engine to ensure that the alternate links involved in a service do not share the same shared risk link group.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "NetworkConstructExpectationDataRO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the network construct expectation"
+        },
+        "type": {
+          "type": "string",
+          "description": "The network construct expectation type",
+          "enum": ["networkConstructExpectations"]
+        },
+        "attributes": {
+          "description": "Expectation attributes to be kept by NSI.",
+          "$ref": "#/definitions/NetworkConstructExpectationAttributesRO"
+        },
+        "relationships": {
+          "$ref": "#/definitions/NetworkConstructExpectationRelationshipsRO"
+        }
+      }
+    },
+    "NetworkConstructExpectationRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/NetworkConstructExpectationDataRO"
+        }
+      }
+    },
+    "NetworkConstructExpectationRelationshipsRO": {
+      "type": "object",
+      "properties": {
+        "equipmentIntent": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "serviceIntent": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "intent": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "physicalLocation": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "parentNetworkConstruct": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "childrenNetworkConstruct": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "concrete": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "concreteAssociations": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "groups": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "srlg": {
+          "description": "The SRLGone-to-many relationship",
+          "$ref": "#/definitions/SRLGOneToManyRelationshipRO"
+        }
+      }
+    },
+    "NetworkConstructListRO": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "description": "A metadata object that contains non-standard meta information",
+          "$ref": "#/definitions/MetaDataRO"
+        },
+        "links": {
+          "description": "Links related to the resource",
+          "$ref": "#/definitions/LinksRO"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NetworkConstructDataRO"
+          }
+        },
+        "included": {
+          "type": "array",
+          "description": "Array of associated planned, expectations, discovered, physical locations, or parent Network Constructs",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "NetworkConstructPatchOperationRO": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "Supported operation on a network construct resource",
+          "enum": ["replace", "update", "delete", "add"]
+        },
+        "attributes": {
+          "$ref": "#/definitions/NetworkConstructAttributesRO"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Name of an attribute to be deleted"
+        },
+        "keys": {
+          "type": "array",
+          "description": "Used to target specific key(s) of the attribute to be deleted",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relationships": {
+          "$ref": "#/definitions/NetworkConstructPlannedRelationshipsRO"
+        }
+      }
+    },
+    "NetworkConstructPatchRO": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NetworkConstructPatchOperationRO"
+          }
+        }
+      }
+    },
+    "NetworkConstructPlannedAttributesRO": {
+      "type": "object",
+      "properties": {
+        "ipAddress": {
+          "type": "string",
+          "description": "IP address of the network construct."
+        },
+        "typeGroup": {
+          "type": "string",
+          "description": "Resource adapter type group."
+        },
+        "resourceType": {
+          "type": "string",
+          "description": "Resource Type."
+        },
+        "deviceType": {
+          "type": "string",
+          "description": "Device Type."
+        },
+        "softwareVersion": {
+          "type": "string",
+          "description": "Software version running in the device."
+        },
+        "accessIdentifier": {
+          "type": "string",
+          "description": "AID of the device, i.e. for 6500 shelf : SHELF-n."
+        },
+        "macAddress": {
+          "type": "string",
+          "description": "MAC address of the device."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name (e.g. TID) of the Network Construct"
+        },
+        "longName": {
+          "type": "string",
+          "description": "Extended name of the Network Construct"
+        },
+        "geoLocation": {
+          "description": "The geography location of the device",
+          "$ref": "#/definitions/GeoLocationRO"
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "Serial number (e.g. NNTMHQDP0001)"
+        },
+        "deviceVersion": {
+          "type": "string",
+          "description": "Device version (e.g. 6500 32-SLOT OPTICAL)"
+        },
+        "softwareType": {
+          "type": "string",
+          "description": "Software type (e.g. OCP)"
+        },
+        "softwareImage": {
+          "type": "string",
+          "description": "Software image"
+        },
+        "subnetName": {
+          "type": "string",
+          "description": "Subnet name (e.g. ROADM1---ROADM2---SUBNET)"
+        },
+        "numberOfShelves": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of shelves (primary + member shelves in case of TIDc)"
+        },
+        "memberFunction": {
+          "type": "string",
+          "description": "Member function of the network construct.",
+          "enum": ["ILA", "DGE", "ROADM"]
+        },
+        "shelfType": {
+          "type": "string",
+          "description": "Shelf type of the network construct.",
+          "enum": ["ILA", "DGE"]
+        },
+        "capabilitySpecRef": {
+          "type": "string",
+          "description": "Name of the file which contains the constraint rules of the network device."
+        },
+        "modelType": {
+          "type": "string",
+          "description": "The model type of network construct, TPE, FRE.",
+          "enum": ["controlPlane", "regenService", "resiliency"]
+        },
+        "networkConstructType": {
+          "type": "string",
+          "description": "The type of network construct. It is used to represent the physical hierarchy of a network element.",
+          "enum": [
+            "networkElement",
+            "shelf",
+            "osrpNode",
+            "manual",
+            "branchingUnit",
+            "submarineRepeater",
+            "unknown"
+          ]
+        },
+        "l2Data": {
+          "type": "array",
+          "description": "It represents the L2 Configuration Data on the NE.",
+          "items": {
+            "$ref": "#/definitions/L2DataRO"
+          }
+        },
+        "additionalAttributes": {
+          "description": "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+          "$ref": "#/definitions/AdditionalAttributesRO"
+        },
+        "resourcePartitionInfo": {
+          "type": "array",
+          "description": "It represents which partition the NE belongs to.",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "associationState": {
+          "type": "string",
+          "description": "Association state of the network construct.",
+          "enum": ["GOA", "LOA"]
+        },
+        "associationStateQualifier": {
+          "type": "string",
+          "description": "How the associationState has been set.",
+          "enum": ["MANUAL", "SYSTEM", "NETWORK"]
+        },
+        "associationStateQualifierReason": {
+          "type": "string",
+          "description": "Reason for going into maintenance mode."
+        },
+        "associationStateLastUpdatedTime": {
+          "type": "string",
+          "description": "Date at which we last changed association state."
+        },
+        "ipCommunicationDetails": {
+          "description": "IP communications data for the network construct",
+          "$ref": "#/definitions/IPCommunicationDetailsRO"
+        },
+        "srlg": {
+          "type": "array",
+          "description": "Shared risk link group is used by the path computation engine to ensure that the alternate links involved in a service do not share the same shared risk link group.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "NetworkConstructPlannedDataRO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the network construct planned"
+        },
+        "type": {
+          "type": "string",
+          "description": "The network construct planned type",
+          "enum": ["networkConstructPlanned"]
+        },
+        "attributes": {
+          "description": "These attributes are set by REST API to be used to validate the expectation.",
+          "$ref": "#/definitions/NetworkConstructPlannedAttributesRO"
+        },
+        "relationships": {
+          "$ref": "#/definitions/NetworkConstructPlannedRelationshipsRO"
+        }
+      }
+    },
+    "NetworkConstructPlannedRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/NetworkConstructPlannedDataRO"
+        },
+        "included": {
+          "type": "array",
+          "description": "Side loaded relationship resources",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "NetworkConstructPlannedRelationshipsRO": {
+      "type": "object",
+      "properties": {
+        "equipmentIntent": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "serviceIntent": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "manualSRLG": {
+          "description": "The SRLGone-to-many relationship",
+          "$ref": "#/definitions/SRLGOneToManyRelationshipRO"
+        },
+        "dynamicAutoSRLG": {
+          "description": "The SRLGone-to-many relationship",
+          "$ref": "#/definitions/SRLGOneToManyRelationshipRO"
+        },
+        "dynamicInheritedSRLG": {
+          "description": "The SRLGone-to-many relationship",
+          "$ref": "#/definitions/SRLGOneToManyRelationshipRO"
+        },
+        "dynamicPropagatedSRLG": {
+          "description": "The SRLGone-to-many relationship",
+          "$ref": "#/definitions/SRLGOneToManyRelationshipRO"
+        },
+        "physicalLocation": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "parentNetworkConstruct": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "childrenNetworkConstruct": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "concrete": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "concreteAssociations": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "groups": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "srlg": {
+          "description": "The SRLGone-to-many relationship",
+          "$ref": "#/definitions/SRLGOneToManyRelationshipRO"
+        }
+      }
+    },
+    "NetworkConstructRO": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "description": "A metadata object that contains non-standard meta information",
+          "$ref": "#/definitions/MetaDataRO"
+        },
+        "data": {
+          "$ref": "#/definitions/NetworkConstructDataRO"
+        },
+        "included": {
+          "type": "array",
+          "description": "Referenced resources (discovered, planned, expectations, physical locations, or parent/child Network Constructs)",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "NetworkConstructRelationshipsRO": {
+      "type": "object",
+      "properties": {
+        "networkConstructPlanned": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "networkConstructExpectations": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "networkConstructDiscovered": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "managementSession": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "physicalLocation": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "parentNetworkConstruct": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        },
+        "childrenNetworkConstruct": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "concrete": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "concreteAssociations": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "groups": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "srlg": {
+          "description": "The SRLGone-to-many relationship",
+          "$ref": "#/definitions/SRLGOneToManyRelationshipRO"
+        }
+      }
+    },
+    "OneToManyRelationshipRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "The one-to-many relationship",
+          "items": {
+            "$ref": "#/definitions/RelationshipDataRO"
+          }
+        },
+        "meta": {
+          "description": "The relationship type and identifier",
+          "$ref": "#/definitions/RelationshipMetaDataRO"
+        }
+      }
+    },
+    "OneToOneRelationshipRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "The relationship type and identifier",
+          "$ref": "#/definitions/RelationshipDataRO"
+        },
+        "meta": {
+          "description": "The relationship type and identifier",
+          "$ref": "#/definitions/RelationshipMetaDataRO"
+        }
+      }
+    },
+    "OspfRouterRO": {
+      "type": "object",
+      "properties": {
+        "routerId": {
+          "type": "string",
+          "description": "ID of the router primarily applicable for OSPF, takes the from of an IPV4 address"
+        },
+        "areaBorderRouter": {
+          "type": "string",
+          "description": "Area border Router",
+          "enum": ["RFC_3509", "RFC_2328"]
+        },
+        "areaSystemBorderRouter": {
+          "type": "string",
+          "description": "Defines if the router is a area system border router",
+          "enum": ["ON", "OFF"]
+        },
+        "area": {
+          "type": "string",
+          "description": "OSPFV2 area of the network construct. Takes the form of an IPV4 address"
+        }
+      }
+    },
+    "OspfRouterRO_": {
+      "type": "object",
+      "properties": {
+        "routerId": {
+          "type": "string",
+          "description": "ID of the router primarily applicable for OSPFV3, takes the from of an IPV4 address"
+        },
+        "areaBorderRouter": {
+          "type": "string",
+          "description": "Area border Router",
+          "enum": ["RFC_3509", "RFC_2328"]
+        },
+        "area": {
+          "type": "string",
+          "description": "OSPFV3 area of the network construct. Takes the form of an IPV4 address"
+        }
+      }
+    },
+    "OspfcircuitRO": {
+      "type": "object",
+      "properties": {
+        "networkArea": {
+          "type": "string",
+          "description": "Network area in the form of an IPV4 address"
+        },
+        "cost": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Cost associated with the network interface"
+        },
+        "carrier": {
+          "type": "string",
+          "description": "Identifies the carrier, ie. Section, Line, GCC0, GCC1. When an interface supports multiple layers, carrier may be required to uniquely identify the entry"
+        },
+        "identifier": {
+          "type": "string",
+          "description": "Unique identifier for the OSPFv3 circuit"
+        },
+        "passive": {
+          "type": "string",
+          "description": "ON/OFF enables/disables passive circuit"
+        },
+        "opaque": {
+          "type": "string",
+          "description": "ON/OFF, enables/disables opaque circuit"
+        }
+      }
+    },
+    "OspfcircuitRO_": {
+      "type": "object",
+      "properties": {
+        "networkArea": {
+          "type": "string",
+          "description": "Network area in the form of an IPV4 address"
+        },
+        "cost": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Cost associated with the network interface"
+        },
+        "carrier": {
+          "type": "string",
+          "description": "Identifies the carrier, ie. Section, Line, GCC0, GCC1. When an interface supports multiple layers, carrier may be required to uniquely identify the entry"
+        },
+        "identifier": {
+          "type": "string",
+          "description": "Unique identifier for the OSPFv3 circuit"
+        }
+      }
+    },
+    "RRConfigRO": {
+      "type": "object",
+      "properties": {
+        "configured": {
+          "type": "boolean",
+          "description": "A flag to check if RR configured or not.",
+          "default": false
+        },
+        "clusters": {
+          "type": "array",
+          "description": "Holds data related to Clusters configured on RR",
+          "items": {
+            "$ref": "#/definitions/ClusterRO"
+          }
+        }
+      }
+    },
+    "RangeRO": {
+      "type": "object",
+      "properties": {
+        "minValue": {
+          "type": "integer",
+          "format": "int32",
+          "description": "This defines the min value for the range."
+        },
+        "maxValue": {
+          "type": "integer",
+          "format": "int32",
+          "description": "This defines the max value for the range."
+        }
+      }
+    },
+    "RelationshipDataRO": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The relationship resource type"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the referenced resource."
+        }
+      }
+    },
+    "RelationshipMetaDataRO": {
+      "type": "object",
+      "properties": {
+        "partiallyPopulated": {
+          "type": "boolean",
+          "description": "Flags whether the included relationship object is partially populated or not",
+          "default": false
+        }
+      }
+    },
+    "ResourceMetaDataRO": {
+      "type": "object",
+      "properties": {
+        "partiallyPopulated": {
+          "type": "boolean",
+          "description": "Flags whether the current object is partially populated or not",
+          "default": false
+        }
+      }
+    },
+    "SRLGDataRO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The identifier value of the SRLG. It's same as the native value of structured srlg attributes"
+        },
+        "type": {
+          "type": "string",
+          "description": "The SRLG Attribute type",
+          "enum": ["SRLG"]
+        }
+      }
+    },
+    "SRLGOneToManyRelationshipRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "The SRLG one-to-many relationship",
+          "items": {
+            "$ref": "#/definitions/SRLGDataRO"
+          }
+        }
+      }
+    },
+    "SlddRO": {
+      "type": "object",
+      "properties": {
+        "adminState": {
+          "type": "string",
+          "description": "ON/OFF enables/disables SLDD"
+        },
+        "config": {
+          "type": "string",
+          "description": "AUTO/MANUAL When set to auto the scope id will be automatically re-provisioned when the Site Id changed"
+        },
+        "scopeid": {
+          "type": "integer",
+          "format": "int32",
+          "description": "AR/TR records are distributed to all shelves with the same scope id. 0-65535"
+        }
+      }
+    },
+    "StateHistoryRO": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "NOT_SYNCHRONIZED",
+            "SYNCHRONIZING",
+            "SYNCHRONIZED",
+            "FAILED",
+            "ABORTED",
+            "DELETING",
+            "DELETE_FAILED",
+            "TIMEOUT"
+          ]
+        }
+      }
+    },
+    "SyncStateRO": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "NOT_SYNCHRONIZED",
+            "SYNCHRONIZING",
+            "SYNCHRONIZED",
+            "FAILED",
+            "ABORTED",
+            "DELETING",
+            "DELETE_FAILED",
+            "TIMEOUT"
+          ]
+        },
+        "additionalText": {
+          "type": "string"
+        },
+        "lastStateUpdated": {
+          "type": "string"
+        },
+        "lastSynchronized": {
+          "type": "string"
+        },
+        "stateHistory": {
+          "type": "array",
+          "description": "list of state and time history.",
+          "items": {
+            "$ref": "#/definitions/StateHistoryRO"
+          }
+        }
+      }
+    },
+    "TopologyRO": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The ID resource type"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the referenced resource"
+        },
+        "name": {
+          "type": "string",
+          "description": "The port name in the referenced resource or its expectation"
+        }
+      }
+    },
+    "UserDataRO": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,150 @@
+> NSI_API_TPES
+
+        Handle resource of type nsi_api_tpes
+
+OPTIONS (= is mandatory):
+
+- concrete
+        (Optional) Id of the concrete tpe
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- content
+        (Optional) The TPE content level
+        Used by `state=['get']'
+        (Choices: detail, summary)[Default: (null)]
+        type: str
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier for the TPE resource
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict):
+         - `type' (str): The TPE resource type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- equipmentId
+        (Optional) Equipment identifier. In case of usage with limit
+        parameter, paging will be enabled.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        (Optional) Comma separated list of TPE identifiers to retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: expectations, tpePlanned,
+        tpeDiscovered, concrete
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Referenced sub-resources
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- limit
+        The size of a returned page. Defaulted to return 30 TPEs at
+        once.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- location
+        (Optional) TPE location - shelf-slot-port or slot-port or
+        port. Only applied when Network Construct identifier is
+        provided.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- locationFormat
+        (Optional) Format for the given location; when not given,
+        assume location is [[shelf-]slot-]port. Only applied when
+        Network Construct identifier is provided.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- networkConstruct.id
+        (Optional) Network Construct identifier. In case of usage with
+        limit parameter, paging will be enabled.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- structureType
+        (Optional) TPE structure type. Only applied when Network
+        Construct identifier is provided.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tpeExpectations.equipmentIntent.id
+        (Optional) The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tpeExpectations.intent.id
+        (Optional) The intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tpeExpectations.serviceIntent.id
+        (Optional) The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

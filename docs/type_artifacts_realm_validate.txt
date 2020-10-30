@@ -1,0 +1,12 @@
+> TYPE_ARTIFACTS_REALM_VALIDATE
+
+        Handle resource of type type_artifacts_realm_validate
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,103 @@
+> NSI_API_V6_NETWORKCONSTRUCTS
+
+        Handle resource of type nsi_api_v6_networkconstructs
+
+OPTIONS (= is mandatory):
+
+- concrete
+        (Optional) Id of the concrete networkConstruct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- identifierKey
+        The identifier key list
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- identifierValue
+        The identifier value list
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: expectations, physicalLocation,
+        parentNetworkConstruct, networkConstructDiscovered,
+        networkConstructPlanned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        (Optional) Ip Address of Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page. The default is 30
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        (Optional) List of device name values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.equipmentIntent.id
+        (Optional) The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructExpectations.serviceIntent.id
+        (Optional) The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructType
+        (Optional) Network Construct type. The allowed values are:
+        networkElement, shelf, osrpNode, manual, branchingUnit,
+        submarineRepeater
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- physicalLocationId
+        (Optional) Physical location id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sessionId
+        (Optional) Management Session Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

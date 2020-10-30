@@ -1,0 +1,19 @@
+> COMMISSIONING_API_V1_EQUIPMENT
+
+        Handle resource of type commissioning_api_v1_equipment
+
+OPTIONS (= is mandatory):
+
+- data
+        Data for commissioning an equipment.
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

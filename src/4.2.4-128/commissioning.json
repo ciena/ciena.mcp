@@ -1,0 +1,2368 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "3.0.31",
+    "title": "Commissioning",
+    "description": "Commission equipment topologies and manage commissioning scripts\n"
+  },
+  "schemes": ["http", "https"],
+  "tags": [
+    {
+      "name": "Scripts Management",
+      "description": "Manage commissioning scripts for shelf and its related equipment projects"
+    },
+    {
+      "name": "Equipment Commissioning",
+      "description": "Commission an equipment and its topologies"
+    },
+    {
+      "name": "Policy Management",
+      "description": "Manage policies required for commissioning"
+    },
+    {
+      "name": "Policy Defaults Management",
+      "description": "Manage default values for each policy"
+    },
+    {
+      "name": "IP Subnet Management",
+      "description": "Allocate IPv4 and IPv6 subnet"
+    },
+    {
+      "name": "IPv4 Subnet Management",
+      "description": "Allocate IPv4 subnet address for shelf"
+    },
+    {
+      "name": "Reserved IPAddress Management",
+      "description": "Load Reserved IPAddress for the Interface"
+    },
+    {
+      "name": "Deployed Network IPv4 Management",
+      "description": "Manage deployed IPv4 address for shelf"
+    },
+    {
+      "name": "Retrieval of IPAdress Management",
+      "description": "Retrieve IPAddress from given subnet or tid"
+    },
+    {
+      "name": "Service Management",
+      "description": "Perform provisioning of services"
+    },
+    {
+      "name": "User Access Privileges Management",
+      "description": "Determine 6500 User Access Privileges"
+    },
+    {
+      "name": "Deployment data",
+      "description": "Deployment data for the planning project"
+    }
+  ],
+  "basePath": "/",
+  "produces": ["application/json"],
+  "paths": {
+    "/commissioning/api/v1/scripts/": {
+      "get": {
+        "tags": ["Scripts Management"],
+        "description": "Use this API to fetch the commissioning scripts for a planned project.\n\nPrerequisite: Commissioning scripts must exist for specified project.\n",
+        "summary": "Get commissioning scripts",
+        "parameters": [
+          {
+            "name": "projectname",
+            "in": "query",
+            "description": "Project Name of planned network",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "devicetype",
+            "in": "query",
+            "description": "Device type planned network i.e., 6500, Waveserver",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nodename",
+            "in": "query",
+            "description": "Node name in a planned network",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "shelfId",
+            "in": "query",
+            "description": "Shelf Id of the generated script e.g. Shelf number 0,1,2,11,21 etc or ALL",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "Script format to be returned i.e., ztpScript, json, cli",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved commissioning scripts.",
+            "schema": {
+              "title": "CommissioningScriptsData",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "projectName": { "type": "string" },
+                    "relatedProjects": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "nodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "nodeType": { "type": "string" },
+                          "nodeName": { "type": "string" },
+                          "shelves": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "shelfId": { "type": "string" },
+                                "scripts": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "release": { "type": "string" },
+                                      "sequenceId": { "type": "string" },
+                                      "deviceType": { "type": "string" },
+                                      "scriptId": { "type": "string" },
+                                      "commands": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "commandType": { "type": "string" },
+                                            "command": { "type": "string" }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters, could not find projectname parameter."
+          },
+          "500": {
+            "description": "Retrieval of commissioning scripts failed, error message provided in logs and response."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Scripts Management"],
+        "description": "Use this API to delete the commissioning scripts for a project name.\n\nPrerequisite: Commissioning scripts must exist for specified project.\n",
+        "summary": "Delete commissioning scripts",
+        "parameters": [
+          {
+            "name": "projectname",
+            "in": "query",
+            "description": "Project Name of planned network",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted commissioning scripts."
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters, could not find projectname parameter."
+          },
+          "500": {
+            "description": "Deletion of commissioning scripts failed, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Scripts Management"],
+        "description": "Use this API to generate the commissioning scripts for a planned project.\n\nPrerequisite: Project must have been planned, committed and deployment planning data(example: TID, IP and FIC) must have been provided.\n",
+        "summary": "Generate and return commissioning scripts",
+        "parameters": [
+          {
+            "name": "projectname",
+            "in": "query",
+            "description": "Project Name of planned network",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "policyid",
+            "in": "query",
+            "description": "Policy id of commissioning policy to be used",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully generated commissioning scripts.",
+            "schema": {
+              "title": "CommissioningScriptsData",
+              "type": "object",
+              "$ref": "#/definitions/scriptsSummaryData"
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters, could not find projectname parameter."
+          },
+          "500": {
+            "description": "Generation of commissioning scripts failed, error message provided in logs and response."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/scriptsSummary/": {
+      "get": {
+        "tags": ["Scripts Management"],
+        "description": "Use this API to retrieve summary of commissioning scripts.",
+        "summary": "Get commissioning scripts summary",
+        "parameters": [
+          {
+            "name": "projectname",
+            "in": "query",
+            "description": "Project Name of planned network",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved commissioning scripts summary.",
+            "schema": {
+              "title": "Scripts summary data",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/scriptsSummaryData"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Retrieval of scripts summary failed, error message provided in logs and response."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/equipment/": {
+      "post": {
+        "tags": ["Equipment Commissioning"],
+        "description": "Use this API to commission the topologies of a provisioned equipment.\n\nPrerequiste: Equipment project must have been planned, committed and equipment must be provisioned. \n",
+        "summary": "Commission topologies of an equipment",
+        "responses": {
+          "201": {
+            "description": "Successfully submitted request to commission topologies of an equipment."
+          },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Failed to commission equipment topologies, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "newEquipment",
+            "in": "body",
+            "description": "New equipment to be commissioned.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/newEquipment" }
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v1/policy/": {
+      "get": {
+        "tags": ["Policy Management"],
+        "description": "Use this API to retrieve a policy by id or to retrieve all policies.\n\nPrerequisite: Policy must exist for specified policy id.\n",
+        "summary": "Get policy details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the policy",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved policy details.",
+            "schema": {
+              "title": "Policies data",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "description": { "type": "string" },
+                      "policy_name": { "type": "string" },
+                      "state": { "type": "string" },
+                      "policy_type": { "type": "string" },
+                      "policy_id": { "type": "string" },
+                      "customer_name": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters, could not find policy id parameter."
+          },
+          "500": {
+            "description": "Retrieval of policy failed, error message provided in logs and response."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Policy Management"],
+        "description": "Use this API to delete a policy.\n\nPrerequisite: Policy must exist for specified policy id.\n",
+        "summary": "Delete policy details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the policy",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successfully deleted policy." },
+          "400": {
+            "description": "Bad request. Invalid parameters, could not find policy id parameter."
+          },
+          "500": {
+            "description": "Deletion of policy failed, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Policy Management"],
+        "description": "Use this API to create a policy.\n\nPrerequisite: Policy type for this policy must exist in commissioning.\n",
+        "summary": "Create a policy",
+        "responses": {
+          "200": {
+            "description": "Successfully created policy.",
+            "schema": {
+              "title": "PolicyData",
+              "type": "object",
+              "properties": {
+                "description": { "type": "string" },
+                "policy_name": { "type": "string" },
+                "state": { "type": "string" },
+                "policy_type": { "type": "string" },
+                "policy_id": { "type": "string" },
+                "customer_name": { "type": "string" }
+              }
+            }
+          },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Policy creation failed, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "newPolicy",
+            "in": "body",
+            "description": "Policy object.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/policy" }
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Policy Management"],
+        "description": "Use this API to update a policy state.\n\nPrerequisite: Policy must exist in commissioning.\n",
+        "summary": "Update a policy",
+        "responses": {
+          "200": { "description": "Successfully updated policy." },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Policy update failed, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of policy.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "policy",
+            "in": "body",
+            "description": "Policy object.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/policy" }
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v1/policyTypes/": {
+      "get": {
+        "tags": ["Policy Management"],
+        "description": "Use this API to retrieve all policy types supported in commissioning.",
+        "summary": "Get all policy types",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved policy types.",
+            "schema": {
+              "title": "PolicyTypesData",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "supported_operation": { "type": "string" },
+                      "master_template": { "type": "string" },
+                      "policy_type": { "type": "string" },
+                      "defaults_file": { "type": "string" },
+                      "handler_class": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Retrieval of policy types failed, error message provided in logs and response."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/policyDefaults/": {
+      "get": {
+        "tags": ["Policy Defaults Management"],
+        "description": "Use this API to retrieve defaults for a policy or to retrieve defaults for all policies of a specific policy type or to retrieve defaults for all policies.\n\nPrerequisite: Policy must exist for specified policy id.\n",
+        "summary": "Get defaults of a policy",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the policy",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of the policy",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved defaults for specified policy id.",
+            "schema": {
+              "title": "DefaultsData",
+              "type": "object",
+              "properties": { "data": { "type": "object" } }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters, could not find policyId parameter."
+          },
+          "500": {
+            "description": "Retrieval of defaults failed, error message provided in logs and response."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Policy Defaults Management"],
+        "description": "Use this API to reset defaults for a policy.\n\nPrerequisite: Policy must exist for specified policy id.\n",
+        "summary": "Reset defaults of a policy",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the policy",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successfully reset defaults of a policy." },
+          "400": {
+            "description": "Bad request. Invalid parameters, could not find policyId parameter."
+          },
+          "500": {
+            "description": "Reset of defaults failed, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Policy Defaults Management"],
+        "description": "Use this API to set the custom defaults for a policy.\n\nPrerequisite: Policy type for this policy must exist in commissioning.\n",
+        "summary": "Set custom defaults for a policy",
+        "responses": {
+          "201": {
+            "description": "Successfully updated defaults for a policy."
+          },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Defaults update failed, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of policy.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "defaults",
+            "in": "body",
+            "description": "Value of defaults",
+            "required": true,
+            "schema": { "$ref": "#/definitions/defaults" }
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Policy Defaults Management"],
+        "description": "Use this API to set the custom defaults for a policy.\n\nPrerequisite: Policy must exist in commissioning.\n",
+        "summary": "Set custom defaults for a policy",
+        "responses": {
+          "201": {
+            "description": "Successfully updated defaults of a policy."
+          },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Defaults update failed, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of policy.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "defaults",
+            "in": "body",
+            "description": "Value of defaults.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/defaults" }
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v2/ipsubnet/": {
+      "get": {
+        "tags": ["IP Subnet Management"],
+        "description": "Use this API to retrieve allocated IP Subnet.",
+        "summary": "Get IP Subnet details",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved allocated IPAddress Subnets.",
+            "schema": { "$ref": "#/definitions/subnetallocation" }
+          },
+          "500": {
+            "description": "Retrieval of IPSubnet failed, error message provided in logs and response."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["IP Subnet Management"],
+        "description": "Use this API to delete allocated IPSubnet for given OspfArea.",
+        "summary": "Delete IP Subnet OspfArea Address",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "subnetId with OspfArea.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ipremoval" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successfully deleted IPSubnet." },
+          "400": {
+            "description": "Bad Request OspfArea or subnetId is not valid or does not exist."
+          },
+          "500": {
+            "description": "Internal Error in deletion of OspfArea, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["IP Subnet Management"],
+        "description": "Use this API to Allocate new IP Subnet and OspfArea for the Shelf,\n\n Provide IP address with Subnet and CIDR for Shelf ",
+        "summary": "Allocate IP Subnet and ospfArea Addresses",
+        "responses": {
+          "201": {
+            "description": "Successfully allocated IP Subnet and OspfArea."
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters OspfArea or IPsubnet Parameter is wrong."
+          },
+          "500": {
+            "description": "Failed to Allocate IPSubnet, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "IPAddressSubnet",
+            "in": "body",
+            "description": "ipsubnet object.",
+            "required": false,
+            "schema": { "$ref": "#/definitions/subnet" }
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v1/ipsubnet/": {
+      "get": {
+        "tags": ["IPv4 Subnet Management"],
+        "deprecated": true,
+        "description": "Use this API to retrieve allocated IPv4 Subnet.",
+        "summary": "Get IPv4 Subnet details",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved allocated IPAddress Subnets.",
+            "schema": {
+              "title": "IPSubnet",
+              "type": "object",
+              "properties": {
+                "ipsubnet": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "usage": { "type": "string" },
+                      "subnetId": { "type": "string" },
+                      "ospfArea": { "type": "string" },
+                      "shelfIP": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Retrieval of IPv4 Address allocation failed, error message provided in logs and response."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["IPv4 Subnet Management"],
+        "deprecated": true,
+        "description": "Use this API to delete allocated IPv4 OspfArea Address.",
+        "summary": "Delete IPv4 OspfArea Address",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "subnetId with OspfArea.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ipremoval" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successfully deleted ospfArea." },
+          "400": {
+            "description": "Bad Request OspfArea or subnetId is not valid or does not exist."
+          },
+          "500": {
+            "description": "Internal Error in deletion of OspfArea, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["IPv4 Subnet Management"],
+        "deprecated": true,
+        "description": "Use this API to Allocate new IPv4 Subnet and OspfArea for the Shelf,\n\n Provide IPv4 address with Subnet and CIDR for Shelf ",
+        "summary": "Allocate IPv4 shelf subnet and ospfArea Addresses",
+        "responses": {
+          "201": {
+            "description": "Successfully allocated IPv4 Address and OspfArea."
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters OspfArea or ShelfIP Parameter is wrong."
+          },
+          "500": {
+            "description": "Failed to Allocate IPAddress, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "ipsubnet",
+            "in": "body",
+            "description": "ipsubnet object.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ipsubnet" }
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v2/reservedIP/": {
+      "get": {
+        "tags": ["Reserved IPAddress Management"],
+        "description": "Use this API to retrieve reserved network data for shelves, crafts. \n\nPrerequisite: IPAddress network data must be uploaded for deployed shelf or craft.",
+        "summary": "Get Reserved IPAddress data of Interface (shelves , crafts)",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "query",
+            "description": "Target Identifier for shelves with reserved IPAddress",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved reserved shelves, crafts IPAddress data.",
+            "schema": {
+              "title": "Reserved IPAddress of Shelves or crafts",
+              "type": "object",
+              "properties": {
+                "reservedIPdata": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": { "type": "string" },
+                      "projectId": { "type": "string" },
+                      "ospfArea": { "type": "string" },
+                      "shelfNumber": { "type": "string" },
+                      "tid": { "type": "string" },
+                      "projectName": { "type": "string" },
+                      "IP": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve  reserved shelves or craft IPAddress data, error message provided in logs and response."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reserved IPAddress Management"],
+        "description": "Use this API to delete reserved shelf IPAddress data.",
+        "summary": "Reserved IPAddress Management",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Tid with ShelfNumber.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/deployedShelfRemoval" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted reserved IPAddress data."
+          },
+          "400": {
+            "description": "Bad Request, ShelfNumber or Tid is not valid or does not exist."
+          },
+          "500": {
+            "description": "Internal Error in deletion of Shelf, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reserved IPAddress Management"],
+        "description": "Use this API to load reserved shelf or craft IPAddress data into commissioning.\n\nPrerequisite: Shelves are already deployed in the network and are not commissioned using scripts generated by commissioning",
+        "summary": "Reserved IPAddress of the Interface (shelf or craft) data",
+        "responses": {
+          "201": { "description": "Successfully loaded IPAddress data." },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Failed to load IPAddress data, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "reservedIP",
+            "in": "body",
+            "description": "Reserved IPAddress of the Interface.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/reservedIP" }
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v1/deployedIPv4Data/": {
+      "get": {
+        "tags": ["Deployed Network IPv4 Management"],
+        "deprecated": true,
+        "description": "Use this API to retrieve deployed IPv4 network data for shelves. \n\nPrerequisite: IPv4 network data must be uploaded for deployed shelf.",
+        "summary": "Get deployed shelves IPv4 data",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "query",
+            "description": "Target Identifier for shelves in deployed IPv4 network",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved deployed shelves IPv4 data.",
+            "schema": {
+              "title": "Deployed Shelf",
+              "type": "object",
+              "properties": {
+                "deployedShelf": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "usage": { "type": "string" },
+                      "projectId": { "type": "string" },
+                      "ospfArea": { "type": "string" },
+                      "shelfNumber": { "type": "string" },
+                      "tid": { "type": "string" },
+                      "projectName": { "type": "string" },
+                      "shelfIP": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve deployed shelves IPv4 data, error message provided in logs and response."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Deployed Network IPv4 Management"],
+        "deprecated": true,
+        "description": "Use this API to delete deployed shelf IPv4 data.",
+        "summary": "Delete deployed shelf IPv4 data",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Tid with ShelfNumber.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/deployedShelfRemoval" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successfully deleted shelf IPv4 data." },
+          "400": {
+            "description": "Bad Request, ShelfNumber or Tid is not valid or does not exist."
+          },
+          "500": {
+            "description": "Internal Error in deletion of Shelf, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Deployed Network IPv4 Management"],
+        "deprecated": true,
+        "description": "Use this API to load deployed shelves IPv4 data into commissioning.\n\nPrerequisite: Shelves are already deployed in the network and are not commissioned using scripts generated by commissioning",
+        "summary": "Load deployed shelves IPv4 data",
+        "responses": {
+          "201": { "description": "Successfully loaded shelves IPv4 data." },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Failed to load shelves IPv4 data, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "deployedNetwork",
+            "in": "body",
+            "description": "deployed Network object.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/deployedNetwork" }
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v1/ipaddress/": {
+      "get": {
+        "tags": ["Retrieval of IPAdress Management"],
+        "description": "Retrieve IPAddress from given subnet or tid.",
+        "summary": "Get IPAddress under a given subnet or tid",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "query",
+            "description": "tid or Target Identifier",
+            "type": "string"
+          },
+          {
+            "name": "subnet",
+            "in": "query",
+            "description": "Subnet",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieved IPAddress.",
+            "schema": {
+              "title": "IPAddress",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/ipaddressdata"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Retrieval of IPAddress failed. error message provided in logs and response."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/services/": {
+      "get": {
+        "tags": ["Service Management"],
+        "description": "Retrieve provisioned services state.",
+        "summary": "Get provisioned services state",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved provisioned services state."
+          },
+          "500": {
+            "description": "Retrieval of provisioned services state failed, error message provided in logs and response."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Service Management"],
+        "description": "Perform manual provisioning of all services like SNMP, NTP etc. which is normally done after successful discovery of network element. If performed for a specific service this operation will queue a request per discovered node. The processing of requests for all nodes will take time to complete. Subsequent Post requests for a service will be rejected until the queue has been completely processed",
+        "summary": "Trigger service provisioning",
+        "responses": {
+          "201": { "description": "Successfully provisioned services." },
+          "202": {
+            "description": "Request has been accepted for provisioning."
+          },
+          "500": {
+            "description": "Failed to provision services, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "sessionid",
+            "in": "query",
+            "description": "Session id of the network element.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nodename",
+            "in": "query",
+            "description": "Node name in a planned network.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "deviceType",
+            "in": "query",
+            "description": "The provisioning of the service to be trigger against provided type of network elements e.g. 6500, Waveserver, Waveserver Ai",
+            "required": false,
+            "type": "string",
+            "examples": ["Waveserver Ai", "Waveserver", "6500"]
+          },
+          {
+            "name": "service",
+            "in": "query",
+            "description": "Service to be provisioned, if not provided by default all applicable services will be provisioned. Bulk operation may be slow.",
+            "required": false,
+            "type": "string",
+            "examples": ["license", "ntp", "snmp"]
+          }
+        ]
+      }
+    },
+    "/commissioning/api/v1/uap-6500-1/": {
+      "get": {
+        "tags": ["User Access Privileges Management"],
+        "description": "Validate User Access Level 1 Privilege",
+        "summary": "Determine User Access Level 1 Privilege",
+        "responses": {
+          "200": { "description": "User has 6500 Level 1 Access privileges." },
+          "500": { "description": "User does not have any access privileges." }
+        }
+      }
+    },
+    "/commissioning/api/v1/uap-6500-2/": {
+      "get": {
+        "tags": ["User Access Privileges Management"],
+        "description": "Validate User Access Level 2 Privilege",
+        "summary": "Determine User Access Level 2 Privilege",
+        "responses": {
+          "200": { "description": "User has 6500 Level 2 Access privileges." },
+          "500": {
+            "description": "User does not have Level 2 Access privileges."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/uap-6500-3/": {
+      "get": {
+        "tags": ["User Access Privileges Management"],
+        "description": "Validate User Access Level 3 Privilege",
+        "summary": "Determine User Access Level 3 Privilege",
+        "responses": {
+          "200": { "description": "User has 6500 Level 3 Access privileges." },
+          "500": {
+            "description": "User does not have Level 3 Access privileges."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/uap-6500-4/": {
+      "get": {
+        "tags": ["User Access Privileges Management"],
+        "description": "Validate User Access Level 4 Privilege",
+        "summary": "Determine User Access Level 4 Privilege",
+        "responses": {
+          "200": { "description": "User has 6500 Level 4 Access privileges." },
+          "500": {
+            "description": "User does not have Level 4 Access privileges."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/uap-6500-5/": {
+      "get": {
+        "tags": ["User Access Privileges Management"],
+        "description": "Validate User Access Level 5 Privilege",
+        "summary": "Determine User Access Level 5 Privilege",
+        "responses": {
+          "200": { "description": "User has 6500 Level 5 Access privileges." },
+          "500": {
+            "description": "User does not have Level 5 Access privileges."
+          }
+        }
+      }
+    },
+    "/commissioning/api/v1/deploymentData/": {
+      "get": {
+        "tags": ["Deployment data"],
+        "description": "Use this API to retrieve the deployment data of the planning project.",
+        "summary": "Get the deployment data of the planning project",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved deployment data of the project.",
+            "schema": {
+              "title": "Deployment data",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/projectDeploymentData"
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Retrieval of deployment data failed, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectname",
+            "in": "query",
+            "description": "Project Name of planned network.",
+            "required": true
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Deployment data"],
+        "description": "Use this API to add/update the deployment data of the planning project.",
+        "summary": "Update the deployment data of the planning project.",
+        "responses": {
+          "201": {
+            "description": "Request sent successfully to update the deployment of the project.",
+            "schema": {
+              "title": "Deployment data",
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/projectPostDeploymentResponseData"
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad request. Invalid parameters." },
+          "500": {
+            "description": "Updation of deployment data failed, error message provided in logs and response."
+          }
+        },
+        "parameters": [
+          {
+            "name": "projectname",
+            "in": "query",
+            "description": "Project Name of planned network.",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Network construct userdata and attribute data to be updated.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PostDeploymentRequestData" }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "scriptsSummaryData": {
+      "type": "object",
+      "required": [
+        "devicetypesURLs",
+        "projectName",
+        "nodes",
+        "supportedFormats"
+      ],
+      "properties": {
+        "devicetypesURLs": {
+          "type": "array",
+          "description": "The URLs to get commissioning scripts for each device types available in project.",
+          "items": {
+            "type": "object",
+            "required": ["deviceType", "scriptLinks"],
+            "properties": {
+              "deviceType": {
+                "type": "string",
+                "description": "The device type value",
+                "default": "",
+                "examples": ["WaveserverAi", "6500"]
+              },
+              "scriptLinks": {
+                "type": "array",
+                "description": "The URLs array to get commissioning scripts for each device type.",
+                "items": {
+                  "type": "object",
+                  "required": ["link", "format"],
+                  "properties": {
+                    "link": {
+                      "type": "string",
+                      "description": "A URL to get the commissioning scripts for a device type.",
+                      "examples": [
+                        "http://localhost:8080/commissioning/api/v1/scripts/?projectname=WS6500Project&devicetype=WaveserverAi&format=ztpScripts"
+                      ]
+                    },
+                    "format": {
+                      "type": "string",
+                      "description": "Format of the commissioning scripts data, for example - json, cli, ztpScripts",
+                      "examples": ["ztpScripts", "cli", "json"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "projectName": {
+          "type": "string",
+          "description": "Project name for which commissioning scripts are available."
+        },
+        "nodes": {
+          "type": "array",
+          "description": "Nodes available in the project.",
+          "items": {
+            "type": "object",
+            "required": [
+              "nodeType",
+              "shelves",
+              "deviceType",
+              "nodeName",
+              "scriptLinks"
+            ],
+            "properties": {
+              "nodeType": {
+                "type": "string",
+                "description": "Node type of the node.",
+                "examples": ["OADM"]
+              },
+              "shelves": {
+                "type": "array",
+                "description": "Shelves available in the node.",
+                "items": {
+                  "type": "object",
+                  "required": ["release", "shelfId", "primary"],
+                  "properties": {
+                    "release": {
+                      "type": "string",
+                      "description": "Release of the node.",
+                      "examples": ["12.1"]
+                    },
+                    "shelfId": {
+                      "type": "string",
+                      "description": "Shelf id or Shelf number",
+                      "examples": ["1"]
+                    },
+                    "primary": {
+                      "type": "string",
+                      "description": "Inform if primary is enabled or not.",
+                      "examples": ["Enable"]
+                    }
+                  }
+                }
+              },
+              "deviceType": {
+                "type": "string",
+                "description": "Device type",
+                "examples": ["6500"]
+              },
+              "nodeName": {
+                "type": "string",
+                "description": "Node name",
+                "examples": ["NE1"]
+              },
+              "scriptLinks": {
+                "type": "array",
+                "description": "The URLs array to get the commissioning script for a node.",
+                "items": {
+                  "type": "object",
+                  "required": ["link", "format"],
+                  "properties": {
+                    "link": {
+                      "type": "string",
+                      "description": "The URL to get the commissioning script for a node name.",
+                      "examples": [
+                        "http://localhost:8080/commissioning/api/v1/scripts/?projectname=WS6500Project&devicetype=6500&nodename=sidtid1"
+                      ]
+                    },
+                    "format": {
+                      "type": "string",
+                      "description": "Format of the commissioning scripts data, for example - json, cli, ztpScripts",
+                      "examples": ["ztpScripts", "cli", "json"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "supportedFormats": {
+          "type": "array",
+          "description": "Support formats of commissioning scripts available for this project.",
+          "items": {
+            "type": "string",
+            "examples": ["ztpScripts", "cli", "json"]
+          }
+        }
+      }
+    },
+    "newEquipment": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "type": "object",
+          "description": "Data for commissioning an equipment.",
+          "required": ["attributes"],
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "description": "Attributes required for an equipment commissioning.",
+              "properties": {
+                "planning": { "$ref": "#/definitions/planningData" },
+                "networkConstruct": {
+                  "$ref": "#/definitions/networkConstructData"
+                },
+                "equipment": { "$ref": "#/definitions/equipmentData" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "commissionProjectData": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "type": "object",
+          "description": "Data for nodes and planning projects identifiers.",
+          "required": ["attributes"],
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "description": "Attributes required for commissionining shelves available in planning project.",
+              "properties": {
+                "planning": { "$ref": "#/definitions/planningData" },
+                "nodes": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/networkConstructData" }
+                },
+                "expectations": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/networkConstructExpectationsData"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "planningData": {
+      "type": "object",
+      "description": "Data associated with Resource Planning Tool(RPT).",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "This field maps to the project id field in the RPT. This identifier is used by commissioning to retrieve auto-slat data from RPT."
+        },
+        "name": {
+          "type": "string",
+          "description": "This field maps to the project name field in the RPT."
+        }
+      }
+    },
+    "networkConstructData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the NetworkConstruct resource"
+        },
+        "type": {
+          "type": "string",
+          "description": "The Network Construct resource type"
+        },
+        "attributes": { "$ref": "#/definitions/networkConstructAttributes" },
+        "relationships": {
+          "$ref": "#/definitions/networkConstructRelationships"
+        }
+      }
+    },
+    "networkConstructExpectationsData": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "id": {
+          "description": "The unique identifier of the network construct expectation",
+          "type": "string"
+        },
+        "type": {
+          "description": "The network construct expectation type",
+          "type": "string"
+        },
+        "attributes": {
+          "$ref": "#/definitions/networkConstructExpectationAttributes"
+        },
+        "relationships": {
+          "$ref": "#/definitions/networkConstructExpectationRelationships"
+        }
+      }
+    },
+    "networkConstructExpectationAttributes": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "Name (e.g. TID) of the Network Construct"
+        },
+        "ipAddress": {
+          "type": "string",
+          "title": "IP Address",
+          "description": "IP address used for expectations."
+        },
+        "shelfType": {
+          "type": "string",
+          "title": "Shelf type",
+          "description": "Shelf type of the network construct(example - ILA, DGE."
+        }
+      }
+    },
+    "networkConstructExpectationRelationships": {
+      "type": "object",
+      "properties": {
+        "equipmentIntent": {
+          "type": "object",
+          "description": "The one-to-one relationship to the equipment intent that created the expectation",
+          "$ref": "#/definitions/oneToOneRelationship"
+        },
+        "serviceIntent": {
+          "type": "object",
+          "description": "The one-to-one relationship to the service intent that created the expectation",
+          "$ref": "#/definitions/oneToOneRelationship"
+        },
+        "physicalLocation": {
+          "type": "object",
+          "description": "The location of the network construct expectation is a one-to-one relationship",
+          "$ref": "#/definitions/oneToOneRelationship"
+        },
+        "parentNetworkConstruct": {
+          "type": "object",
+          "description": "The parent network construct is a one-to-one relationship",
+          "$ref": "#/definitions/oneToOneRelationship"
+        }
+      }
+    },
+    "equipmentData": {
+      "description": "The equipment data",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The unique identifier for the equipment resource",
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "The equipment resource type"
+        },
+        "attributes": { "$ref": "#/definitions/equipmentAttributes" },
+        "relationships": { "$ref": "#/definitions/equipmentRelationships" }
+      }
+    },
+    "equipmentAttributes": {
+      "description": "The equipment attributes",
+      "type": "object",
+      "properties": {
+        "locations": {
+          "type": "array",
+          "description": "The list of locations associated with the equipment",
+          "items": { "$ref": "#/definitions/location" }
+        },
+        "category": {
+          "type": "string",
+          "description": "The equipment category"
+        },
+        "nativeName": {
+          "type": "string",
+          "description": "The native name of the equipment"
+        },
+        "provisionedSpec": { "$ref": "#/definitions/equipmentSpec" },
+        "installedSpec": { "$ref": "#/definitions/equipmentSpec" },
+        "state": {
+          "type": "string",
+          "description": "The primary state of the equipment"
+        },
+        "secondaryState": {
+          "type": "string",
+          "description": "The secondary state of the equipment"
+        },
+        "availabilityState": {
+          "type": "string",
+          "description": "The availability state of the equipment"
+        },
+        "reservationState": {
+          "type": "string",
+          "description": "The reservation state of the equipment"
+        },
+        "cardType": { "type": "string", "description": "The card type" },
+        "siteName": {
+          "type": "string",
+          "description": "The site name associated with the equipment"
+        },
+        "siteId": {
+          "type": "string",
+          "description": "The site identifier associated with the equipment"
+        },
+        "maintenanceMode": {
+          "description": "Maintenance mode to indicate if the equipment is available or not to MCP. While in maintenance mode, MCP will not provision anything against this equipment (including TPE information)",
+          "type": "boolean"
+        },
+        "syncScopes": {
+          "type": "array",
+          "description": "The sync scope for the equipment",
+          "items": { "$ref": "#/definitions/syncScope" }
+        },
+        "additionalAttributes": { "$ref": "#/definitions/additionalAttributes" }
+      }
+    },
+    "equipmentSpec": {
+      "description": "The specification of an equipment; can be either installed specification, the physical representation of the equipment, or provisioned specification, the logic representation of the equipment",
+      "type": "object",
+      "properties": {
+        "hardwareVersion": {
+          "type": "string",
+          "description": "The hardware version"
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "The serial number"
+        },
+        "manufacturer": { "type": "string", "description": "The manufacturer" },
+        "type": { "type": "string", "description": "The type of equipment" },
+        "partNumber": { "type": "string", "description": "The part number" },
+        "version": { "type": "string", "description": "The software version" },
+        "displayLabels": { "$ref": "#/definitions/displayLabelMap" },
+        "additionalAttributes": { "$ref": "#/definitions/additionalAttributes" }
+      }
+    },
+    "equipmentRelationships": {
+      "description": "The equipment relationships",
+      "type": "object",
+      "properties": {
+        "networkConstruct": { "$ref": "#/definitions/oneToOneRelationship" },
+        "equipmentHolder": { "$ref": "#/definitions/oneToOneRelationship" },
+        "equipmentExpectations": {
+          "$ref": "#/definitions/oneToManyRelationship"
+        }
+      }
+    },
+    "networkConstructAttributes": {
+      "type": "object",
+      "properties": {
+        "ipAddress": {
+          "type": "string",
+          "description": "IP Address of Network Construct."
+        },
+        "typeGroup": {
+          "type": "string",
+          "description": "Resource adapter type group."
+        },
+        "resourceType": { "type": "string", "description": "Resource Type." },
+        "associationState": {
+          "type": "string",
+          "description": "Association state of the network construct."
+        },
+        "deviceType": { "type": "string", "description": "Device Type." },
+        "softwareVersion": {
+          "type": "string",
+          "description": "Software version running in the device."
+        },
+        "accessIdentifier": {
+          "type": "string",
+          "description": "AID of the device."
+        },
+        "macAddress": {
+          "type": "string",
+          "description": "MAC address of the device."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name (e.g. TID) of the Network Construct."
+        },
+        "geoLocation": { "$ref": "#/definitions/geoLocation" },
+        "serialNumber": {
+          "type": "string",
+          "description": "Serial number (e.g. NNTMHQDP0001)."
+        },
+        "deviceVersion": {
+          "type": "string",
+          "description": "Device version (example- 6500 32-SLOT OPTICAL)."
+        },
+        "softwareType": {
+          "type": "string",
+          "description": "Software type (example- OCP)"
+        },
+        "softwareImage": { "type": "string", "description": "Software image" },
+        "subnetName": {
+          "type": "string",
+          "description": "Subnet name (e.g. ROADM1---ROADM2---SUBNET)"
+        },
+        "numberOfShelves": {
+          "type": "integer",
+          "description": "Number of shelves (primary + member shelves in case of TIDc)"
+        },
+        "memberFunction": {
+          "type": "string",
+          "description": "Member function of the network construct."
+        },
+        "shelfType": {
+          "type": "string",
+          "description": "Shelf type of the network construct."
+        },
+        "additionalAttributes": {
+          "$ref": "#/definitions/additionalAttributes"
+        },
+        "capabilitySpecRef": {
+          "type": "string",
+          "description": "Name of the file which contains the constraint rules of the network device."
+        },
+        "identifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/networkConstructIdentifier",
+            "description": "A list of attributes used to identify a specific Equipment"
+          }
+        },
+        "userData": { "$ref": "#/definitions/networkConstructUserData" },
+        "modelType": {
+          "type": "string",
+          "description": "The model type associated with this network construct.",
+          "$ref": "#/definitions/networkConstructModelType"
+        },
+        "networkConstructType": {
+          "type": "string",
+          "description": "The type of network construct. It is used to represent the physical hierarchy of a network element."
+        },
+        "l2Data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/l2Data",
+            "description": "L2 Configuration Data for the NE"
+          }
+        }
+      }
+    },
+    "networkConstructUserData": {
+      "type": "object",
+      "description": "User data"
+    },
+    "networkConstructIdentifier": {
+      "type": "object",
+      "description": "Various attributes added by a user to identify the device"
+    },
+    "networkConstructRelationships": {
+      "type": "object",
+      "properties": {
+        "networkConstructExpectations": {
+          "$ref": "#/definitions/oneToManyRelationship"
+        },
+        "managementSession": { "$ref": "#/definitions/oneToOneRelationship" },
+        "physicalLocation": { "$ref": "#/definitions/oneToOneRelationship" },
+        "parentNetworkConstruct": {
+          "$ref": "#/definitions/oneToOneRelationship"
+        },
+        "childrenNetworkConstruct": {
+          "$ref": "#/definitions/oneToManyRelationship"
+        },
+        "concrete": { "$ref": "#/definitions/oneToManyRelationship" }
+      }
+    },
+    "networkConstructModelType": {
+      "type": "string",
+      "description": "The model type of network construct, TPE, FRE."
+    },
+    "geoLocation": {
+      "type": "object",
+      "description": "The geography location of the device",
+      "properties": {
+        "zone": {
+          "type": "string",
+          "description": "Zone of the device location"
+        },
+        "longitude": {
+          "type": "string",
+          "description": "Longitude of the device location"
+        },
+        "latitude": {
+          "type": "string",
+          "description": "Latitude of the device location"
+        }
+      }
+    },
+    "location": {
+      "description": "Location of the entity",
+      "type": "object",
+      "properties": {
+        "managementType": {
+          "type": "string",
+          "description": "Management protocol type"
+        },
+        "fic": { "type": "string", "description": "Frame identification code" },
+        "baynum": { "type": "string", "description": "Bay number" },
+        "rack": { "type": "string", "description": "Rack number" },
+        "shelf": { "type": "string", "description": "Shelf number" },
+        "subshelf": { "type": "string" },
+        "slot": { "type": "string" },
+        "subslot": { "type": "string" },
+        "port": { "type": "string" },
+        "subport": { "type": "string" },
+        "logicalPortName": { "type": "string" },
+        "logicalId": { "type": "string" },
+        "wavelength": { "type": "string" },
+        "index": { "type": "string" },
+        "odu2_index": { "type": "string" },
+        "odu4_index": { "type": "string" },
+        "vlan": {
+          "type": "string",
+          "description": "The VLAN ID of the CTP entity"
+        },
+        "vce": {
+          "type": "string",
+          "description": "The VS name of the CTP entity"
+        },
+        "eqptGrp": {
+          "type": "string",
+          "description": "The group ID obtained from RTRV-EQPTGRP for the SAOS card on which the entity resides"
+        },
+        "frequency": {
+          "type": "string",
+          "description": "The frequency of the channel"
+        },
+        "mcId": {
+          "type": "string",
+          "description": "The identifier of the media channel"
+        },
+        "pseudoWireId": {
+          "type": "string",
+          "description": "DEPRECATED The identifier of Pseudo-Wire CTP"
+        },
+        "pseudoWireName": {
+          "type": "string",
+          "description": "The name of the Pseudo-Wire on the CTP"
+        },
+        "interfaceName": {
+          "type": "string",
+          "description": "Interface name of the IP FTP"
+        },
+        "interfaceIp": {
+          "type": "string",
+          "description": "DEPRECATED The IP address of MPLS interface"
+        },
+        "primaryLspName": {
+          "type": "string",
+          "description": "The primary MPLS tunnel name"
+        },
+        "tunnelRole": { "type": "string", "description": "MPLS tunnel role" },
+        "lspName": { "type": "string", "description": "MPLS tunnel name" },
+        "protectionRole": {
+          "type": "string",
+          "description": "Protection role"
+        },
+        "mplsLabel": {
+          "type": "string",
+          "description": "MPLS tunnel forward/reverse in/out label"
+        },
+        "lagName": { "type": "string", "description": "Name of the LAG" }
+      }
+    },
+    "remoteNetworkConstructRoute": {
+      "description": "The remote NE connection data",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "TL1 target identifier for an NE (e.g. G4218-2NCP06)"
+        },
+        "connectionAddress": {
+          "type": "array",
+          "description": "Connection addresses of the NE",
+          "items": {
+            "$ref": "#/definitions/remoteNetworkConstructRoutingConnectionAddress"
+          }
+        },
+        "additionalAttributes": { "$ref": "#/definitions/additionalAttributes" }
+      }
+    },
+    "remoteNetworkConstructRoutingConnectionAddress": {
+      "description": "The remote NE connection data",
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Connection address of the NE"
+        },
+        "cost": {
+          "type": "integer",
+          "description": "Connection cost of the above mentioned address (optional)"
+        }
+      }
+    },
+    "additionalAttributes": {
+      "type": "object",
+      "description": "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+      "properties": { "additionalProperties": { "type": "string" } }
+    },
+    "displayLabelMap": {
+      "type": "object",
+      "description": "Display label key/value pair map",
+      "properties": { "additionalProperties": { "type": "string" } }
+    },
+    "oneToManyRelationship": {
+      "description": "The one-to-many relationship",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "The one-to-many relationship",
+          "type": "array",
+          "items": { "$ref": "#/definitions/relationshipData" }
+        }
+      }
+    },
+    "oneToOneRelationship": {
+      "description": "The one-to-one relationship",
+      "type": "object",
+      "properties": { "data": { "$ref": "#/definitions/relationshipData" } }
+    },
+    "relationshipData": {
+      "description": "The relationship type and identifier",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "The relationship resource type",
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the referenced resource.",
+          "type": "string"
+        }
+      }
+    },
+    "syncScope": {
+      "description": "The synchronization scope",
+      "properties": {
+        "context": {
+          "type": "string",
+          "description": "sync scope context",
+          "items": { "type": "string" }
+        },
+        "name": {
+          "type": "array",
+          "description": "sync scope name",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "l2Data": {
+      "description": "Describes a single entry in the L2Data",
+      "type": "object",
+      "properties": {
+        "shelf": { "type": "string", "description": "Shelf number" },
+        "eqptGrp": {
+          "type": "string",
+          "description": "The group ID obtained from RTRV-EQPTGRP for the SAOS card on which the entity resides"
+        },
+        "loopbackAddresses": {
+          "type": "array",
+          "description": "The loopback addresses in the NE.",
+          "items": { "type": "string" }
+        },
+        "staticTunnelLabelRange": {
+          "description": "The operational static tunnel label range.",
+          "$ref": "#/definitions/range"
+        },
+        "dynamicLabelRange": {
+          "description": "The operational dynamic label range.",
+          "$ref": "#/definitions/range"
+        },
+        "staticVcLabelRange": {
+          "description": "The operational static VC label range.",
+          "$ref": "#/definitions/range"
+        }
+      }
+    },
+    "range": {
+      "description": "Describes a Range attribute",
+      "type": "object",
+      "properties": {
+        "minValue": {
+          "type": "integer",
+          "description": "This defines the min value for the range."
+        },
+        "maxValue": {
+          "type": "integer",
+          "description": "This defines the max value for the range."
+        }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "type": "object",
+          "description": "Data for defaults of a policy."
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "required": ["policyName", "policyType"],
+      "properties": {
+        "policyName": { "type": "string", "description": "Name of policy" },
+        "policyType": { "type": "string", "description": "Type of policy" },
+        "description": {
+          "type": "string",
+          "description": "Description of policy"
+        },
+        "customerName": { "type": "string", "description": "Customer notes" },
+        "state": {
+          "type": "string",
+          "description": "State of policy. For example: New, Enable, Disable"
+        },
+        "policyId": { "type": "string", "description": "Id of policy" }
+      }
+    },
+    "ipsubnet": {
+      "type": "object",
+      "required": ["shelfIP", "ospfArea"],
+      "properties": {
+        "shelfIP": {
+          "type": "string",
+          "description": "Shelf IPv4 subnet with CIDR"
+        },
+        "ospfArea": {
+          "type": "string",
+          "description": "ospfArea of the Shelf"
+        },
+        "usage": {
+          "type": "string",
+          "description": "IPSubnet is allocated for shelf, craft"
+        }
+      }
+    },
+    "ipremoval": {
+      "type": "object",
+      "required": ["subnetId", "ospfArea"],
+      "properties": {
+        "subnetId": { "type": "string", "description": "Subnet id" },
+        "ospfArea": { "type": "string", "description": "ospfArea of the Shelf" }
+      }
+    },
+    "subnetallocation": {
+      "title": "IPSubnet",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attribute": {
+                "type": "object",
+                "properties": {
+                  "IP": { "type": "array", "items": { "type": "string" } },
+                  "ospfArea": { "type": "string" }
+                }
+              },
+              "type": { "type": "string" },
+              "id": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "subnet": {
+      "title": "IPAddressSubnet",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "properties": {
+                "ospfArea": { "type": "string" },
+                "ospfAreaV3": { "type": "string" },
+                "IP": { "type": "string" },
+                "IP6": { "type": "string" }
+              }
+            },
+            "type": { "type": "string" }
+          }
+        }
+      }
+    },
+    "session": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "description": "The data associated with this request."
+        }
+      },
+      "required": ["session_id"]
+    },
+    "deployedShelfRemoval": {
+      "type": "object",
+      "required": ["tid", "shelfNumber"],
+      "properties": {
+        "tid": {
+          "type": "string",
+          "description": "Target Identifier of the shelf"
+        },
+        "shelfNumber": { "type": "string", "description": "Shelf Number" }
+      }
+    },
+    "deployedNetwork": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ospfArea": { "type": "string" },
+          "projectId": { "type": "string" },
+          "projectName": { "type": "string" },
+          "shelfIP": { "type": "string" },
+          "shelfNumber": { "type": "string" },
+          "tid": { "type": "string" },
+          "usage": { "type": "string" }
+        }
+      }
+    },
+    "reservedIP": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ospfArea": { "type": "string" },
+          "ospfAreaV3": { "type": "string" },
+          "projectId": { "type": "string" },
+          "projectName": { "type": "string" },
+          "IP": { "type": "string" },
+          "IP6": { "type": "string" },
+          "shelfNumber": { "type": "string" },
+          "tid": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      }
+    },
+    "ipaddressdata": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": { "ipaddress": { "type": "string" } }
+      }
+    },
+    "projectDeploymentData": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "required": ["projectName"],
+          "type": "object",
+          "properties": {
+            "projectName": {
+              "type": "string",
+              "decription": "Name of the project."
+            },
+            "nodes": {
+              "type": "array",
+              "description": "Deployment nodes data.",
+              "items": {
+                "type": "object",
+                "$ref": "#/definitions/DeploymentDataNodes"
+              }
+            }
+          }
+        }
+      }
+    },
+    "projectPostDeploymentResponseData": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "required": ["projectName"],
+          "type": "object",
+          "properties": {
+            "projectName": {
+              "type": "string",
+              "decription": "Name of the project."
+            },
+            "nodes": {
+              "type": "array",
+              "description": "Deployment nodes data.",
+              "items": {
+                "type": "object",
+                "$ref": "#/definitions/DeploymentDataNodes"
+              }
+            },
+            "errors": {
+              "type": "array",
+              "description": "Error from NSI against an construct ID.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "code": { "type": "string", "description": "Error code" },
+                  "title": { "type": "string", "description": "Error title" },
+                  "details": {
+                    "type": "string",
+                    "description": "Error details"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostDeploymentRequestData": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "required": ["projectName"],
+          "type": "object",
+          "properties": {
+            "projectName": {
+              "type": "string",
+              "decription": "Name of the project."
+            },
+            "constructs": {
+              "type": "array",
+              "description": "Array of expectations to be updated",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "identifiers": {
+                    "type": "object",
+                    "description": "Network construct and expectation ids to be updated",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "type of network construct, shelf, networkElement, osrpNode"
+                      },
+                      "ncId": {
+                        "type": "string",
+                        "description": "Network construct id"
+                      },
+                      "ncExpectationId": {
+                        "type": "string",
+                        "description": "Network construct expectation id.What about multiple expectations for a NC?"
+                      }
+                    }
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "description": "Attributes for the associated NC and expectation identifiers",
+                    "properties": {
+                      "userData": {
+                        "type": "object",
+                        "description": "Userdata for a network construct"
+                      },
+                      "ipaddress": {
+                        "type": "string",
+                        "decription": "DCN ip address of the shelf."
+                      },
+                      "name": {
+                        "type": "string",
+                        "decription": "Name of the network element."
+                      },
+                      "accessIdentifier": {
+                        "type": "string",
+                        "decription": "Access identifier."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DeploymentDataNodes": {
+      "type": "object",
+      "properties": {
+        "function": {
+          "type": "string",
+          "description": "Function of the network element."
+        },
+        "name": { "type": "string", "description": "Network element name" },
+        "ncExpID": {
+          "type": "string",
+          "description": "Network construct expectation ID of the NE in the NSI."
+        },
+        "version": {
+          "type": "string",
+          "description": "The version number of the NE."
+        },
+        "ncID": {
+          "type": "string",
+          "description": "Network construct ID of the NE in NSI."
+        },
+        "osrpNodeName": {
+          "type": "string",
+          "description": "OSRP node name of the network element."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the network element."
+        },
+        "shelves": {
+          "type": "array",
+          "description": "shelves data in the network element.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ncExpID": {
+                "type": "string",
+                "description": "Network construct expectation ID of the shelf in the NSI."
+              },
+              "fic": {
+                "type": "string",
+                "description": "Frame identification code of the shelf."
+              },
+              "ospfarea": {
+                "type": "string",
+                "description": "OSPF area of the shelf."
+              },
+              "siteId": {
+                "type": "string",
+                "description": "site id of the shelf."
+              },
+              "ncID": {
+                "type": "string",
+                "description": "Network construct id of the shelf in NSI."
+              },
+              "shelfNumber": {
+                "type": "string",
+                "description": "Shelf number."
+              },
+              "shelfIPAddress": {
+                "type": "string",
+                "description": "IP address of the shelf."
+              },
+              "colanA": {
+                "type": "object",
+                "description": "colan A properties of the shelf.",
+                "properties": {
+                  "defaultGateway": {
+                    "type": "string",
+                    "description": "Default gateway of the shelf."
+                  },
+                  "override": {
+                    "type": "string",
+                    "description": "Override property of the shelf."
+                  },
+                  "usage": {
+                    "type": "string",
+                    "description": "Usage of the shelf."
+                  },
+                  "subnetMask": {
+                    "type": "string",
+                    "description": "Subnet mask of the shelf."
+                  },
+                  "ipAddress": {
+                    "type": "string",
+                    "description": "IP address of the colan A."
+                  },
+                  "topology": {
+                    "type": "string",
+                    "description": "Network topology of the shelf in the network."
+                  }
+                }
+              },
+              "colanX": {
+                "type": "object",
+                "description": "colan X properties of the shelf.",
+                "properties": {
+                  "defaultGateway": {
+                    "type": "string",
+                    "description": "Default gateway of the shelf."
+                  },
+                  "override": {
+                    "type": "string",
+                    "description": "Override property of the shelf."
+                  },
+                  "usage": {
+                    "type": "string",
+                    "description": "Usage of the shelf."
+                  },
+                  "subnetMask": {
+                    "type": "string",
+                    "description": "Subnet mask of the shelf."
+                  },
+                  "ipAddress": {
+                    "type": "string",
+                    "description": "IP address of the colan X."
+                  },
+                  "topology": {
+                    "type": "string",
+                    "description": "Network topology of the shelf in the network."
+                  }
+                }
+              },
+              "6500_in": {
+                "type": "object",
+                "description": "6500 IN properties of the shelf.",
+                "items": {
+                  "defaultGateway": {
+                    "type": "string",
+                    "description": "Default gateway of the shelf."
+                  },
+                  "subnetMask": {
+                    "type": "string",
+                    "description": "Subnet mask of the shelf."
+                  },
+                  "ipAddress": {
+                    "type": "string",
+                    "description": "IP address of the IN port."
+                  },
+                  "topology": {
+                    "type": "string",
+                    "description": "Network topology of the shelf in the network."
+                  }
+                }
+              },
+              "6500_out": {
+                "type": "object",
+                "description": "6500 OUT properties of the shelf.",
+                "items": {
+                  "defaultGateway": {
+                    "type": "string",
+                    "description": "Default gateway of the shelf."
+                  },
+                  "subnetMask": {
+                    "type": "string",
+                    "description": "Subnet mask of the shelf."
+                  },
+                  "ipAddress": {
+                    "type": "string",
+                    "description": "IP address of the OUT port."
+                  },
+                  "topology": {
+                    "type": "string",
+                    "description": "Network topology of the shelf in the network."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

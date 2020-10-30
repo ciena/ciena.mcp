@@ -1,0 +1,20 @@
+> NSI_API_V2_0_PHYSICALLOCATIONS_BY_PHYSICALLOCATIONID
+
+        Handle resource of type
+        nsi_api_v2_0_physicallocations_by_physicallocationid
+
+OPTIONS (= is mandatory):
+
+- physicalLocationId
+        Identifier of the physical location to delete
+        Required with `state=['delete']'
+        Used by `state=['delete']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

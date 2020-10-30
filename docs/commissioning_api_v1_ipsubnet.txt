@@ -1,0 +1,39 @@
+> COMMISSIONING_API_V1_IPSUBNET
+
+        Handle resource of type commissioning_api_v1_ipsubnet
+
+OPTIONS (= is mandatory):
+
+- ospfArea
+        ospfArea of the Shelf
+        Required with `state=['delete', 'post']'
+        Used by `state=['delete', 'post']'
+        [Default: (null)]
+        type: str
+
+- shelfIP
+        Shelf IPv4 subnet with CIDR
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, post)[Default: (null)]
+        type: str
+
+- subnetId
+        Subnet id
+        Required with `state=['delete']'
+        Used by `state=['delete']'
+        [Default: (null)]
+        type: str
+
+- usage
+        IPSubnet is allocated for shelf, craft
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

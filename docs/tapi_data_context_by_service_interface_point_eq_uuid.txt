@@ -1,0 +1,20 @@
+> TAPI_DATA_CONTEXT_BY_SERVICE_INTERFACE_POINT_EQ_UUID
+
+        Handle resource of type
+        tapi_data_context_by_service_interface_point_eq_uuid
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- uuid
+        Id of service-interface-point
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

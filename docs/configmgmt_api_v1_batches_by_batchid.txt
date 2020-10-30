@@ -1,0 +1,45 @@
+> CONFIGMGMT_API_V1_BATCHES_BY_BATCHID
+
+        Handle resource of type configmgmt_api_v1_batches_by_batchid
+
+OPTIONS (= is mandatory):
+
+- attributes
+        Validate attributes are:
+         - `additionalAttributes' (dict):
+         - `configMgmtJobId' (str):
+         - `id' (str):
+         - `lastExecutionTime' (str):
+         - `name' (str):
+         - `neDetails' (list):
+         - `nextExecutionTime' (str):
+         - `scheduleDetails' (dict):
+         - `state' (str):
+         - `type' (str):
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- batchId
+        The batchId used for lookup inside created batch
+        Required with `state=['get', 'put']'
+        Used by `state=['get', 'put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, put)[Default: (null)]
+        type: str
+
+- type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,12 @@
+> REVELL_API_V1_SERVICETRAILS
+
+        Handle resource of type revell_api_v1_servicetrails
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

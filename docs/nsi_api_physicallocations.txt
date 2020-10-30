@@ -1,0 +1,67 @@
+> NSI_API_PHYSICALLOCATIONS
+
+        Handle resource of type nsi_api_physicallocations
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier of the physical location
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict):
+         - `type' (str): The physical location type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- include
+        List of comma separated resources to be side-loaded. The
+        allowed values are: expectations
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Referenced resources (planned, expectation, discovered)
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- limit
+        The size of a returned page. The default is 30
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

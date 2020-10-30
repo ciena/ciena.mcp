@@ -1,0 +1,45 @@
+> CONFIGMGMT_API_V1_MHOPBFDSESSIONS
+
+        Handle resource of type configmgmt_api_v1_mhopbfdsessions
+
+OPTIONS (= is mandatory):
+
+- bfdProfile
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- bfdSessionName
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- neighbour
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- remoteNE
+        (Optional) Remote NE
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- source
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- sourceNE
+        Source NE
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

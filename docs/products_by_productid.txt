@@ -1,0 +1,80 @@
+> PRODUCTS_BY_PRODUCTID
+
+        Handle resource of type products_by_productid
+
+OPTIONS (= is mandatory):
+
+- active
+        State of the product (active or inactive)
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: bool
+
+- constraints
+        Additional constraints for the product
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: dict
+
+- description
+        Detailed description of the product
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- domainId
+        Identifier of the domain that advertises the product
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Unique identifier of the product (ignored during create
+        request)
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- productId
+        Identifier of the product being queried
+        Required with `state=['delete', 'get', 'head', 'patch',
+        'put']'
+        Used by `state=['delete', 'get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- providerData
+        Provider custom data
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: dict
+
+- providerProductId
+        Identifier within the provider's context or scope for the
+        product
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- resourceTypeId
+        The type of resource provided by the product
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, head, patch, put)[Default: (null)]
+        type: str
+
+- title
+        Name or title describing the product
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,20 @@
+> NSI_API_V3_FRES_BY_FREID_DISCOVERED_VALIDATE
+
+        Handle resource of type
+        nsi_api_v3_fres_by_freid_discovered_validate
+
+OPTIONS (= is mandatory):
+
+- freId
+        FRE identifier
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

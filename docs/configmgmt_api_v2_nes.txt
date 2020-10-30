@@ -1,0 +1,20 @@
+> CONFIGMGMT_API_V2_NES
+
+        Handle resource of type configmgmt_api_v2_nes
+
+OPTIONS (= is mandatory):
+
+- batchType
+        Retrieve all NEs details by batch type
+        Required with `state=['get']'
+        Used by `state=['get']'
+        (Choices: BACKUP, CUSTOM_SCRIPT, POST_UPGRADE, PRE_UPGRADE,
+        SCRIPT, UPGRADE)[Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

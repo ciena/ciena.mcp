@@ -1,0 +1,41 @@
+> NSI_API_PHYSICALLOCATIONS_BY_ID_EXPECTATIONS
+
+        Handle resource of type
+        nsi_api_physicallocations_by_id_expectations
+
+OPTIONS (= is mandatory):
+
+- attributes
+        Validate attributes are:
+         - `additionalAttributes' (dict): Various miscellaneous
+        attributes that do not necessarily belong in the parent
+        resource. Attributes are populated dynamically and therefore
+        cannot be documented here.
+         - `geoLocation' (dict): The geography location of the device
+         - `intentId' (str): The intent id of the physical expectation
+        location
+         - `name' (str): Name of the physical location.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- id
+        Identifier of the physical location under which to create the
+        expectation
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- type
+        The physical location expectation type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

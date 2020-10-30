@@ -1,0 +1,571 @@
+{
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "schemes": ["https", "http"],
+  "swagger": "2.0",
+  "info": {
+    "description": "Authorize API access based on assigned user roles",
+    "title": "API authorization",
+    "version": "1.1.0"
+  },
+  "basePath": "/rbac-e/api/v1",
+  "paths": {
+    "/admin/current-user": {
+      "get": {
+        "description": "Retrieve current flattened user info",
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "Current user found",
+            "schema": {
+              "$ref": "#/definitions/FlattenUserAccount"
+            }
+          },
+          "204": {
+            "description": " Current user not found"
+          },
+          "500": {
+            "description": "Unexpected processing error",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/admin/current-account": {
+      "get": {
+        "description": "Retrieve current account info",
+        "operationId": "getCurrentSessionData",
+        "deprecated": true,
+        "responses": {
+          "200": {
+            "description": "Account found",
+            "schema": {
+              "$ref": "#/definitions/UserAccount"
+            }
+          },
+          "204": {
+            "description": " Account not found"
+          },
+          "500": {
+            "description": "Unexpected processing error",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/admin/current-permissions": {
+      "get": {
+        "description": "Returns list of permissions and partitions available to the\nauthenticated user (from the Authorization header bearer token) given\nthe current GeoRed active/standby state of the site.  If any of the\nuser's roles give the user access to \"all partitions\" then this is\nindicated and the partition list will be empty.",
+        "summary": "Retrieve current permissions based on account and geored status",
+        "operationId": "getCurrentPermissions",
+        "responses": {
+          "200": {
+            "description": "Account found",
+            "schema": {
+              "$ref": "#/definitions/CurrentPermissions"
+            }
+          },
+          "204": {
+            "description": "Account not found"
+          },
+          "500": {
+            "description": "Unexpected processing error",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/admin/resources": {
+      "get": {
+        "description": "On startup, this service caches all the available resources in the\nsolution, and associates them with the role they are associated with.",
+        "summary": "Retrieves a list of all cached resources, associated with their roles.",
+        "operationId": "getResources",
+        "responses": {
+          "200": {
+            "description": "Resources found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Resource"
+              }
+            }
+          },
+          "204": {
+            "description": "No resources are cached on this API-GW"
+          }
+        }
+      }
+    },
+    "/admin/sessions": {
+      "get": {
+        "description": "Retrieve all sessions currently in the cache",
+        "operationId": "getSessions",
+        "responses": {
+          "200": {
+            "description": "Sessions found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RbacSession"
+              }
+            }
+          },
+          "204": {
+            "description": "No sessions were available"
+          }
+        }
+      }
+    },
+    "/admin/usercache": {
+      "delete": {
+        "description": "This forces api-gw to retrieve user information from the UAC service\nfor every subsequent request received.",
+        "summary": "Deletes the internal user cache.",
+        "operationId": "clearUserCache",
+        "responses": {
+          "200": {
+            "description": "The cache was properly cleared"
+          }
+        }
+      }
+    },
+    "/audit/configuration": {
+      "post": {
+        "description": "Configure the audit feature",
+        "operationId": "configureAudit",
+        "parameters": [
+          {
+            "type": "boolean",
+            "description": "Enable/Disable the addition of the HTTP body in the Audit Logs for every API\nrequest and response entering and leaving the system.",
+            "name": "enable",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Accepted the request and changed the state"
+          }
+        }
+      }
+    },
+    "/rest/permission": {
+      "post": {
+        "description": "For the resource and token specified in the body, checks whether the\ntoken is allowed to use the resource.",
+        "summary": "Checks resource access permission.",
+        "operationId": "validateRestResource",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RestPermissionData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access is allowed",
+            "$ref": "#/responses/grantedRestResourceResponse"
+          },
+          "401": {
+            "description": "Access is not allowed",
+            "$ref": "#/responses/deniedRestResourceResponse"
+          },
+          "500": {
+            "description": "Unexpected processing error",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "CurrentPermissions": {
+      "type": "object",
+      "properties": {
+        "partitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Partition"
+          }
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Permission"
+          }
+        }
+      }
+    },
+    "DeniedRbacResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "GrantedRbacResponse": {
+      "type": "object",
+      "properties": {
+        "Data": {
+          "type": "object",
+          "required": ["tenant_name", "tenant_context", "user_roles"],
+          "properties": {
+            "session_id": {
+              "type": "string"
+            },
+            "tenant_context": {
+              "type": "string"
+            },
+            "tenant_context_id": {
+              "type": "string"
+            },
+            "tenant_id": {
+              "type": "string"
+            },
+            "tenant_name": {
+              "type": "string"
+            },
+            "user_id": {
+              "type": "string"
+            },
+            "user_name": {
+              "type": "string"
+            },
+            "user_roles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^(AUTH|RBAC|RBAC_AUTH)$"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "LastLoginDetail": {
+      "type": "object",
+      "properties": {
+        "ipAddress": {
+          "type": "string"
+        },
+        "sessionId": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Partition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
+    "RbacSession": {
+      "type": "object",
+      "properties": {
+        "creationTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ipAddress": {
+          "type": "string"
+        },
+        "lastAccess": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sessionId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        }
+      }
+    },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "matcher": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "resource": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          }
+        },
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
+    "RestPermissionData": {
+      "type": "object",
+      "required": ["method", "path", "authType"],
+      "properties": {
+        "Mac": {
+          "type": "string"
+        },
+        "authType": {
+          "type": "string",
+          "pattern": "^(AUTH|RBAC|RBAC_AUTH)$"
+        },
+        "method": {
+          "type": "string",
+          "pattern": "^(POST|GET|PUT|DELETE|PATCH|OPTIONS|HEAD|TRACE|CONNECT)$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "Role": {
+      "type": "object",
+      "properties": {
+        "application": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "lastLoginDetail": {
+          "$ref": "#/definitions/LastLoginDetail"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "tenantName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
+    "UserAccount": {
+      "type": "object",
+      "properties": {
+        "lastAccessed": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "retrievedTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "token": {
+          "type": "string"
+        },
+        "tokenType": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
+    "FlattenUserAccount": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "allPartitions": {
+          "type": "boolean"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          }
+        },
+        "partitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Partition"
+          }
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Permission"
+          }
+        }
+      }
+    },
+    "sessionInfo": {
+      "type": "object",
+      "properties": {
+        "ciena-session-id": {
+          "type": "string"
+        },
+        "ciena-user-id": {
+          "type": "string"
+        },
+        "ciena-user-name": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "responses": {
+    "apiResponse": {
+      "schema": {
+        "$ref": "#/definitions/ApiResponse"
+      }
+    },
+    "currentPermissionsResponse": {
+      "schema": {
+        "$ref": "#/definitions/CurrentPermissions"
+      }
+    },
+    "deniedRestResourceResponse": {
+      "schema": {
+        "$ref": "#/definitions/DeniedRbacResponse"
+      }
+    },
+    "grantedRestResourceResponse": {
+      "schema": {
+        "$ref": "#/definitions/GrantedRbacResponse"
+      },
+      "headers": {
+        "headers": {
+          "description": "in:headers"
+        }
+      }
+    },
+    "resourcesResponse": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Resource"
+        }
+      }
+    },
+    "sessionsResponse": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/RbacSession"
+        }
+      }
+    },
+    "userAccountResponse": {
+      "schema": {
+        "$ref": "#/definitions/UserAccount"
+      }
+    }
+  }
+}

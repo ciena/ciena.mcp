@@ -1,0 +1,47 @@
+> NSI_API_V4_FRES_BY_FREID_FREPLANNED
+
+        Handle resource of type nsi_api_v4_fres_by_freid_freplanned
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier of the planned fre
+         - `relationships' (dict):
+         - `type' (str): The fre planned type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- freId
+        Identifier of the FRE Planned to be retrieved
+        Required with `state=['get', 'patch', 'put']'
+        Used by `state=['get', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: fres, tpes, equipment
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Side loaded relationship resources
+        Used by `state=['put']'
+        [Default: (null)]
+        type: list
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: get, patch, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

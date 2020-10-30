@@ -1,0 +1,74 @@
+> NSI_API_EQUIPMENT_BY_EQUIPMENTID
+
+        Handle resource of type nsi_api_equipment_by_equipmentid
+
+OPTIONS (= is mandatory):
+
+- data
+        The equipment data
+        Validate attributes are:
+         - `attributes' (dict): The equipment attributes
+         - `id' (str): The unique identifier for the equipment
+        resource
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict): The equipment relationships
+         - `type' (str): The equipment resource type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- equipmentId
+        Equipment identifier
+        Required with `state=['delete', 'get', 'put']'
+        Used by `state=['delete', 'get', 'put']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: expectations,
+        equipmentDiscovered, equipmentPlanned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- included
+        Resources related to equipment, such as
+        EquipmentExpectationData
+        Used by `state=['put']'
+        [Default: (null)]
+        type: list
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: delete, get, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

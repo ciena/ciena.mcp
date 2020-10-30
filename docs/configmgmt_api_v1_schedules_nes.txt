@@ -1,0 +1,17 @@
+> CONFIGMGMT_API_V1_SCHEDULES_NES
+
+        Handle resource of type configmgmt_api_v1_schedules_nes
+
+OPTIONS (= is mandatory):
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

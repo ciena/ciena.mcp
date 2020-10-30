@@ -1,0 +1,20 @@
+> DISCOVERY_API_V3_MANAGEMENTSESSIONS_BY_SESSIONID
+
+        Handle resource of type
+        discovery_api_v3_managementsessions_by_sessionid
+
+OPTIONS (= is mandatory):
+
+- sessionId
+        identifier of Management Session to be deleted
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

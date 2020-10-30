@@ -1,0 +1,20 @@
+> TAPI_DATA_CONTEXT_PHYSICAL_CONTEXT_BY_EQUIPMENTHOLDER_EQ_EQUIPMENTHOLDER_UUID
+
+        Handle resource of type tapi_data_context_physical_context_by_
+        equipmentholder_eq_equipmentholder_uuid
+
+OPTIONS (= is mandatory):
+
+- equipmentholder-uuid
+        Id of contained-holder
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

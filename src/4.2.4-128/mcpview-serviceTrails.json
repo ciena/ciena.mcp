@@ -1,0 +1,179 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Retrieve and Visualize trails of a given service",
+    "version": "1.0",
+    "title": "Service Topology (ServiceTrails)",
+    "termsOfService": ""
+  },
+  "basePath": "/",
+  "tags": [{ "name": "mcp-view v2" }, { "name": "mcp-view v1" }],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/revell/api/v2/serviceTrails/{freId}": {
+      "get": {
+        "tags": ["mcp-view v2"],
+        "summary": "Return Service Trail for a given FRE Id",
+        "description": "",
+        "operationId": "serviceTrailV2",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "freId",
+            "in": "path",
+            "description": "Identifier of the FRE to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "startTpeId",
+            "in": "query",
+            "description": "Source Termination point Identifier",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endTpeId",
+            "in": "query",
+            "description": "Destination Termination point Identifier",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "traversalScope",
+            "in": "query",
+            "description": "Traversal Scope. The allowed values are: TOPOLOGICAL, SERVICE, LAYER NAVIGATION",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: fres, tpes, networkConstructs, equipment, expectations, frePlanned, freDiscovered, abstracts",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Service Trail",
+            "schema": { "$ref": "#/definitions/ServiceTrailResponse" }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/revell/api/v2/serviceTopology/{freId}": {
+      "get": {
+        "tags": ["mcp-view v2"],
+        "summary": "Return Service Topology for a given FRE Id",
+        "description": "",
+        "operationId": "serviceTopologyV2",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "freId",
+            "in": "path",
+            "description": "Identifier of the FRE to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: fres, tpes, networkConstructs, equipment, expectations, frePlanned, freDiscovered, abstracts",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Service Topology",
+            "schema": { "$ref": "#/definitions/ServiceTrailResponse" }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/revell/api/v2/serviceTopology/": {
+      "post": {
+        "tags": ["mcp-view v2"],
+        "summary": "Returns a Service Trail",
+        "description": "",
+        "operationId": "pstServiceTrailV2",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "FRE to generate trail",
+            "required": true,
+            "schema": { "$ref": "#/definitions/JValue" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Service Trail",
+            "schema": { "$ref": "#/definitions/ServiceTrailResponse" }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/revell/api/v1/serviceTrails/{freId}": {
+      "get": {
+        "tags": ["mcp-view v1"],
+        "summary": "Return Service Trail for a given FRE Id",
+        "description": "",
+        "operationId": "serviceTrailV1",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "freId",
+            "in": "path",
+            "description": "Identifier of the FRE to be retrieved",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Service Trail",
+            "schema": { "$ref": "#/definitions/ServiceTrailResponse" }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/revell/api/v1/serviceTrails/": {
+      "post": {
+        "tags": ["mcp-view v1"],
+        "summary": "Returns a Service Trail",
+        "description": "",
+        "operationId": "pstServiceTrailV1",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "FRE to generate trail",
+            "required": true,
+            "schema": { "$ref": "#/definitions/JValue" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Service Trail",
+            "schema": { "$ref": "#/definitions/ServiceTrailResponse" }
+          },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    }
+  },
+  "securityDefinitions": { "basicAuth": { "type": "basic" } },
+  "definitions": {
+    "ServiceTrailResponse": { "type": "object" },
+    "JValue": { "type": "object" }
+  }
+}

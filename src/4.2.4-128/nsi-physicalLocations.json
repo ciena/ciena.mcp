@@ -1,0 +1,1769 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Retrieve, plan and modify physical locations resources",
+    "version": "1.0",
+    "title": "Network elements location (physical)"
+  },
+  "tags": [
+    {
+      "name": "000 - nsiapiphysicalLocations",
+      "description": "Retrieve, and manage the physical location resources<p/>&nbsp;&nbsp;&nbsp;&nbsp;This non-versioned API is meant for use by an end-user as a pass-through to the latest version. WARNING - backwards compatibility is not guaranteed for non-versioned APIs."
+    },
+    {
+      "name": "996 - nsiapiv4physicalLocations",
+      "description": "Retrieve, and manage the physical location resources V4."
+    },
+    {
+      "name": "997 - nsiapiv3physicalLocations",
+      "description": "Retrieve, and manage the physical location resources V3."
+    },
+    {
+      "name": "998 - nsiapiv2_0physicalLocations",
+      "description": "Retrieve, and manage the physical location resources (version 2)"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/nsi/api/physicalLocations": {
+      "get": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Get list of physical locations",
+        "description": "<p>LATEST VERSION: V4<p>Discovered locations returned as a JSON list of physical location objects",
+        "operationId": "getPhysicalLocations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page. The default is 30",
+            "required": false,
+            "type": "string",
+            "default": "30"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of physical locations",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationListRO"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve physical location",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Retrieval of physical location failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Creates or updates a physical location",
+        "description": "<p>LATEST VERSION: V3<p>Upon success, code 201 is returned and the output consists of JSON objects representing the physical location.<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"data\": {\n    \"id\": \"1\",\n    \"type\": \"physicalLocation\"\n  }\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postPhysicalLocation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an physical location.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "201": {
+            "description": "Physical location has been created on the server"
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/physicalLocations/{id}": {
+      "get": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Retrieve a physical location with given id",
+        "description": "<p>LATEST VERSION: V3<p>Discovered location returned as a JSON format of physical location object",
+        "operationId": "getPhysicalLocationById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved physical location successfully.",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified physical location",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/physicalLocations/{id}/expectations": {
+      "post": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Create an physical location expectation given the physical location id",
+        "description": "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postPhysicalLocationExpectations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location under which to create the expectation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Physical location expectation to create",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationExpectationDataRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Physical location expectations have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/physicalLocations/{id}/expectations/{expectationId}": {
+      "get": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Retrieve an physical locations Expectation given the physical locations id and expectation id",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "getPhysicalLocationExpectationById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location under which an expectation is to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved physical locations expectation successfully.",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationExpectationRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical locations or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified physical locations Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Delete an physical location expectation given the physical location id and expectation id",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "deletePhysicalLocationExpectationById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location whose expectation is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location expectation successfully."
+          },
+          "400": {
+            "description": "Invalid value specified for Attribute {attribute_name} value {attribute_value}",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/physicalLocations/{id}/identifiers/{identifierKey}": {
+      "put": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Creates or updates an Identifier to a given physical location",
+        "description": "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updatePhysicalLocationIdentifiers",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location under which to create or update the identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "identifier",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Physical location userData identifier have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Delete an Identifier from a given physical location",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "deletePhysicalLocationIdentifiers",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location whose identifier is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location identifier successfully."
+          },
+          "404": {
+            "description": "The specified physical location or identifier does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/physicalLocations/{id}/userData/{userDataKey}": {
+      "put": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Creates or updates an UserData to a given physical location",
+        "description": "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updateUserData",
+        "consumes": ["text/plain"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of physical location under which to create or update the UserData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userDataKey",
+            "in": "path",
+            "description": "Key of the UserData to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The desired userData value",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Physical location userData have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Delete a userData from a given physical location",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "deletePhysicalLocationUserData",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location whose UserData is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userDataKey",
+            "in": "path",
+            "description": "Key of the UserData to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location userData successfully."
+          },
+          "404": {
+            "description": "The specified physical location or userData does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location userData - identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/physicalLocations/{physicalLocationId}": {
+      "delete": {
+        "tags": ["000 - nsiapiphysicalLocations"],
+        "summary": "Deletes a specific physical location",
+        "description": "<p>LATEST VERSION: V3",
+        "operationId": "deletePhysicalLocationById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "physicalLocationId",
+            "in": "path",
+            "description": "Identifier of the physical location to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location successfully."
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "409": {
+            "description": "The physical location is related to networkConstruct/networkConstructExpectation, cannot delete.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location (error message provided).",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v2_0/physicalLocations": {
+      "get": {
+        "tags": ["998 - nsiapiv2_0physicalLocations"],
+        "summary": "Get list of physical locations",
+        "description": "Discovered locations returned as a JSON list of physical location objects",
+        "operationId": "getPhysicalLocations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of physical locations",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationListRO"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Unable to retrieve physical location"
+          },
+          "500": {
+            "description": "Retrieval of physical location failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["998 - nsiapiv2_0physicalLocations"],
+        "summary": "Creates or updates a physical location",
+        "description": "Upon success, code 201 is returned and the output consists of JSON objects representing the physical location.<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"data\": {\n    \"id\": \"1\",\n    \"type\": \"physicalLocation\"\n  }\n}</code></pre>",
+        "operationId": "postPhysicalLocation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an physical location.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "201": {
+            "description": "Physical location has been created on the server"
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v2_0/physicalLocations/{physicalLocationId}": {
+      "delete": {
+        "tags": ["998 - nsiapiv2_0physicalLocations"],
+        "summary": "Deletes a specific physical location",
+        "description": "",
+        "operationId": "deletePhysicalLocationById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "physicalLocationId",
+            "in": "path",
+            "description": "Identifier of the physical location to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location successfully."
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "409": {
+            "description": "The physical location is related to networkConstruct/networkConstructExpectation, cannot delete.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location (error message provided).",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/physicalLocations": {
+      "get": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Get list of physical locations",
+        "description": "Discovered locations returned as a JSON list of physical location objects",
+        "operationId": "getPhysicalLocations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page",
+            "required": false,
+            "type": "string",
+            "default": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of physical locations",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationListRO"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Unable to retrieve physical location"
+          },
+          "500": {
+            "description": "Retrieval of physical location failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Trigger the  creation of physical location",
+        "description": "Upon success, code 201 is returned and the output consists of JSON objects representing the physical location.<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"data\": {\n    \"id\": \"1\",\n    \"type\": \"physicalLocation\"\n  }\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postPhysicalLocation",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request to create an physical location.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "201": {
+            "description": "Physical location has been created on the server"
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/physicalLocations/{id}": {
+      "get": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Retrieve a physical location with given id",
+        "description": "",
+        "operationId": "getPhysicalLocationById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved physical location successfully.",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified physical location",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/physicalLocations/{id}/expectations": {
+      "post": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Create an physical location expectation given the physical location id",
+        "description": "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "postPhysicalLocationExpectations",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location under which to create the expectation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Physical location expectation to create",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationExpectationDataRO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Physical location expectations have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/physicalLocations/{id}/expectations/{expectationId}": {
+      "get": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Retrieve an physical locations Expectation given the physical locations id and expectation id",
+        "description": "",
+        "operationId": "getPhysicalLocationExpectationById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location under which an expectation is to be retrieved",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved physical locations expectation successfully.",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationExpectationRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical locations or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve the specified physical locations Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Delete an physical location expectation given the physical location id and expectation id",
+        "description": "",
+        "operationId": "deletePhysicalLocationExpectationById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location whose expectation is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expectationId",
+            "in": "path",
+            "description": "Identifier of the expectation to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location expectation successfully."
+          },
+          "400": {
+            "description": "Invalid value specified for Attribute {attribute_name} value {attribute_value}",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location or expectation does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location Expectation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/physicalLocations/{id}/identifiers/{identifierKey}": {
+      "put": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Creates or updates an Identifier to a given physical location",
+        "description": "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+        "operationId": "updatePhysicalLocationIdentifiers",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location under which to create or update the identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "identifier",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/IdentifierRO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Physical location userData identifier have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Delete an Identifier from a given physical location",
+        "description": "",
+        "operationId": "deletePhysicalLocationIdentifiers",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location whose identifier is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identifierKey",
+            "in": "path",
+            "description": "Key of the identifier to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location identifier successfully."
+          },
+          "404": {
+            "description": "The specified physical location or identifier does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/physicalLocations/{id}/userData/{userDataKey}": {
+      "put": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Creates or updates an UserData to a given physical location",
+        "description": "",
+        "operationId": "updateUserData",
+        "consumes": ["text/plain"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of physical location under which to create or update the UserData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userDataKey",
+            "in": "path",
+            "description": "Key of the UserData to create or update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The desired userData value",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Physical location userData have been created on the server",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationRO"
+            }
+          },
+          "400": {
+            "description": "Bad or invalid parameters were provided",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Internal system error (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Delete a userData from a given physical location",
+        "description": "",
+        "operationId": "deletePhysicalLocationUserData",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of the physical location whose UserData is to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userDataKey",
+            "in": "path",
+            "description": "Key of the UserData to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location userData successfully."
+          },
+          "404": {
+            "description": "The specified physical location or userData does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location userData - identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v3/physicalLocations/{physicalLocationId}": {
+      "delete": {
+        "tags": ["997 - nsiapiv3physicalLocations"],
+        "summary": "Delete a physical location with given id.",
+        "description": "",
+        "operationId": "deletePhysicalLocationById",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "physicalLocationId",
+            "in": "path",
+            "description": "Identifier of the physical location to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted physical location successfully."
+          },
+          "404": {
+            "description": "The specified physical location does not exist",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "409": {
+            "description": "The physical location is related to networkConstruct/networkConstructExpectation, cannot delete.",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          },
+          "500": {
+            "description": "Failed to delete physical location (error message provided).",
+            "schema": {
+              "$ref": "#/definitions/ErrorsRO"
+            }
+          }
+        }
+      }
+    },
+    "/nsi/api/v4/physicalLocations": {
+      "get": {
+        "tags": ["996 - nsiapiv4physicalLocations"],
+        "summary": "Get list of physical locations",
+        "description": "Discovered locations returned as a JSON list of physical location objects",
+        "operationId": "getPhysicalLocations",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "include",
+            "in": "query",
+            "description": "List of comma separated resources to be side-loaded. The allowed values are: expectations",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset for the second page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The size of a returned page. The default is 30",
+            "required": false,
+            "type": "string",
+            "default": "30"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of physical locations",
+            "schema": {
+              "$ref": "#/definitions/PhysicalLocationListRO"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "Unable to retrieve physical location",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "Retrieval of physical location failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AdditionalAttributesRO": {
+      "type": "object"
+    },
+    "AggregationBucketRO": {
+      "type": "object",
+      "properties": {
+        "bucketKey": {
+          "type": "string",
+          "description": "The key of the aggregation criteria"
+        },
+        "bucketValue": {
+          "type": "string",
+          "description": "The result of the aggregation"
+        },
+        "absoluteTotal": {
+          "type": "string",
+          "description": "The unfiltered total number of entities in the data"
+        },
+        "subAggregations": {
+          "description": "The aggregated data based on a requested aggregation name and criteria",
+          "$ref": "#/definitions/AggregationRO"
+        }
+      }
+    },
+    "AggregationRO": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the aggregation"
+        },
+        "buckets": {
+          "type": "array",
+          "description": "Aggregation results for different criteria",
+          "items": {
+            "$ref": "#/definitions/AggregationBucketRO"
+          }
+        }
+      }
+    },
+    "AttributePoliciesRO": {
+      "type": "object",
+      "properties": {
+        "defaultAttributeSourcePolicy": {
+          "type": "string",
+          "description": "Source of attribute.",
+          "enum": ["plannedOverDiscovered", "discoveredOverPlanned"]
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttributePolicyOverrideRO"
+          }
+        }
+      }
+    },
+    "AttributePolicyOverrideRO": {
+      "type": "object",
+      "properties": {
+        "attributeName": {
+          "type": "string",
+          "description": "Attribute path(e.g. attribute.customerCode or relationship.endpoints)"
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["plannedOverDiscovered", "discoveredOverPlanned"]
+          }
+        },
+        "attributeSource": {
+          "type": "string",
+          "description": "Attribute source, in case it has the value from some other references, (e.g. attributes.srlg is relationships.srlgs.id"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "errorCode": {
+          "type": "string"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "errorDescription": {
+          "type": "string"
+        },
+        "msgAttributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "meta": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "ErrorRO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code"
+        },
+        "title": {
+          "type": "string",
+          "description": "Error title"
+        },
+        "detail": {
+          "type": "string",
+          "description": "Error details"
+        },
+        "source": {
+          "description": "Error source",
+          "$ref": "#/definitions/ErrorSourceRO"
+        }
+      }
+    },
+    "ErrorSourceRO": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "type": "string",
+          "description": "JSON Pointer to the associated entity in the request document"
+        },
+        "parameter": {
+          "type": "string",
+          "description": "URI query parameter that caused the error"
+        }
+      }
+    },
+    "Errors": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "ErrorsRO": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "description": "A list of errors",
+          "items": {
+            "$ref": "#/definitions/ErrorRO"
+          }
+        }
+      }
+    },
+    "GeoLocationRO": {
+      "type": "object",
+      "properties": {
+        "zone": {
+          "type": "string",
+          "description": "Zone of the device location"
+        },
+        "longitude": {
+          "type": "string",
+          "description": "Longitude of the device location"
+        },
+        "latitude": {
+          "type": "string",
+          "description": "Latitude of the device location"
+        }
+      }
+    },
+    "IdentifierRO": {
+      "type": "object"
+    },
+    "LinksRO": {
+      "type": "object",
+      "properties": {
+        "self": {
+          "type": "string",
+          "format": "uri",
+          "description": "A `self` member, whose value is a URL for the relationship itself (a \"relationship URL\"). This URL allows the client to directly manipulate the relationship. For example, it would allow a client to remove an `author` from an `article` without deleting the people resource itself."
+        },
+        "first": {
+          "type": "string",
+          "format": "uri",
+          "description": "The first page of data"
+        },
+        "last": {
+          "type": "string",
+          "format": "uri",
+          "description": "The last page of data"
+        },
+        "prev": {
+          "type": "string",
+          "format": "uri",
+          "description": "The previous page of data"
+        },
+        "next": {
+          "type": "string",
+          "format": "uri",
+          "description": "The next page of data"
+        },
+        "current": {
+          "type": "string",
+          "format": "uri",
+          "description": "The current page of data"
+        }
+      }
+    },
+    "MetaDataRO": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The total number of entities in the data"
+        },
+        "absoluteTotal": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The unfiltered total number of entities in the data"
+        },
+        "aggregations": {
+          "type": "array",
+          "description": "The aggregated data based on a requested aggregation name and criteria",
+          "items": {
+            "$ref": "#/definitions/AggregationRO"
+          }
+        },
+        "missingReferences": {
+          "type": "boolean",
+          "description": "boolean detailing if the GET FRE tree has any missing references",
+          "default": false
+        },
+        "missingReferenceIds": {
+          "type": "array",
+          "description": "The list of missing resource IDs",
+          "items": {
+            "$ref": "#/definitions/RelationshipDataRO"
+          }
+        },
+        "filtered": {
+          "type": "boolean",
+          "description": "Flags whether the current object is filtered using `fields` query param or not",
+          "default": false
+        }
+      }
+    },
+    "OneToManyRelationshipRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "The one-to-many relationship",
+          "items": {
+            "$ref": "#/definitions/RelationshipDataRO"
+          }
+        },
+        "meta": {
+          "description": "The relationship type and identifier",
+          "$ref": "#/definitions/RelationshipMetaDataRO"
+        }
+      }
+    },
+    "OneToOneRelationshipRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "The relationship type and identifier",
+          "$ref": "#/definitions/RelationshipDataRO"
+        },
+        "meta": {
+          "description": "The relationship type and identifier",
+          "$ref": "#/definitions/RelationshipMetaDataRO"
+        }
+      }
+    },
+    "PhysicalLocationAttributesRO": {
+      "type": "object",
+      "properties": {
+        "userData": {
+          "description": "User data",
+          "$ref": "#/definitions/UserDataRO"
+        },
+        "identifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IdentifierRO"
+          }
+        },
+        "policies": {
+          "description": "Policies for attributes.",
+          "$ref": "#/definitions/AttributePoliciesRO"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the physical location."
+        },
+        "geoLocation": {
+          "description": "The geography location of the device",
+          "$ref": "#/definitions/GeoLocationRO"
+        },
+        "additionalAttributes": {
+          "description": "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+          "$ref": "#/definitions/AdditionalAttributesRO"
+        }
+      }
+    },
+    "PhysicalLocationDataRO": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "description": "A metadata object that contains non-standard meta information",
+          "$ref": "#/definitions/ResourceMetaDataRO"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the physical location"
+        },
+        "type": {
+          "type": "string",
+          "description": "The physical location type",
+          "enum": ["physicalLocation"]
+        },
+        "attributes": {
+          "$ref": "#/definitions/PhysicalLocationAttributesRO"
+        },
+        "relationships": {
+          "$ref": "#/definitions/PhysicalLocationRelationshipsRO"
+        }
+      }
+    },
+    "PhysicalLocationExpectationAttributesRO": {
+      "type": "object",
+      "properties": {
+        "intentId": {
+          "type": "string",
+          "description": "The intent id of the physical expectation location"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the physical location."
+        },
+        "geoLocation": {
+          "description": "The geography location of the device",
+          "$ref": "#/definitions/GeoLocationRO"
+        },
+        "additionalAttributes": {
+          "description": "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+          "$ref": "#/definitions/AdditionalAttributesRO"
+        }
+      }
+    },
+    "PhysicalLocationExpectationDataRO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the physical location"
+        },
+        "type": {
+          "type": "string",
+          "description": "The physical location expectation type",
+          "enum": ["physicalLocationExpectations"]
+        },
+        "attributes": {
+          "$ref": "#/definitions/PhysicalLocationExpectationAttributesRO"
+        }
+      }
+    },
+    "PhysicalLocationExpectationRO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/PhysicalLocationExpectationDataRO"
+        }
+      }
+    },
+    "PhysicalLocationListRO": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "description": "Links related to the resource",
+          "$ref": "#/definitions/LinksRO"
+        },
+        "meta": {
+          "description": "A metadata object that contains non-standard meta information",
+          "$ref": "#/definitions/MetaDataRO"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PhysicalLocationDataRO"
+          }
+        },
+        "included": {
+          "type": "array",
+          "description": "Array of associated expectations",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "PhysicalLocationRO": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "description": "A metadata object that contains non-standard meta information",
+          "$ref": "#/definitions/MetaDataRO"
+        },
+        "data": {
+          "$ref": "#/definitions/PhysicalLocationDataRO"
+        },
+        "included": {
+          "type": "array",
+          "description": "Referenced resources (planned, expectation, discovered)",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "PhysicalLocationRelationshipsRO": {
+      "type": "object",
+      "properties": {
+        "physicalLocationPlanned": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "physicalLocationExpectations": {
+          "description": "The one-to-many relationship",
+          "$ref": "#/definitions/OneToManyRelationshipRO"
+        },
+        "physicalLocationDiscovered": {
+          "description": "The one-to-one relationship",
+          "$ref": "#/definitions/OneToOneRelationshipRO"
+        }
+      }
+    },
+    "RelationshipDataRO": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The relationship resource type"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the referenced resource."
+        }
+      }
+    },
+    "RelationshipMetaDataRO": {
+      "type": "object",
+      "properties": {
+        "partiallyPopulated": {
+          "type": "boolean",
+          "description": "Flags whether the included relationship object is partially populated or not",
+          "default": false
+        }
+      }
+    },
+    "ResourceMetaDataRO": {
+      "type": "object",
+      "properties": {
+        "partiallyPopulated": {
+          "type": "boolean",
+          "description": "Flags whether the current object is partially populated or not",
+          "default": false
+        }
+      }
+    },
+    "UserDataRO": {
+      "type": "object"
+    }
+  }
+}

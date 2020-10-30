@@ -1,0 +1,51 @@
+> COMMISSIONING_API_V1_POLICY
+
+        Handle resource of type commissioning_api_v1_policy
+
+OPTIONS (= is mandatory):
+
+- customerName
+        Customer notes
+        Used by `state=['post', 'put']'
+        [Default: (null)]
+        type: str
+
+- description
+        Description of policy
+        Used by `state=['post', 'put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Id of the policy
+        Required with `state=['delete', 'get', 'put']'
+        Used by `state=['delete', 'get', 'put']'
+        [Default: (null)]
+        type: str
+
+- policyId
+        Id of policy
+        Used by `state=['post', 'put']'
+        [Default: (null)]
+        type: str
+
+- policyName
+        Name of policy
+        Required with `state=['post', 'put']'
+        Used by `state=['post', 'put']'
+        [Default: (null)]
+        type: str
+
+- policyType
+        Type of policy
+        Required with `state=['post', 'put']'
+        Used by `state=['post', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, post, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

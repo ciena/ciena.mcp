@@ -1,0 +1,33 @@
+> CONFIGMGMT_API_V1_JOBS
+
+        Handle resource of type configmgmt_api_v1_jobs
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `batchattributes' (dict):
+         - `relationships' (dict):
+         - `type' (str):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- included
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- scriptName
+        The job name used for current status of a config job lookup
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

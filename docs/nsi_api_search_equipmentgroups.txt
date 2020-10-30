@@ -1,0 +1,157 @@
+> NSI_API_SEARCH_EQUIPMENTGROUPS
+
+        Handle resource of type nsi_api_search_equipmentgroups
+
+OPTIONS (= is mandatory):
+
+- endDateMax
+        (Optional) Maximum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- endDateMin
+        (Optional) Minimum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- equipment.id
+        (Optional) Comma separated list of equipment identifiers
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- equipmentGroupExpectations.equipmentIntent.id
+        (Optional) Equipment Intent Identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        (Optional) Comma separated list of Equipment group identifiers
+        to retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: expectations,
+        networkConstructs, discovered, planned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: type, subType
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataQualifiers
+        (Optional) List of meta data options. The allowed values are:
+        absoluteTotals
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        (Optional) Equipment group name
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.id
+        (Optional) Network Construct identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourceState
+        (Optional) List of resource states. By default, if no value
+        for this parameter is specified, root and unknown states are
+        filtered out. The allowed values are: root, planned,
+        discovered, plannedAndDiscovered, unknown
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied. Fields
+        require full path (e.g. data.attributes.name)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. Fields require full path (i.e. data.attributes.field).
+        A dash or negative sign before a field indicates descending
+        order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMax
+        (Optional) Maximum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMin
+        (Optional) Minimum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- subType
+        (Optional) List of Equipment group sub type
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- type
+        (Optional) List of Equipment group type
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

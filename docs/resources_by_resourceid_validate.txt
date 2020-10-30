@@ -1,0 +1,204 @@
+> RESOURCES_BY_RESOURCEID_VALIDATE
+
+        Handle resource of type resources_by_resourceid_validate
+
+OPTIONS (= is mandatory):
+
+- autoClean
+        Free up any resources automatically upon any activation
+        failure
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- createdAt
+        Time of creation
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- custom
+        Whether to perform custom validation in addition to built-in
+        schema and accessor validations
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- description
+        Detailed description of this resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- desiredOrchState
+        Desired orchestration state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- differences
+        Differences represent the difference between desired and
+        observed state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- discovered
+        Is this resource discovered
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- id
+        Unique identifier for the resource (optional/ignored on calls
+        to create)
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- label
+        Textual label
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- method
+        The HTTP method for the resource to be validated against
+        Required with `state=['post']'
+        Used by `state=['post']'
+        (Choices: DELETE, PATCH, PUT)[Default: (null)]
+        type: str
+
+- nativeState
+        Native (type specific) state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- orchState
+        Current state of the resource in the orchestrator
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- orderId
+        If applicable, the order containing this resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- productId
+        The type of product for this resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- properties
+        Properties
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- providerData
+        Provider custom data
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- providerResourceId
+        Identifier of the resource in provider's context
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- reason
+        Reason for the orchestration state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- resourceId
+        Identifier of the resource being validated against
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- resourceTypeId
+        The type of this resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- revision
+        Strictly increasing revision number, incremented every update
+        including observed update
+        Used by `state=['post']'
+        [Default: (null)]
+        type: int
+
+- shared
+        Is resource shared?
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- sharingPermissionId
+        The sharing permission associated with the resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- subDomainId
+        Identifier of the resource's sub-domain
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- tags
+        Tags
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- tenantId
+        Owner tenant of the resource?
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- updateCount
+        Monotonically increasing count of updates applied to this
+        resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: int
+
+- updateReason
+        Reason for the update state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- updateState
+        Current state of updating the resource, or `unset`
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- updatedAt
+        Time of last update
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

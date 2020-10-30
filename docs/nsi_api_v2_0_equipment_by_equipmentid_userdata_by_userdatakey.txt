@@ -1,0 +1,34 @@
+> NSI_API_V2_0_EQUIPMENT_BY_EQUIPMENTID_USERDATA_BY_USERDATAKEY
+
+        Handle resource of type
+        nsi_api_v2_0_equipment_by_equipmentid_userdata_by_userdatakey
+
+OPTIONS (= is mandatory):
+
+- equipmentId
+        Equipment identifier
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, put)[Default: (null)]
+        type: str
+
+- userDataKey
+        Key of the UserData to delete
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- userDataValue
+        The desired userData value
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

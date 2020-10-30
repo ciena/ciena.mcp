@@ -1,0 +1,12 @@
+> COMMISSIONING_API_V1_POLICYTYPES
+
+        Handle resource of type commissioning_api_v1_policytypes
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,19 @@
+> RESYNCS_BY_RESYNCID
+
+        Handle resource of type resyncs_by_resyncid
+
+OPTIONS (= is mandatory):
+
+- resyncId
+        ID of the resync being requested
+        Required with `state=['get', 'head']'
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,55 @@
+> NSI_API_V5_TPES_BY_TPEID
+
+        Handle resource of type nsi_api_v5_tpes_by_tpeid
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier for the TPE resource
+         - `meta' (dict): A metadata object that contains non-standard
+        meta information
+         - `relationships' (dict):
+         - `type' (str): The TPE resource type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- included
+        Referenced sub-resources
+        Used by `state=['put']'
+        [Default: (null)]
+        type: list
+
+- meta
+        A metadata object that contains non-standard meta information
+        Validate attributes are:
+         - `absoluteTotal' (int): The unfiltered total number of
+        entities in the data
+         - `aggregations' (list): The aggregated data based on a
+        requested aggregation name and criteria
+         - `filtered' (bool): Flags whether the current object is
+        filtered using `fields` query param or not
+         - `missingReferenceIds' (list): The list of missing resource
+        IDs
+         - `missingReferences' (bool): boolean detailing if the GET
+        FRE tree has any missing references
+         - `total' (int): The total number of entities in the data
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+- tpeId
+        The TPE identifier
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

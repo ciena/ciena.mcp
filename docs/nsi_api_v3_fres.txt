@@ -1,0 +1,174 @@
+> NSI_API_V3_FRES
+
+        Handle resource of type nsi_api_v3_fres
+
+OPTIONS (= is mandatory):
+
+- childFreId
+        The child FRE identifier to return its parents
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- endpoint.tpe.concrete
+        Concrete TPE identifier for endpoints
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- exclude
+        (Optional) The given type would be excluded from get parents
+        call, only combine with childFreId
+        Used by `state=['get']'
+        (Choices: actual, expectation)[Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.equipmentIntent.id
+        The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.serviceIntent.id
+        The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- freType
+        (Optional) FRE types in comma separated list. The allowed
+        values are: explicitRoute, explicitRouteGroup, snc, sncGroup
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- group
+        FRE group :<ul><li>dwa for all FREs in OTU4 and all top level
+        FREs in ETHERNET, DSR, DSR_ETHERNET, OTSi(OCH), ODU2,
+        ODU4<li>infrastructure for all FRE-APs representing forwarding
+        constructs between ROADM OTS'<li>packet for all L2 nodal and
+        top level FREs in ETHERNET including infrastructure</ul>
+        Used by `state=['get']'
+        (Choices: dwa, infrastructure, packet)[Default: (null)]
+        type: str
+
+- identifierKey
+        List of comma separated keys for an identifer object
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- identifierValue
+        List of comma separated values for an identifier object
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: tpes, expectations, planned
+        (roadmlines), frePlanned, freDiscovered
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- includeMetaData
+        (Optional) MetaData to be included. The allowed values are:
+        layerRate
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- layerRate
+        (Optional) FRE layer rates in comma separated list. The
+        allowed values are: ETHERNET, OTU2, OTU4, OTSi, OMS, OS, PHY,
+        OTS, ODU2, ODU4, DSR, DSR_10GE, DSR_100GE, DSR_ETHERNET
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        (Optional) The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- managementName
+        (Optional) Management Name
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.id
+        Network Construct identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- roadmLineId
+        (Optional) Find services configured over a roadmline based on
+        the roadmline FRE identifier.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- signalContentType
+        (Optional) The identifier indicating type of parent to be
+        returned. If specified, parent matching the criteria will be
+        returned
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- srlg
+        (Optional) Find roadmlines by srlg values separated by comma.
+        A roadmline is a FRE between two SAM cards.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier for endpoints
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- type
+        (Optional) FRE types in comma separated list. The allowed
+        values are: service, link, roadmline-ap, roadmline
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- userLabel
+        (Optional) User label
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

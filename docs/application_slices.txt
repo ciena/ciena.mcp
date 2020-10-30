@@ -1,0 +1,93 @@
+> APPLICATION_SLICES
+
+        Handle resource of type application_slices
+
+OPTIONS (= is mandatory):
+
+- description
+        Description of the application slice
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- extendable
+        Whether the application slice is extendable
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- holderTenantId
+        The id of the tenant holding the slice
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- isDefault
+        Whether the application slice is the default slice of the
+        owner tenant
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- limit
+        The maximum number of elements to return in a single paged
+        request
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- name
+        Name of the application slice
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- offset
+        Requested offset within the total result set to be the first
+        element in the paged response
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- ownerTenantId
+        The id of the tenant owning the slice
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- p
+        Optional query parameter to define a partial string match
+        filter using property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- pageToken
+        String pagination token returned from a previous query that
+        encodes query information in order to optimize a
+        subsequent request for a page of results. The token includes
+        the limit and offset parameters for the next page, but one or
+        both can be included to override the encoded values
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- parentId
+        The id of the parent application slice
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

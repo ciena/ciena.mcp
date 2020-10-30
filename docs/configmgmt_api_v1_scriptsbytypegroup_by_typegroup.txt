@@ -1,0 +1,20 @@
+> CONFIGMGMT_API_V1_SCRIPTSBYTYPEGROUP_BY_TYPEGROUP
+
+        Handle resource of type
+        configmgmt_api_v1_scriptsbytypegroup_by_typegroup
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- typeGroup
+        The type group used for scripts lookup
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

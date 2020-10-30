@@ -1,0 +1,123 @@
+> RELATIONSHIPS
+
+        Handle resource of type relationships
+
+OPTIONS (= is mandatory):
+
+- capabilityName
+        Capability name in target resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- exactRelationshipTypeId
+        Optional query to limit relationships by an exact relationship
+        type
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- id
+        Unique identifier for the relationship (optional/ignored on
+        calls to create)
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The maximum number of elements to return in a single paged
+        request
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- offset
+        Requested offset within the total result set to be the first
+        element in the paged response
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- orchState
+        Current state of the resource in the orchestrator
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- p
+        Optional query parameter to define a partial string match
+        filter using property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- pageToken
+        String pagination token returned from a previous query that
+        encodes query information in order to optimize a
+        subsequent request for a page of results. The token includes
+        the limit and offset parameters for the next page, but one or
+        both can be included to override the encoded values
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- properties
+        Relationship properties
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- providerData
+        Provider custom data
+        Validate attributes are:
+         - `obj' (list):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- reason
+        Reason for the orchestration state
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- relationshipTypeId
+        Optional query to limit relationships by the relationship type
+        (including derived types)
+        Used by `state=['get', 'head', 'post']'
+        [Default: (null)]
+        type: str
+
+- requirementName
+        Requirement name in source resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- sourceId
+        UUID of source resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head, post)[Default: (null)]
+        type: str
+
+- targetId
+        UUID of target resource
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,227 @@
+> CONFIGMGMT_API_V1_NEMAINTENANCEDETAILS
+
+        Handle resource of type configmgmt_api_v1_nemaintenancedetails
+
+OPTIONS (= is mandatory):
+
+- associationState
+        (Optional) List of networkConstruct associationStates. The
+        allowed values are: GOA, LOA
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- associationStateQualifier
+        (Optional) Association state qualifier. The allowed values are
+        MANUAL, SYSTEM, NETWORK
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- backupSchedule
+        (Optional) List of backup schedules for Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- customScriptSchedule
+        (Optional) List of customScript schedules for Network
+        Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- displayName
+        (Optional) List of device displayName values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fromNextOperationTime
+        (Optional) Time of next operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fromRecentOperationTime
+        (Optional) Time of recent operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        List of networkConstruct Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        (Optional) Ip Address of Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- longName
+        (Optional) List of comma separated longName values
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: resourceType, associationState, syncState,
+        softwareActiveVersion, associationStateQualifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        List of networkConstruct names
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- nextOperation
+        (Optional) List of Next operations. The allowed values are:
+        Download, Upgrade, PostUpgrade, CommitUpgrade, CancelUpgrade,
+        FULLUPGRADE, BACKUP, RESTORE, SCRIPT, CUSTOM_SCRIPT
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- physicalLocationId
+        (Optional) Physical location id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- recentOperation
+        (Optional) List of Recent operations. The allowed values are:
+        Download, Upgrade, PostUpgrade, CommitUpgrade, CancelUpgrade,
+        FULLUPGRADE, BACKUP, RESTORE, SCRIPT, CUSTOM_SCRIPT
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- recentOperationProgressState
+        (Optional) Recent operation progress state of Network
+        Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- recentOperationState
+        (Optional) Recent operation state of Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourcePartitionInfo
+        (Optional) Resource partition info
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourceType
+        (Optional) List of networkConstruct resourceTypes
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied. Fields
+        require full path (e.g. data.attributes.name)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sessionId
+        List of Management Session Ids
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- softwareActiveVersion
+        (Optional) List of networkConstruct software versions
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- softwareAvailableVersion
+        (Optional) Software version available on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. Fields require full path (i.e. data.attributes.field).
+        A dash or negative sign before a field indicates descending
+        order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- subnetName
+        (Optional) SubnetName of Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- syncState
+        (Optional) List of networkConstruct syncStates. The allowed
+        values are: notSynchronized, synchronizing, synchronized,
+        failed, aborted, deleting, deleteFailed
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- toNextOperationTime
+        (Optional) Time of next operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- toRecentOperationTime
+        (Optional) Time of recent operation on Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- typeGroup
+        (Optional) List of networkConstruct typeGroups
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- upgradeSchedule
+        (Optional) List of upgrade schedules for Network Construct
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

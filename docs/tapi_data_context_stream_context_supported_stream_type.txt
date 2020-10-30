@@ -1,0 +1,13 @@
+> TAPI_DATA_CONTEXT_STREAM_CONTEXT_SUPPORTED_STREAM_TYPE
+
+        Handle resource of type
+        tapi_data_context_stream_context_supported_stream_type
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

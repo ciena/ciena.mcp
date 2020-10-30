@@ -1,0 +1,24 @@
+> CONFIGMGMT_API_V1_BACKUPIMAGES
+
+        Handle resource of type configmgmt_api_v1_backupimages
+
+OPTIONS (= is mandatory):
+
+- nename
+        Retrieve all backup images for an NE.
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- netype
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

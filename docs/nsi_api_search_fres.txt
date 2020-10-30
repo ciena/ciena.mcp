@@ -1,0 +1,652 @@
+> NSI_API_SEARCH_FRES
+
+        Handle resource of type nsi_api_search_fres
+
+OPTIONS (= is mandatory):
+
+- active
+        (Optional) The active state of the resource
+        Used by `state=['get', 'post']'
+        (Choices: false, true)[Default: (null)]
+        type: str
+
+- adminState
+        (Optional) Allow filtering on FRE adminState. This parameter
+        accepts a list of comma separated values: enabled, disabled,
+        not applicable, In Service, Out of Service
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- bookingData.lockout
+        (Optional)  Flag that enables/disables a link from having
+        additional tunnel BW being consumed
+        Used by `state=['get', 'post']'
+        (Choices: false, true)[Default: (null)]
+        type: str
+
+- childFreId
+        (Optional) The child FRE identifier to return its parents
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- concrete
+        (Optional) List of concrete FRE identifiers
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- coroutedFreId
+        (Optional) Retrieves all correlated FREs that are co-routed
+        and co-terminated with the specified FRE Id
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- customerName
+        (Optional) Search for an exact match on customerName
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- decomposedFreIds
+        (Optional) Retrieves all parent FREs that have the specified
+        FRE as a decomposed relation
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- deploymentState
+        (Optional) deploymentState parameter used to filter results
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- directionality
+        (Optional) Indicates if unidirectional or bidirectional FREs
+        should be returned
+        Used by `state=['get', 'post']'
+        (Choices: bidirectional, unidirectional)[Default: (null)]
+        type: str
+
+- displayAdminState
+        (Optional) Allow filtering on FRE adminState display string
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- displayDeploymentState
+        (Optional) Allow filtering on FRE deploymentState display
+        string
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- displayOperationState
+        (Optional) Allow filtering on FRE operationState display
+        string
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- displayRecoveryCharacteristicsOnHome
+        (Optional) Allow filtering on FRE resiliency controller
+        recovery characteristics onHome display string
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- displayTopologySource
+        (Optional) Allow filtering on FRE topologySource display
+        string
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- domainTypes
+        (Optional) Allow filtering on FRE domainTypes. This parameter
+        accepts a list of comma separated values
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- endDateMax
+        (Optional) Maximum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- endDateMin
+        (Optional) Minimum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- endpoint.tpe.concrete
+        Concrete TPE identifier for endpoints
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- facilityBypass
+        (Optional) Allow filtering of FRE's with facilityBypass
+        tunnels.
+        Used by `state=['get', 'post']'
+        (Choices: exclude)[Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.equipmentIntent.id
+        (Optional) The equipment intent Id
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.intent.id
+        (Optional) The intent id
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.intent.type
+        (Optional) The intent type
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- freExpectations.serviceIntent.id
+        (Optional) The service intent Id
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- freType
+        FRE types in comma separated list The allowed values are:
+        explicitRoute, explicitRouteGroup, snc, sncGroup,
+        explicitRouteInstance
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- gneSubnetName
+        (Optional) GNE Subnet name of the FRE
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- group
+        (Optional, Deprecated) FRE group :<ul><li>dwa for all FREs in
+        OTU4 and all top level FREs in ETHERNET, DSR, DSR_ETHERNET,
+        OTSi(OCH), ODU2, ODU4, ODUCn, OTUCn<li>infrastructure for all
+        FRE-APs representing forwarding constructs between ROADM
+        OTS'<li>packet for all L2 nodal and top level FREs in ETHERNET
+        including infrastructure</ul>
+        Used by `state=['get', 'post']'
+        (Choices: dwa, infrastructure, packet, packet_infrastructure,
+        tdm)[Default: (null)]
+        type: str
+
+- id
+        (Optional) Comma separated list of FRE identifiers to retrieve
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- identifierKey
+        List of comma separated keys for an identifer object
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: list
+
+- identifierValue
+        List of comma separated values for an identifier object
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: list
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: tpes, expectations,
+        networkConstructs, planned, freDiscovered, frePlanned,
+        supportedByFreResiliencyClientTpes
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- internalStructure
+        (Optional) Allow filtering on the FRE Internal Structure. This
+        parameter accepts a list of comma separated values. The
+        allowed values are: SIMPLE,SIMPLE_SWITCHED,PROTECTED_ONE_END,
+        MULTI_SIMPLE, MULTIPLE,PROTECTED_BOTH_ENDSMULTIPOINT, HUB_AND_
+        SPOKE,EXPLICIT,INTERCONNECT_ONE_END,UNKNOWN,FULL_MESH,PARTIAL_
+        MESH
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- isOtdrCapable
+        (Optional) List all fres that have OTDR capable links.Allowed
+        value is true
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- isUsedByService
+        (Optional) Allow filtering of DTLSet fres on the basis of
+        whether they are used by snc/sncg or not.Allowed values are
+        true/false
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- layerRate
+        FRE layer rates in comma separated list. The allowed values
+        are: ETHERNET, OTU1, OTU2, OTU2e, OTU3, OTU4, OTUCn, OTSi,
+        OMS, OS, PHY, OTS, FICON, FC, ODU, ODU0, ODU1, ODU2, ODU2e,
+        ODU3, ODU4, ODUCn, DSR, DSR_10GE, DSR_100GE, DSR_ETHERNET,
+        ENCAPSULATION, MPLS, MPLS_PROTECTION, MEDIA, LAG, RS, E1, E3,
+        E1_2M, EC1, DSR_2M, LINE_OC3_STS3_AND_MS_STM1,
+        SECTION_OC3_STS3_AND_RS_STM1, DSR_OC3_STM1, DSR_OC12_STM4,
+        DSR_OC48_STM16, DSR_OC192_STM64, CES_IWF, T1, DSR_1_5M, STS1,
+        STS3C, STS12C, STS24C, STS48C, DS0, DS1, DS3, VT15, VT2,
+        NOT_APPLICABLE, ODUFLEX, OTUg, ODUg, BGP, IP
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- layerRateQualifier
+        (Optional) Indicates additional qualification information for
+        a LayerRate. For example, for beyond 100G rates (e.g. OTUCn,
+        ODUCn), defines the n multiplier, or the n-M subrate value.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- lqsData.fiber.method
+        (Optional) Allow filtering on the LQS fiber method. This
+        parameter accepts a list of comma separated values
+        Used by `state=['get', 'post']'
+        (Choices: osc, totalPower)[Default: (null)]
+        type: str
+
+- lqsData.fiber.reconciled
+        (Optional) The LQS fiber reconciled state
+        Used by `state=['get', 'post']'
+        (Choices: false, true)[Default: (null)]
+        type: str
+
+- lqsData.margin.valid
+        (Optional) The LQS margin validity state
+        Used by `state=['get', 'post']'
+        (Choices: false, true)[Default: (null)]
+        type: str
+
+- lqsData.margin.viableAtEol
+        (Optional) A list of LQS margin viable at EOL states
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- lqsData.ppg.snrStatus
+        (Optional) A list of LQS PPG snr states
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- lqsData.status
+        (Optional) Allow filtering on the LQS status. This parameter
+        accepts a list of comma separated values
+        Used by `state=['get', 'post']'
+        (Choices: good, high, low, upgrade)[Default: (null)]
+        type: str
+
+- managementName
+        Management Name
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        MetaData to be included. The allowed values are: layerRate,
+        layerRateQualifier, signalContentType,
+        intentLifeCyclePhaseString, intentDeploymentStateString,
+        serviceClass, sncgUserlabel, adminState, operationState,
+        lqsData.status, lqsData.margin.valid,
+        lqsData.fiber.reconciled, lqsData.fiber.method,
+        lqsData.margin.viableAtEol, displayAdminState,
+        displayOperationState, displayTopologySource, customerName,
+        domainTypes, resilienceLevel, directionality,
+        displayDeploymentState, ringType, ringCompleteness,
+        displayRecoveryCharacteristicsOnHome
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- metaDataQualifiers
+        (Optional) List of meta data options. The allowed values are:
+        absoluteTotals
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- modelType
+        (Optional) modelType parameter used to filter results
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- namedQuery
+        (Optional) Comma-separated named query id list; The allowed
+        values are: resiliency, tdmServices, topologicalLinks,
+        roadmLineSpan, reusableSNCG, tunnelReplacement,
+        layer1OtuLinks, photonicSncpWorkLegs, relatedFresFull,
+        relatedFresLight, ringsWithoutConstraints, groupedSNCDTLSET,
+        relatedRoadmlineSeedsForIntent<br><br>tunnelReplacement cannot
+        be used in combination with other named
+        queries<br><br>photonicSncpWorkLegs can not be used alone,
+        networkConstruct.Id must be provided with this named
+        query<br><br>relatedFresFull can not be used alone,
+        namedQueryParam1  must be provided with this named
+        query.<br><br>relatedFresLight can not be used alone,
+        namedQueryParam1 must be provided with this named
+        query.<br><br>relatedRoadmlineSeedsForIntent can not be used
+        alone, namedQueryParam1 must be provided with this named
+        query<br><br>groupedSNCDTLSET cannot be used in combination
+        with other named queries and can not be used alone,
+        namedQueryParam1  must be provided with this named query.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- namedQueryParam1
+        Mandatory when namedQuery relatedFresFull/relatedFresLight is
+        used. This parameter accepts a list of comma separated freIds
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- ncTags
+        (Optional) List of comma-separated network construct tags that
+        is an endpoint for an FRE
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.id
+        (Optional) Comma separated Network Construct identifier
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.id.operator
+        (Optional) The logical operator to use when searching Network
+        Construct identifiers
+        Used by `state=['get', 'post']'
+        (Choices: and, or)[Default: (null)]
+        type: str
+
+- networkRole
+        (Optional) Determines if the FRE participates in an internal
+        or external forwarding view or involves access points or
+        connection points
+        Used by `state=['get', 'post']'
+        (Choices: FREAP, FREhAP, IFRE, IFRECP, ROADMLINE)[Default:
+        (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- operationState
+        (Optional) Allow filtering on FRE operationState. This
+        parameter accepts a list of comma separated values: fully
+        operating, not operating, degraded operation, Not Applicable,
+        Undetermined, In Service, Degraded, Out of Service External,
+        Out of Service
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- ovpnIds
+        List of comma separated values for ovpn Id
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- partitionFreIds
+        (Optional) Retrieves all parent FREs that have the specified
+        FRE as a partition relation
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- partitioningFreIds
+        (Optional) Retrieves all child FREs that have the specified
+        FRE as a partitioning relation
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- remoteOSRPNodeName
+        (Optional) Allow filtering of DTLSet fres on the basis of
+        destination osrp node name
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- resilienceLevel
+        (Optional) Allow filtering on FRE domainTypes. This parameter
+        accepts a list of comma separated values: unprotected,
+        partial, protected
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- resourceState
+        List of fre planning states. By default, if no value for this
+        parameter is specified, root and unknown states are filtered
+        out. The allowed values are: root, planned, discovered,
+        plannedAndDiscovered, unknown
+        Default value: planned,discovered,plannedAndDiscovered2
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- ringCompleteness
+        (Optional) Allow filtering on type of G8032 ring completeness.
+        This parameter accepts a list of comma separated values:
+        partial, complete
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- ringType
+        (Optional) Allow filtering on type of G8032 ring. This
+        parameter accepts a list of comma separated values: majorRing,
+        subRing
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- roadmLineId
+        (Optional) Find services configured over a roadmline based on
+        the roadmline FRE identifier.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- routingConstraints.inclusionConstraints.id
+        (Optional) Retrieves all FREs that have an inclusion
+        constraint relationship to the specified identifier
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search with,
+        combined with searchText. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text, (default search Fields are
+        name, layerRate, tpeLocations if searchFields is not
+        specified.)
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- serviceClass
+        (Optional) Allow filtering on the FRE service class. This
+        parameter accepts a list of comma separated values. The
+        allowed values are: EVC, ETransit, EAccess, VLAN, TDM,
+        Transport Client, Photonic, Tunnel, IP, LLDP, LAG, OTU, ROADM
+        Line, Fiber, SNC , OSRP Link, OSRP Line, SNCP, ICL, Ring,
+        L3VPN
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- serviceClassMismatch
+        Allow filtering on the FRE  where the discovered service class
+        and derived service class matches or not : true or false
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- signalContentType
+        (Optional) The identifier indicating type of parent to be
+        returned. If specified, parent matching the criteria will be
+        returned
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- sncgUserlabel
+        (Optional) For Control Plane SNCs only: Retrieves all SNCs
+        provided the parent SNCG userLabel
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. Fields require full path (i.e. data.attributes.field).
+        A dash or negative sign before a field indicates descending
+        order; by default ascending order is used
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- srlg
+        (Optional) Find roadmlines by srlg values separated by comma.
+        A roadmline is a FRE between two SAM cards.
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- startDateMax
+        (Optional) Maximum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- startDateMin
+        (Optional) Minimum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+- supportedByFreId
+        (Optional) Retrieves all supported parent FREs (default is one
+        serviceClass/layer level up) that have a serviceClass
+        designation for the specified FRE Id
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- supportedByQualifier
+        (Optional) Used in conjunction with supportedByFreId and
+        controls if only one-level (default) or all parent FREs with a
+        serviceClass are returned
+        Used by `state=['get', 'post']'
+        (Choices: all, one)[Default: (null)]
+        type: str
+
+- supportingFreId
+        (Optional) Retrieves all supporting child FREs (one
+        serviceClass/layer level down) that have a serviceClass
+        designation for the specified FRE Id
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- tags
+        (Optional) Allow filtering on FRE tags. This parameter accepts
+        a list of comma separated strings
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- tpe.id
+        (Optional) Comma separated TPE identifier for endpoints
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- tpe.id.operator
+        (Optional) The logical operator to use when searching tpeIds
+        Used by `state=['get', 'post']'
+        (Choices: and, or)[Default: (null)]
+        type: str
+
+- tunnelType
+        (Optional) Allow filtering on FRE Tunnel class service. This
+        parameter accepts a list of comma separated values: dynamic,
+        static
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- type
+        FRE types in comma separated list. The allowed values are:
+        service, link, roadmline-ap, roadmline
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+- userLabel
+        User label
+        Used by `state=['get', 'post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

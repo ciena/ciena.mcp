@@ -1,0 +1,127 @@
+> RESOURCES_BY_RESOURCEID_DEPENDENCIES
+
+        Handle resource of type resources_by_resourceid_dependencies
+
+OPTIONS (= is mandatory):
+
+- applicationSliceId
+        Optional query to limit resources by the application slice id.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- domainId
+        Optional query to limit resources by domain
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- exactTypeId
+        Optional query to limit resources by one or more exact
+        resource types (takes precedence over resourceTypeId). Use
+        comma-separated string to specify multiple resource types.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The maximum number of elements to return in a single paged
+        request
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- obfuscate
+        If true, schema obfuscated values will be replaced with a
+        fixed string in the response.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: bool
+
+- offset
+        Requested offset within the total result set to be the first
+        element in the paged response
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- p
+        Optional query parameter to define a partial string match
+        filter using property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- pageToken
+        String pagination token returned from a previous query that
+        encodes query information in order to optimize a
+        subsequent request for a page of results. The token includes
+        the limit and offset parameters for the next page, but one or
+        both can be included to override the encoded values
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- productId
+        Optional query to limit resources by product type
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- recursive
+        If true, returns indirect dependencies as well, i.e.,
+        dependencies of the dependencies, etc.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: bool
+
+- resourceId
+        Identifies the resource for which dependency resources are
+        searched
+        Required with `state=['get', 'head']'
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- resourceProviderId
+        Optional query to limit resources by resource provider
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- resourceTypeId
+        Optional query to limit resources by one or more resource
+        types. Use a comma-separated string to specify multiple
+        resource types.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+- subDomainId
+        Optional query to limit resources by one or more subdomain
+        ids. Use a comma-separated string to specify multiple
+        subdomain ids.
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- tags
+        Optional query parameter to define a tag filter using
+        tagKey:tagValue syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

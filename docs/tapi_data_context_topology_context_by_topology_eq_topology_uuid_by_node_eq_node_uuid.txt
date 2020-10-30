@@ -1,0 +1,27 @@
+> TAPI_DATA_CONTEXT_TOPOLOGY_CONTEXT_BY_TOPOLOGY_EQ_TOPOLOGY_UUID_BY_NODE_EQ_NODE_UUID
+
+        Handle resource of type tapi_data_context_topology_context_by_
+        topology_eq_topology_uuid_by_node_eq_node_uuid
+
+OPTIONS (= is mandatory):
+
+- node-uuid
+        Id of node
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- topology-uuid
+        Id of topology
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

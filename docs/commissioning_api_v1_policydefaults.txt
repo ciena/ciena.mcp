@@ -1,0 +1,32 @@
+> COMMISSIONING_API_V1_POLICYDEFAULTS
+
+        Handle resource of type commissioning_api_v1_policydefaults
+
+OPTIONS (= is mandatory):
+
+- data
+        Data for defaults of a policy.
+        Required with `state=['post', 'put']'
+        Used by `state=['post', 'put']'
+        [Default: (null)]
+        type: dict
+
+- id
+        Id of the policy
+        Required with `state=['delete', 'get', 'post', 'put']'
+        Used by `state=['delete', 'get', 'post', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, post, put)[Default: (null)]
+        type: str
+
+- type
+        Type of the policy
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

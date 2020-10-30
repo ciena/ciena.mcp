@@ -1,0 +1,33 @@
+> RESOURCES_BY_RESOURCEID_INTERFACES
+
+        Handle resource of type resources_by_resourceid_interfaces
+
+OPTIONS (= is mandatory):
+
+- p
+        Optional query parameter to define a partial string match
+        filter using property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- resourceId
+        Identifier of the resource whose interfaces will be queried
+        Required with `state=['get', 'head']'
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

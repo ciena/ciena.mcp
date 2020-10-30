@@ -1,0 +1,19 @@
+> RESOURCE_TYPES_BY_RESOURCETYPEID
+
+        Handle resource of type resource_types_by_resourcetypeid
+
+OPTIONS (= is mandatory):
+
+- resourceTypeId
+        Identifier of the resource type being queried
+        Required with `state=['get', 'head']'
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

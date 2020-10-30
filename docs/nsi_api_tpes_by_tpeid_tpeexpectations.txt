@@ -1,0 +1,19 @@
+> NSI_API_TPES_BY_TPEID_TPEEXPECTATIONS
+
+        Handle resource of type nsi_api_tpes_by_tpeid_tpeexpectations
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- tpeId
+        TPE identifier
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

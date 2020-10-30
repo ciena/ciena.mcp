@@ -1,0 +1,21 @@
+> CONFIGMGMT_API_V1_DELETEBATCH
+
+        Handle resource of type configmgmt_api_v1_deletebatch
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str):
+         - `type' (str):
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

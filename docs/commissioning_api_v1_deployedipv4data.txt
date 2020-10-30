@@ -1,0 +1,26 @@
+> COMMISSIONING_API_V1_DEPLOYEDIPV4DATA
+
+        Handle resource of type commissioning_api_v1_deployedipv4data
+
+OPTIONS (= is mandatory):
+
+- shelfNumber
+        Shelf Number
+        Required with `state=['delete']'
+        Used by `state=['delete']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, post)[Default: (null)]
+        type: str
+
+- tid
+        Target Identifier for shelves in deployed IPv4 network
+        Required with `state=['delete', 'get']'
+        Used by `state=['delete', 'get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

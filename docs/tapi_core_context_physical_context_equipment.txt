@@ -1,0 +1,25 @@
+> TAPI_CORE_CONTEXT_PHYSICAL_CONTEXT_EQUIPMENT
+
+        Handle resource of type
+        tapi_core_context_physical_context_equipment
+
+OPTIONS (= is mandatory):
+
+- limit
+        (Optional) The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- token
+        (Optional) Token for the page to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

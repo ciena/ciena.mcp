@@ -1,0 +1,26 @@
+> CONFIGMGMT_API_V1_PORT_PECS
+
+        Handle resource of type configmgmt_api_v1_port_pecs
+
+OPTIONS (= is mandatory):
+
+- file
+        The Input stream of the pec code definition to be uploaded.
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: file
+
+- name
+        Name of the pec code definition
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

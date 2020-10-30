@@ -1,0 +1,12 @@
+> ADMIN_SESSIONS
+
+        Handle resource of type admin_sessions
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

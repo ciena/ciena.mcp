@@ -1,0 +1,27 @@
+> NSI_API_V3_EQUIPMENT_BY_EQUIPMENTID_EQUIPMENTEXPECTATIONS_BY_EQUIPMENTEXPECTATIONID
+
+        Handle resource of type nsi_api_v3_equipment_by_equipmentid_eq
+        uipmentexpectations_by_equipmentexpectationid
+
+OPTIONS (= is mandatory):
+
+- equipmentExpectationId
+        Equipment expectation identifier
+        Required with `state=['delete']'
+        Used by `state=['delete']'
+        [Default: (null)]
+        type: str
+
+- equipmentId
+        Equipment identifier
+        Required with `state=['delete']'
+        Used by `state=['delete']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

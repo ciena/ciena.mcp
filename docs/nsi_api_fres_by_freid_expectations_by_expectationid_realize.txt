@@ -1,0 +1,27 @@
+> NSI_API_FRES_BY_FREID_EXPECTATIONS_BY_EXPECTATIONID_REALIZE
+
+        Handle resource of type
+        nsi_api_fres_by_freid_expectations_by_expectationid_realize
+
+OPTIONS (= is mandatory):
+
+- expectationId
+        FreExpectation to realize
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- freId
+        FRE identifier
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

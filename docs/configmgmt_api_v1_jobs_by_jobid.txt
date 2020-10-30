@@ -1,0 +1,28 @@
+> CONFIGMGMT_API_V1_JOBS_BY_JOBID
+
+        Handle resource of type configmgmt_api_v1_jobs_by_jobid
+
+OPTIONS (= is mandatory):
+
+- body
+        Update config job execution user input attributes as JSON
+        wrapper object
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- jobId
+        The job execution id used for current status of a config job
+        lookup
+        Required with `state=['delete', 'get', 'patch']'
+        Used by `state=['delete', 'get', 'patch']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

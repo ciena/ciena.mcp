@@ -1,0 +1,27 @@
+> NSI_API_FRES_BY_FREID_OPERATIONS_BY_OPERATION
+
+        Handle resource of type
+        nsi_api_fres_by_freid_operations_by_operation
+
+OPTIONS (= is mandatory):
+
+- freId
+        FRE identifier
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- operation
+        FRE operation
+        Required with `state=['put']'
+        Used by `state=['put']'
+        (Choices: makeCurrentToHome, regroom, revert)[Default: (null)]
+        type: str
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

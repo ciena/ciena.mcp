@@ -1,5 +1,13 @@
 # Ciena MCP Release Notes
 
+## v1.0.4
+
+### Changes
+
+* add APIs
+* add docs
+* add swagger source files
+
 ## v1.0.3
 
 ### Changes

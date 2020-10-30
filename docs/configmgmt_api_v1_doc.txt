@@ -1,0 +1,29 @@
+> CONFIGMGMT_API_V1_DOC
+
+        Handle resource of type configmgmt_api_v1_doc
+
+OPTIONS (= is mandatory):
+
+- docDetails
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- networkConstructNames
+        Networkconstruct Names for which config DOCs to be retrieved.
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- operationType
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

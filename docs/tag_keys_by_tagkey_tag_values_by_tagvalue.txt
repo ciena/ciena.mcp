@@ -1,0 +1,47 @@
+> TAG_KEYS_BY_TAGKEY_TAG_VALUES_BY_TAGVALUE
+
+        Handle resource of type
+        tag_keys_by_tagkey_tag_values_by_tagvalue
+
+OPTIONS (= is mandatory):
+
+- description
+        Description of the meaning of a tag value
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- key
+        Tag key
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, head, patch, put)[Default: (null)]
+        type: str
+
+- tagKey
+        Tag key whose tag value is being requested
+        Required with `state=['delete', 'get', 'head', 'patch',
+        'put']'
+        Used by `state=['delete', 'get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- tagValue
+        Tag value being updated
+        Required with `state=['delete', 'get', 'head', 'patch',
+        'put']'
+        Used by `state=['delete', 'get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- value
+        Tag value
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

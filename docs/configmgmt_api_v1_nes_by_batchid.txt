@@ -1,0 +1,19 @@
+> CONFIGMGMT_API_V1_NES_BY_BATCHID
+
+        Handle resource of type configmgmt_api_v1_nes_by_batchid
+
+OPTIONS (= is mandatory):
+
+- batchId
+        Retrieve all NEs associated with a batchId
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

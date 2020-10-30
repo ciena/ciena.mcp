@@ -1,0 +1,32 @@
+> NSI_API_V4_FRES_BY_FREID_EXPECTATIONS_BY_FREEXPID
+
+        Handle resource of type
+        nsi_api_v4_fres_by_freid_expectations_by_freexpid
+
+OPTIONS (= is mandatory):
+
+- freExpId
+        The id of the freExpectation to be updated
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- freId
+        The id of the fre to be updated
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,38 @@
+> TAG_KEYS_BY_TAGKEY
+
+        Handle resource of type tag_keys_by_tagkey
+
+OPTIONS (= is mandatory):
+
+- autoIndexed
+        Are tag value for this key auto-indexed?
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: bool
+
+- description
+        Textual description of tag key
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- key
+        Tag key
+        Used by `state=['patch', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, get, head, patch, put)[Default: (null)]
+        type: str
+
+- tagKey
+         Requested tag key
+        Required with `state=['delete', 'get', 'head', 'patch',
+        'put']'
+        Used by `state=['delete', 'get', 'head', 'patch', 'put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

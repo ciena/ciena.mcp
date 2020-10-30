@@ -1,0 +1,27 @@
+> IFD_API_V1_SERVICEINTENTS_BY_ID_UNDEPLOY
+
+        Handle resource of type
+        ifd_api_v1_serviceintents_by_id_undeploy
+
+OPTIONS (= is mandatory):
+
+- id
+        The unique identifier of the service intent
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- ignoreClientServiceDependencies
+        (Optional. Demo Only - not officially supported) Bypasses
+        service provisioning client service validation if set to true
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

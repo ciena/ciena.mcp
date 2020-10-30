@@ -1,0 +1,12 @@
+> PING
+
+        Handle resource of type ping
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

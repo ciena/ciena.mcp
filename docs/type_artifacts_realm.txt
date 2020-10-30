@@ -1,0 +1,12 @@
+> TYPE_ARTIFACTS_REALM
+
+        Handle resource of type type_artifacts_realm
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get, head)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

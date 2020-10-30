@@ -1,0 +1,65 @@
+> CONFIGMGMT_API_V2_PROFILES_BY_PROFILEID
+
+        Handle resource of type
+        configmgmt_api_v2_profiles_by_profileid
+
+OPTIONS (= is mandatory):
+
+- imageLocation
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- name
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- port
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: int
+
+- profileId
+        The ftp profile with id to be retrieved.
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- profileType
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- protocolType
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: patch)[Default: (null)]
+        type: str
+
+- storageMethod
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- userName
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- userPassword
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

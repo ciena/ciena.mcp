@@ -1,0 +1,29 @@
+> DISCOVERY_API_V2_NEPROFILES_BY_ID
+
+        Handle resource of type discovery_api_v2_neprofiles_by_id
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier for the NE Connection
+        Profile resource
+         - `type' (str): The NE Connection Profile resource type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- id
+        Unique identifier of the NE Connection Profile to update
+        Required with `state=['put']'
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

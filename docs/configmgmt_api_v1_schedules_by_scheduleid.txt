@@ -1,0 +1,69 @@
+> CONFIGMGMT_API_V1_SCHEDULES_BY_SCHEDULEID
+
+        Handle resource of type
+        configmgmt_api_v1_schedules_by_scheduleid
+
+OPTIONS (= is mandatory):
+
+- additionalAttributes
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- configMgmtJobId
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- lastExecutionTime
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- name
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- nextExecutionTime
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- numberOfNEs
+        Used by `state=['put']'
+        [Default: (null)]
+        type: int
+
+- scheduleDetails
+        Validate attributes are:
+         - `scheduleFrequency' (str):
+         - `scheduleTime' (str):
+         - `scheduleWeeklyDays' (dict):
+        Used by `state=['put']'
+        [Default: (null)]
+        type: dict
+
+- scheduleId
+        Update schedule associated with given scheduleId
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, put)[Default: (null)]
+        type: str
+
+- type
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

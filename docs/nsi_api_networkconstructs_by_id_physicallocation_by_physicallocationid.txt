@@ -1,0 +1,34 @@
+> NSI_API_NETWORKCONSTRUCTS_BY_ID_PHYSICALLOCATION_BY_PHYSICALLOCATIONID
+
+        Handle resource of type nsi_api_networkconstructs_by_id_physic
+        allocation_by_physicallocationid
+
+OPTIONS (= is mandatory):
+
+- body
+        The desired physical location value
+        Used by `state=['put']'
+        [Default: (null)]
+        type: str
+
+- id
+        Identifier of Network Construct under which to create or
+        update the physical location
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- physicalLocationId
+        Id of physical location to create or update
+        Required with `state=['delete', 'put']'
+        Used by `state=['delete', 'put']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: delete, put)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

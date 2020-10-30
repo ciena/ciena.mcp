@@ -1,0 +1,26 @@
+> CONFIGMGMT_API_V1_UPGRADE_FPGADETAILS
+
+        Handle resource of type configmgmt_api_v1_upgrade_fpgadetails
+
+OPTIONS (= is mandatory):
+
+- AID
+        AID for which FPGA Details to be retrieved.
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstructName
+        Networkconstruct Name for which FPGA Details to be retrieved.
+        Required with `state=['get']'
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

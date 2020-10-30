@@ -1,0 +1,659 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Provision connection parameters required for communicating securely with network elements",
+    "version": "2.0",
+    "title": "Network element connection profiles"
+  },
+  "tags": [
+    {
+      "name": "neprofiles",
+      "description": "Provision connection parameters for network elements (management sessions)<p>This non-versioned API is meant for use by an end-user as a pass-through to the latest version. WARNING - backwards compatibility is not guaranteed for non-versioned APIs."
+    },
+    {
+      "name": "neprofiles v1",
+      "description": "Provision connection parameters for network elements (management sessions)"
+    },
+    {
+      "name": "neprofiles v2",
+      "description": "Provision connection parameters for network elements (management sessions)"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/discovery/api/neprofiles": {
+      "get": {
+        "tags": ["neprofiles"],
+        "summary": "Get all NE Connection Profiles for a type group",
+        "description": "Return all NE Connection Profiles for the type group.",
+        "operationId": "getNEConnectionProfiles",
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "typeGroup",
+            "in": "query",
+            "description": "(Optional) Device Type Group",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "protocol",
+            "in": "query",
+            "description": "(Optional) Protocol",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieval of NE Connection Profiles complete",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileListV3RO"
+            }
+          },
+          "204": {
+            "description": "No data found.",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["neprofiles"],
+        "summary": "Create a NE Connection Profile",
+        "description": "Create the specified NE Connection Profile. On success, status 201 is returned with the full resource, including the resource identifier.",
+        "operationId": "createNEConnectionProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "NE Connection Profile to be created with the specified contents",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "NE Connection Profile is created",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile content"
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/neprofiles/{id}": {
+      "get": {
+        "tags": ["neprofiles"],
+        "summary": "Get the NE Connection Profile with the specified id",
+        "description": "Return a specific NE Connection Profile.",
+        "operationId": "getNEConnectionProfile",
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the NE Connection Profile to fetch",
+            "required": true,
+            "type": "string",
+            "pattern": ".+"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieval of NE Connection Profile complete",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "No NE Connection Profile found for given Id",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["neprofiles"],
+        "summary": "Create or update an NE Connection Profile with the specified id.",
+        "description": "LATEST VERSION: V2. Create or update a specific NE Connection Profile.",
+        "operationId": "updateNEConnectionProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the NE Connection Profile to update",
+            "required": true,
+            "type": "string",
+            "pattern": ".+"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "NE Connection Profile data as a JSON object.  Existing profile will be replaced by the new contents.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NE Connection Profile has been updated",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "201": {
+            "description": "NE Connection Profile has been created",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile content"
+          },
+          "500": {
+            "description": "NE Connection Profile update failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["neprofiles"],
+        "summary": "Delete the NE Connection Profile with the specified id",
+        "description": "Delete a specific NE Connection Profile.",
+        "operationId": "deleteNEConnectionProfile",
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the NE Connection Profile to delete",
+            "required": true,
+            "type": "string",
+            "pattern": ".+"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NE Connection Profile was deleted"
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/v1/neprofiles": {
+      "get": {
+        "tags": ["neprofiles v1"],
+        "summary": "Get all NE Connection Profiles for a type group",
+        "description": "Return all NE Connection Profiles for the type group.",
+        "operationId": "getNEConnectionProfiles",
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "typeGroup",
+            "in": "query",
+            "description": "(Optional) Device Type Group",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "protocol",
+            "in": "query",
+            "description": "(Optional) Protocol",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieval of NE Connection Profiles complete",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileListV3RO"
+            }
+          },
+          "204": {
+            "description": "No data found.",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["neprofiles v1"],
+        "summary": "Create a NE Connection Profile",
+        "description": "Create the specified NE Connection Profile. On success, status 201 is returned with the full resource, including the resource identifier.",
+        "operationId": "createNEConnectionProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "NE Connection Profile to be created with the specified contents",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "NE Connection Profile is created",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile content"
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/v1/neprofiles/{id}": {
+      "get": {
+        "tags": ["neprofiles v1"],
+        "summary": "Get the NE Connection Profile with the specified id",
+        "description": "Return a specific NE Connection Profile.",
+        "operationId": "getNEConnectionProfile",
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the NE Connection Profile to fetch",
+            "required": true,
+            "type": "string",
+            "pattern": ".+"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieval of NE Connection Profile complete",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "404": {
+            "description": "No NE Connection Profile found for given Id",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["neprofiles v1"],
+        "summary": "Update the NE Connection Profile with the specified id.",
+        "description": "Update a specific NE Connection Profile.",
+        "operationId": "updateNEConnectionProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the NE Connection Profile to update",
+            "required": true,
+            "type": "string",
+            "pattern": ".+"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "NE Connection Profile data as a JSON object.  Existing profile will be replaced by the new contents.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NE Connection Profile has been updated",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile content"
+          },
+          "404": {
+            "description": "No NE Connection Profile found for given Id"
+          },
+          "500": {
+            "description": "NE Connection Profile update failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": ["neprofiles v1"],
+        "summary": "Delete the NE Connection Profile with the specified id",
+        "description": "Delete a specific NE Connection Profile.",
+        "operationId": "deleteNEConnectionProfile",
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the NE Connection Profile to delete",
+            "required": true,
+            "type": "string",
+            "pattern": ".+"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NE Connection Profile was deleted"
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "The server encountered an error while processing the request",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/discovery/api/v2/neprofiles/{id}": {
+      "put": {
+        "tags": ["neprofiles v2"],
+        "summary": "Create or update an NE Connection Profile with the specified id.",
+        "description": "Create or update a specific NE Connection Profile.",
+        "operationId": "updateNEConnectionProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/vnd.api+json", "application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier of the NE Connection Profile to update",
+            "required": true,
+            "type": "string",
+            "pattern": ".+"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "NE Connection Profile data as a JSON object.  Existing profile will be replaced by the new contents.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NE Connection Profile has been updated",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "201": {
+            "description": "NE Connection Profile has been created",
+            "schema": {
+              "$ref": "#/definitions/NEConnectionProfileV3RO"
+            }
+          },
+          "400": {
+            "description": "Unable to process NE Connection Profile content"
+          },
+          "500": {
+            "description": "NE Connection Profile update failed (error message provided)",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "properties": {
+        "errorCode": {
+          "type": "string"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "errorDescription": {
+          "type": "string"
+        },
+        "msgAttributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "meta": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "Errors": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "LinksRO": {
+      "type": "object",
+      "properties": {
+        "self": {
+          "type": "string",
+          "format": "uri",
+          "description": "A `self` member, whose value is a URL for the relationship itself (a \"relationship URL\"). This URL allows the client to directly manipulate the relationship. For example, it would allow a client to remove an `author` from an `article` without deleting the people resource itself."
+        },
+        "first": {
+          "type": "string",
+          "format": "uri",
+          "description": "The first page of data"
+        },
+        "last": {
+          "type": "string",
+          "format": "uri",
+          "description": "The last page of data"
+        },
+        "prev": {
+          "type": "string",
+          "format": "uri",
+          "description": "The previous page of data"
+        },
+        "next": {
+          "type": "string",
+          "format": "uri",
+          "description": "The next page of data"
+        }
+      }
+    },
+    "NEConnectionProfileAttributesV3RO": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the NE Connection Profile"
+        },
+        "profileDescription": {
+          "type": "string",
+          "description": "A short description of the NE Connection Profile"
+        },
+        "typeGroup": {
+          "type": "string",
+          "description": "The NE Type Group which supports this profile"
+        },
+        "isDefault": {
+          "type": "boolean",
+          "description": "Indicates if this is a default NE Connection Profile",
+          "default": false
+        },
+        "isEnabled": {
+          "type": "boolean",
+          "description": "Indicates if this NE Connection Profile is enabled",
+          "default": false
+        },
+        "protocolEndpoints": {
+          "description": "A two-level Map<String, AdditionalAttribute>",
+          "$ref": "#/definitions/ProtocolEndpointsRO"
+        }
+      }
+    },
+    "NEConnectionProfileDataV3RO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the NE Connection Profile resource"
+        },
+        "type": {
+          "type": "string",
+          "description": "The NE Connection Profile resource type",
+          "enum": ["neConnectionProfile"]
+        },
+        "attributes": {
+          "$ref": "#/definitions/NEConnectionProfileAttributesV3RO"
+        }
+      }
+    },
+    "NEConnectionProfileListV3RO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NEConnectionProfileDataV3RO"
+          }
+        },
+        "links": {
+          "description": "Links related to the resource",
+          "$ref": "#/definitions/LinksRO"
+        }
+      }
+    },
+    "NEConnectionProfileV3RO": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/NEConnectionProfileDataV3RO"
+        }
+      }
+    },
+    "ProtocolEndpointsRO": {
+      "type": "object"
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "entity": {
+          "type": "object"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}

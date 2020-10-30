@@ -1,0 +1,32 @@
+> CONFIGMGMT_API_V1_SCHEDULE_ASSIGNNE
+
+        Handle resource of type configmgmt_api_v1_schedule_assignne
+
+OPTIONS (= is mandatory):
+
+- additionalIpAddresses
+        Used by `state=['delete', 'post']'
+        [Default: (null)]
+        type: list
+
+- backupSchedule
+        Used by `state=['delete', 'post']'
+        [Default: (null)]
+        type: str
+
+- ipAddress
+        Used by `state=['delete', 'post']'
+        [Default: (null)]
+        type: str
+
+- resourcePartitionInfo
+        Used by `state=['delete', 'post']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: delete, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

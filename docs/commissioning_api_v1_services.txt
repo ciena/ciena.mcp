@@ -1,0 +1,39 @@
+> COMMISSIONING_API_V1_SERVICES
+
+        Handle resource of type commissioning_api_v1_services
+
+OPTIONS (= is mandatory):
+
+- deviceType
+        The provisioning of the service to be trigger against provided
+        type of network elements e.g. 6500, Waveserver, Waveserver Ai
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- nodename
+        Node name in a planned network.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- service
+        Service to be provisioned, if not provided by default all
+        applicable services will be provisioned. Bulk operation may be
+        slow.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- sessionid
+        Session id of the network element.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

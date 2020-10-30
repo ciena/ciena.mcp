@@ -1,0 +1,19 @@
+> RESOURCES_BY_RESOURCEID_AUDIT
+
+        Handle resource of type resources_by_resourceid_audit
+
+OPTIONS (= is mandatory):
+
+- resourceId
+        Identifier of the resource to be audited
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

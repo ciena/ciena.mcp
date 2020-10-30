@@ -1,0 +1,19 @@
+> IFD_API_SERVICEINTENTS_BY_ID_DEPLOY
+
+        Handle resource of type ifd_api_serviceintents_by_id_deploy
+
+OPTIONS (= is mandatory):
+
+- id
+        The unique identifier of the service intent
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,12 @@
+> COMMISSIONING_API_V1_UAP_6500_4
+
+        Handle resource of type commissioning_api_v1_uap_6500_4
+
+OPTIONS (= is mandatory):
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,3478 @@
+{
+    "swagger" : "2.0",
+    "info" : {
+      "description" : "Retrieve, plan and modify equipment resources",
+      "version" : "1.0",
+      "title" : "Equipment"
+    },
+    "tags" : [ {
+      "name" : "000 - nsiapiequipment",
+      "description" : "Retrieve, plan, and manage the equipment resources.<p/>&nbsp;&nbsp;&nbsp;&nbsp;This non-versioned API is meant for use by an end-user as a pass-through to the latest version. WARNING - backwards compatibility is not guaranteed for non-versioned APIs."
+    }, {
+      "name" : "994 - nsiapiv6equipment",
+      "description" : "Retrieve, plan, and manage the equipment resources (version 6)."
+    }, {
+      "name" : "995 - nsiapiv5equipment",
+      "description" : "Retrieve, plan, and manage the equipment resources (version 5)."
+    }, {
+      "name" : "996 - nsiapiv4equipment",
+      "description" : "Retrieve, plan, and manage the equipment resources (version 4)."
+    }, {
+      "name" : "997 - nsiapiv3equipment",
+      "description" : "Retrieve, plan, and manage the equipment resources (version 3)."
+    }, {
+      "name" : "998 - nsiapiv2_0equipment",
+      "description" : "Retrieve, plan, and manage the equipment resources (version 2)"
+    } ],
+    "schemes" : [ "http", "https" ],
+    "paths" : {
+      "/nsi/api/equipment" : {
+        "get" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Retrieves the equipment satisfying the query parameters",
+          "description" : "<p>LATEST VERSION: V6\n List of equipment returned in JSON format.<p>Only one of the following parameters must be specified:<ul><li>networkConstruct.id<li>equipmentExpectations.equipmentIntent.id<li>id</ul>",
+          "operationId" : "getEquipment",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "id",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment identifiers to retrieve",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "networkConstruct.id",
+            "in" : "query",
+            "description" : "(Optional) Network Construct identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectations.equipmentIntent.id",
+            "in" : "query",
+            "description" : "(Optional) Equipment Intent Identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "fields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "offset",
+            "in" : "query",
+            "description" : "Offset for the second page",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "The size of a returned page. Defaulted to return 30 Equipment at once.",
+            "required" : false,
+            "type" : "string",
+            "default" : "30"
+          }, {
+            "name" : "include",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, equipmentDiscovered, equipmentPlanned",
+            "required" : false,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentListRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            }
+          }
+        },
+        "post" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Creates or updates an equipment",
+          "description" : "<p>LATEST VERSION: V4<p>This REST API is intended to be used by equipment provisioning micro-service IFD only to create or update an equipment expectation.<p>The following attributes and relationships should be specified in the post request:<ul><li>location - management protocol used to retrieve the information and the physical location of the equipment such as its shelf, slot and subslot<li>network construct id relationship<li>a list of equipment expectation id relationship<li>the equipment expectation content - specified in the included section<ul><li>provisionedSpec - The provisioned specification (logical representation) of the equipment<li>installedSpec - The installed specification (physical representation) of the equipment<li>cardType<li>nativeName<li>category<li>validateParameters - The list of parameters (if any) to be validated against the expectation<ul><li>Valid parameters include all equipment expectation content as specified above.<li>Additionally, provisionedSpec and installedSpec can be validated against their sub-attributes. These include: <ul><li>hardwareVersion<li>serialNumber<li>manufacturer<li>type<li>partNumber<li>version<li>additionalAttributes<li>displayLabels</ul></ul></ul></ul><p>The response only has id field populated.<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"data\": {\n    \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11\",\n    \"type\": \"equipment\",\n    \"attributes\": {\n    },\n    \"relationships\": {\n      \"equipmentExpectations\": {\n        \"data\": [\n          {\n            \"type\": \"equipmentExpectations\",\n            \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n          }\n        ]\n      },\n      \"equipmentPlanned\": {\n        \"data\": {\n          \"type\": \"equipmentPlanned\",\n          \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n        }\n      }\n    }\n  },\n  \"included\": [\n    {\n      \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\",\n      \"type\": \"equipmentExpectations\",\n      \"attributes\": {\n        \"provisionedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"installedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"cardType\": \"100GOCLD\",\n        \"validateParameters\": {\n          \"include\": \"provisionedSpec.partNumber, installedSpec.partNumber, cardType\"\n        }\n      },\n      \"relationships\": {\n        \"equipmentIntent\": {\n          \"data\": {\n            \"type\": \"equipmentIntents\",\n            \"id\": \"6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11\",\n      \"type\": \"equipmentPlanned\",\n      \"attributes\": {\n        \"provisionedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"installedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"cardType\": \"100GOCLD\"\n      },\n      \"relationships\": {\n      \"networkConstruct\": {\n        \"data\": {\n          \"type\": \"networkConstructs\",\n          \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8\"\n         }\n        }\n      }\n    }\n  ]\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "postEquipment",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "body",
+            "description" : "Equipment to create or update",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentRO"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "Successfully created/updated the equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to create or update the equipment",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{eqpId}/expectations" : {
+        "post" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Create an Equipment expectation given the Equipment id",
+          "description" : "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "postExpectation",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "eqpId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "EquipmentExpectation to create or update",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentExpectationRO"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "An existing Equipment expectation have been updated on the server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "201" : {
+              "description" : "Equipment expectation has been created on the server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "400" : {
+              "description" : "Bad or invalid parameters were provided",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified Equipment does not exist",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{equipmentId}" : {
+        "get" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Retrieves a specific equipment",
+          "description" : "<p>LATEST VERSION: V3<p>Equipment returned in JSON format",
+          "operationId" : "getEquipmentById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "include",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, equipmentDiscovered, equipmentPlanned",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "fields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required" : false,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "Cannot find the equipment",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "put" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Update a specific equipment",
+          "description" : "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "putEquipment",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "equipment",
+            "description" : "The new equipment data",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentRO"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Equipment with given id has been updated successfully."
+            },
+            "400" : {
+              "description" : "Bad request. Bad or invalid parameters were provided.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to update equipment, internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "delete" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Deletes a specific equipment",
+          "description" : "<p>LATEST VERSION: V3",
+          "operationId" : "deleteEquipmentById",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully deleted the equipment."
+            },
+            "204" : {
+              "description" : "The specified equipment does not exist."
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to delete equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{equipmentId}/equipmentExpectations" : {
+        "get" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Retrieves the expectations of the equipment.",
+          "description" : "<p>LATEST VERSION: V2_0",
+          "operationId" : "getEquipmentExpectations",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Ok",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationListRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The requested equipment cannot be found.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the expectations for the equipment id.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{equipmentId}/equipmentExpectations/{equipmentExpectationId}" : {
+        "get" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Retrieves a specific equipment expectation",
+          "description" : "<p>LATEST VERSION: V2_0",
+          "operationId" : "getEquipmentExpectationById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectationId",
+            "in" : "path",
+            "description" : "Equipment expectation identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the equipment expectation.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The requested equipment expectation cannot be found.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the equipment expectation",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "delete" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Delete a specific equipment expectation.",
+          "description" : "<p>LATEST VERSION: V3",
+          "operationId" : "deleteEquipmentExpectationById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectationId",
+            "in" : "path",
+            "description" : "Equipment expectation identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Deleted the equipment expectation successfully."
+            },
+            "204" : {
+              "description" : "The equipment expectation does not exists."
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The equipment does not exists."
+            },
+            "500" : {
+              "description" : "Failed to delete the equipment expectation",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{equipmentId}/equipmentPlanned" : {
+        "get" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Retrieves a specific equipment planned",
+          "description" : "<p>LATEST VERSION: V3<p>Equipment returned in JSON format",
+          "operationId" : "getEquipmentPlannedById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the equipment planned.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentPlannedRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment planned",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "Cannot find the equipment planned",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment planned.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "put" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Update a specific planned equipment",
+          "description" : "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "putEquipmentPlanned",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "equipment",
+            "description" : "The new equipment data",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentPlannedRO"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Equipment planned with given id has been updated successfully."
+            },
+            "400" : {
+              "description" : "Bad request. Bad or invalid parameters were provided.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to update equipment planned, internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "patch" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "PATCH a specific planned equipment",
+          "description" : "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "patchPlannedEquipment",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "The id of the Equipment to be updated",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "A patch request to the given Equipment.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentPatchRO"
+            }
+          } ],
+          "responses" : {
+            "202" : {
+              "description" : "The request is accepted and is being handled on backend server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentPlannedRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid input supplied",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified Equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{equipmentId}/expectations/{equipmentExpectationId}" : {
+        "patch" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "PATCH a specific equipment expectation",
+          "description" : "<p>LATEST VERSION: V3<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "patchEquipmentExpectation",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "The id of the Equipment to be updated",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectationId",
+            "in" : "path",
+            "description" : "The id of the equipmentExpectation to be updated",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "A patch request to the given Equipment.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentPatchRO"
+            }
+          } ],
+          "responses" : {
+            "202" : {
+              "description" : "The request is accepted and is being handled on backend server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid input supplied",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified Equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{equipmentId}/maintenanceMode" : {
+        "post" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Creates or updates MaintenanceMode for a specific equipment",
+          "description" : "LATEST VERSION: V3",
+          "operationId" : "addMaintenanceMode",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "maintenanceMode value",
+            "required" : false,
+            "schema" : {
+              "type" : "boolean"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "The maintenanceMode for the specific equipment has been created",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : "Bad or invalid parameters were provided",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified equipment does not exist.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "422" : {
+              "description" : "No request body was provided"
+            }
+          }
+        }
+      },
+      "/nsi/api/equipment/{equipmentId}/userData/{userDataKey}" : {
+        "put" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Create or update an equipment's userData",
+          "description" : "<p>LATEST VERSION: V2_0<p>If present, the leading and trailing whitespaces will be trimmed from the userData's key and value.<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "putEquipmentUserData",
+          "consumes" : [ "text/plain" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "userDataKey",
+            "in" : "path",
+            "description" : "Key of userData to update",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "userDataValue",
+            "description" : "The desired userData value",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Equipment userData have been created on the server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : "Bad or invalid parameters were provided",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified equipment userData does not exist",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "delete" : {
+          "tags" : [ "000 - nsiapiequipment" ],
+          "summary" : "Delete a userData from a given equipment",
+          "description" : "<p>LATEST VERSION: V2_0",
+          "operationId" : "deleteEquipmentUserData",
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "userDataKey",
+            "in" : "path",
+            "description" : "Key of the UserData to delete",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "The specified equipment userData does not exist"
+            },
+            "204" : {
+              "description" : "Deleted equipment userData successfully."
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified equipment does not exist",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to delete equipment userData.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v2_0/equipment/{equipmentId}/equipmentExpectations" : {
+        "get" : {
+          "tags" : [ "998 - nsiapiv2_0equipment" ],
+          "summary" : "Retrieves the expectations of the equipment",
+          "description" : "",
+          "operationId" : "getEquipmentExpectations",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Ok",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationListRO"
+              }
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The requested equipment cannot be found.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the expectations for the equipment id.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v2_0/equipment/{equipmentId}/equipmentExpectations/{equipmentExpectationId}" : {
+        "get" : {
+          "tags" : [ "998 - nsiapiv2_0equipment" ],
+          "summary" : "Retrieves a specific equipment expectation",
+          "description" : "",
+          "operationId" : "getEquipmentExpectationById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectationId",
+            "in" : "path",
+            "description" : "Equipment expectation identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the equipment expectation.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The requested equipment expectation cannot be found.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the equipment expectation",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v2_0/equipment/{equipmentId}/userData/{userDataKey}" : {
+        "put" : {
+          "tags" : [ "998 - nsiapiv2_0equipment" ],
+          "summary" : "Create or update an equipment's userData",
+          "description" : "If present, the leading and trailing whitespaces will be trimmed from the userData's key and value.",
+          "operationId" : "putEquipmentUserData",
+          "consumes" : [ "text/plain" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "userDataKey",
+            "in" : "path",
+            "description" : "Key of userData to update",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "userDataValue",
+            "description" : "The desired userData value",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Equipment userData have been created on the server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : "Bad or invalid parameters were provided",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified equipment userData does not exist",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "delete" : {
+          "tags" : [ "998 - nsiapiv2_0equipment" ],
+          "summary" : "Delete a userData from a given equipment",
+          "description" : "",
+          "operationId" : "deleteEquipmentUserData",
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "userDataKey",
+            "in" : "path",
+            "description" : "Key of the UserData to delete",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "The specified equipment userData does not exist"
+            },
+            "204" : {
+              "description" : "Deleted equipment userData successfully."
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified equipment does not exist",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to delete equipment userData.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v3/equipment" : {
+        "get" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Retrieves the equipment satisfying the query parameters",
+          "description" : "List of equipment returned in JSON format.<p>At least one of the following parameters must be specified:<ul><li>ncId (Deprecated)<li>networkConstruct.id<li>equipmentExpectations.equipmentIntent.id<li>id<li>siteId<li>searchText</ul>",
+          "operationId" : "getEquipment",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "ncId",
+            "in" : "query",
+            "description" : "(Optional, Deprecated) Network Construct identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "networkConstruct.id",
+            "in" : "query",
+            "description" : "(Optional) Network Construct identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "id",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment identifiers to retrieve",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "state",
+            "in" : "query",
+            "description" : "(Optional) Status for equipment",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "shelf",
+            "in" : "query",
+            "description" : "(Optional) Shelf for equipment",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "slot",
+            "in" : "query",
+            "description" : "(Optional) Slot for equipment",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "subSlot",
+            "in" : "query",
+            "description" : "(Optional) Subslot for equipment",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "subShelf",
+            "in" : "query",
+            "description" : "(Optional) Subshelf for equipment",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectations.equipmentIntent.id",
+            "in" : "query",
+            "description" : "(Optional) Equipment Intent Identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "siteId",
+            "in" : "query",
+            "description" : "(Optional) Site Identifier for equipment",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "searchText",
+            "in" : "query",
+            "description" : "(Optional) The searchable text",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "searchFields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to search on. If none are specified, all supported fields are implied. Fields require full path (e.g. data.attributes.siteName). If provided, must also provide searchText parameter",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "include",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, equipmentDiscovered, equipmentPlanned",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "offset",
+            "in" : "query",
+            "description" : "Offset for the second page",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "The size of a returned page. Defaulted ALL to return all Equipment at once.",
+            "required" : false,
+            "type" : "string",
+            "default" : "ALL"
+          }, {
+            "name" : "fields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required" : false,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentListRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          },
+          "deprecated" : true
+        },
+        "post" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Creates or updates an equipment",
+          "description" : "This REST API is intended to be used by equipment provisioning micro-service IFD only to create or update an equipment expectation.<p>The following attributes and relationships should be specified in the post request:<ul><li>location - management protocol used to retrieve the information and the physical location of the equipment such as its shelf, slot and subslot<li>network construct id relationship<li>a list of equipment expectation id relationship<li>the equipment expectation content - specified in the included section<ul><li>provisionedSpec - The provisioned specification (logical representation) of the equipment<li>installedSpec - The installed specification (physical representation) of the equipment<li>cardType<li>nativeName<li>category<li>validateParameters - The list of parameters (if any) to be validated against the expectation<ul><li>Valid parameters include all equipment expectation content as specified above.<li>Additionally, provisionedSpec and installedSpec can be validated against their sub-attributes. These include: <ul><li>hardwareVersion<li>serialNumber<li>manufacturer<li>type<li>partNumber<li>version<li>additionalAttributes<li>displayLabels</ul></ul></ul></ul><p>The response only has id field populated.<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"data\": {\n    \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11\",\n    \"type\": \"equipment\",\n    \"attributes\": {\n      \"cardType\": \"100GOCLD\",\n      \"locations\": [\n        {\n          \"managementType\": \"tl1\",\n          \"shelf\": \"12\",\n          \"slot\": \"11\"\n        }\n      ],\n      \"availabilityState\": \"PLANNED\",\n      \"maintenanceMode\": false\n    },\n    \"relationships\": {\n      \"networkConstruct\": {\n        \"data\": {\n          \"type\": \"networkConstructs\",\n          \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8\"\n        }\n      },\n      \"equipmentExpectations\": {\n        \"data\": [\n          {\n            \"type\": \"equipmentExpectations\",\n            \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n          }\n        ]\n      }\n    }\n  },\n  \"included\": [\n    {\n      \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\",\n      \"type\": \"equipmentExpectations\",\n      \"attributes\": {\n        \"provisionedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"installedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"cardType\": \"100GOCLD\",\n        \"validateParameters\": {\n          \"include\": \"provisionedSpec.partNumber, installedSpec.partNumber, cardType\"\n        }\n      },\n      \"relationships\": {\n        \"equipmentIntent\": {\n          \"data\": {\n            \"type\": \"equipmentIntents\",\n            \"id\": \"6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n          }\n        }\n      }\n    }\n  ]\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "postEquipment",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "body",
+            "description" : "Equipment to create or update",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentRO"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "Successfully created the equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to create the equipment",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          },
+          "deprecated" : true
+        }
+      },
+      "/nsi/api/v3/equipment/{eqpId}/expectations" : {
+        "post" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Create an Equipment expectation given the Equipment id",
+          "description" : "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "postExpectation",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "eqpId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "EquipmentExpectation to create or update",
+            "required" : false,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentExpectationRO"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "An existing Equipment expectation have been updated on the server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "201" : {
+              "description" : "Equipment expectation has been created on the server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "400" : {
+              "description" : "Bad or invalid parameters were provided",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified Equipment does not exist",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v3/equipment/{equipmentId}" : {
+        "get" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Retrieves a specific equipment",
+          "description" : "Equipment returned in JSON format",
+          "operationId" : "getEquipmentById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "include",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, equipmentPlanned, equipmentDiscovered.",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "fields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required" : false,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "Cannot find the equipment",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "put" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Create or Update a specific equipment with planned attributes, userData, expectations",
+          "description" : "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "putEquipment",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "equipment",
+            "description" : "The new equipment data",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentRO"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Equipment with given id has been updated successfully."
+            },
+            "400" : {
+              "description" : "Bad request. Bad or invalid parameters were provided.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to update equipment, internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "delete" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Deletes a specific equipment",
+          "description" : "",
+          "operationId" : "deleteEquipmentById",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully deleted the equipment."
+            },
+            "204" : {
+              "description" : "The specified equipment does not exist."
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to delete equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v3/equipment/{equipmentId}/equipmentExpectations/{equipmentExpectationId}" : {
+        "delete" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Delete a specific equipment expectation",
+          "description" : "",
+          "operationId" : "deleteEquipmentExpectationById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectationId",
+            "in" : "path",
+            "description" : "Equipment expectation identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Deleted the equipment expectation successfully."
+            },
+            "204" : {
+              "description" : "The equipment expectation does not exists."
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The equipment does not exists."
+            },
+            "500" : {
+              "description" : "Failed to delete the equipment expectation",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v3/equipment/{equipmentId}/equipmentPlanned" : {
+        "get" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Retrieves  the planned attributes of the given equipment.",
+          "description" : "Equipment Planned returned in JSON format",
+          "operationId" : "getEquipmentPlannedById",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentPlannedRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "Cannot find the equipment",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "put" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Update a specific planned equipment",
+          "description" : "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "putEquipmentPlanned",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "equipment",
+            "description" : "The new equipment data",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentPlannedRO"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Equipment planned with given id has been updated successfully."
+            },
+            "400" : {
+              "description" : "Bad request. Bad or invalid parameters were provided.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to update equipment planned, internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        },
+        "patch" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "PATCH a specific planned equipment",
+          "description" : "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "patchPlannedEquipment",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "The id of the Equipment to be updated",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "A patch request to the given Equipment.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentPatchRO"
+            }
+          } ],
+          "responses" : {
+            "202" : {
+              "description" : "The request is accepted and is being handled on backend server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentPlannedRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid input supplied",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified Equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v3/equipment/{equipmentId}/expectations/{equipmentExpectationId}" : {
+        "patch" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "PATCH a specific equipment expectation",
+          "description" : "<p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "patchEquipmentExpectation",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "The id of the Equipment to be updated",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectationId",
+            "in" : "path",
+            "description" : "The id of the equipmentExpectation to be updated",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "A patch request to the given Equipment.",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentPatchRO"
+            }
+          } ],
+          "responses" : {
+            "202" : {
+              "description" : "The request is accepted and is being handled on backend server",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentExpectationRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid input supplied",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified Equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Internal system error (error message provided)",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v3/equipment/{equipmentId}/maintenanceMode" : {
+        "post" : {
+          "tags" : [ "997 - nsiapiv3equipment" ],
+          "summary" : "Creates or updates MaintenanceMode for a specific equipment",
+          "description" : "",
+          "operationId" : "addMaintenanceMode",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "equipmentId",
+            "in" : "path",
+            "description" : "Equipment identifier",
+            "required" : true,
+            "type" : "string"
+          }, {
+            "in" : "body",
+            "name" : "body",
+            "description" : "maintenanceMode value",
+            "required" : false,
+            "schema" : {
+              "type" : "boolean"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "The maintenanceMode for the specific equipment has been created",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : "Bad or invalid parameters were provided",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "403" : {
+              "description" : "Forbidden to access specified equipment",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "404" : {
+              "description" : "The specified equipment does not exist.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "422" : {
+              "description" : "No request body was provided"
+            }
+          }
+        }
+      },
+      "/nsi/api/v4/equipment" : {
+        "get" : {
+          "tags" : [ "996 - nsiapiv4equipment" ],
+          "summary" : "Retrieves the equipment satisfying the query parameters",
+          "description" : "List of equipment returned in JSON format.",
+          "operationId" : "getEquipment",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "searchText",
+            "in" : "query",
+            "description" : "(Optional) The searchable text",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "searchFields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to search on. If none are specified, all supported fields are implied. Fields require full path (e.g. data.attributes.siteName). If provided, must also provide searchText parameter",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "resourceState",
+            "in" : "query",
+            "description" : "(Optional) List of resource states. By default, if no value for this parameter is specified, root and unknown states are filtered out. The allowed values are: root, planned, discovered, plannedAndDiscovered, unknown",
+            "required" : false,
+            "type" : "string",
+            "default" : "planned,discovered,plannedAndDiscovered"
+          }, {
+            "name" : "networkConstruct.name",
+            "in" : "query",
+            "description" : "(Optional) Network Construct name",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "networkConstruct.id",
+            "in" : "query",
+            "description" : "(Optional) Network Construct identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectations.equipmentIntent.id",
+            "in" : "query",
+            "description" : "(Optional) Equipment Intent Identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "siteId",
+            "in" : "query",
+            "description" : "(Optional) Site Identifier for equipment",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "state",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment states. The allowed values are: IS, OOS, OOS_AU, OOS_MA, OOS_AUMA",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "shelf",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment shelves",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "slot",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment slots",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "subSlot",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment sub-slots",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "subShelf",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment sub-shelves",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "availabilityState",
+            "in" : "query",
+            "description" : "(Optional) List of Equipment availabilityState. The allowed values are: PLANNED, AVAILABLE, UNVALIDATED, INUSE",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "reservationState",
+            "in" : "query",
+            "description" : "(Optional) List of Equipment reservationState. The allowed values are: Unknown, Not reserved, Reserved for maintenance, Reserved for facility, Reserved for reversion",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "maintenanceMode",
+            "in" : "query",
+            "description" : "(Optional) List of Equipment maintenanceMode. The allowed values are: true, false",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "cardType",
+            "in" : "query",
+            "description" : "(Optional) List of Equipment cardType",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "specificationMismatch",
+            "in" : "query",
+            "description" : "(Optional) List of Equipment specificationMismatch. The allowed values are: true, false",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "category",
+            "in" : "query",
+            "description" : "(Optional) List of Equipment category. The allowed values are: rack, shelf, pluggable, standalone",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "neContactState",
+            "in" : "query",
+            "description" : "(Optional) List of neContactState. The allowed values are: IN, OUT",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "networkConstruct.macAddress",
+            "in" : "query",
+            "description" : "(Optional) Network Construct macAddress",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "fields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "sortBy",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields by which to sort the result. Fields require full path (i.e. data.attributes.field). A dash or negative sign before a field indicates descending order; by default ascending order is used",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "offset",
+            "in" : "query",
+            "description" : "(Optional) Offset for current index of data to return",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "The size of a returned page",
+            "required" : false,
+            "type" : "string",
+            "default" : "20"
+          }, {
+            "name" : "metaDataFields",
+            "in" : "query",
+            "description" : "(Optional) List of meta data to be included. The allowed values are: specificationMismatch, state, availabilityState, reservationState, maintenanceMode, cardType, category, ncMacAddress",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "include",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, planned, discovered, networkConstructs, equipmentPlanned, equipmentDiscovered",
+            "required" : false,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentListRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          },
+          "deprecated" : true
+        },
+        "post" : {
+          "tags" : [ "996 - nsiapiv4equipment" ],
+          "summary" : "Creates an equipment",
+          "description" : "This REST API is intended to be used by equipment provisioning micro-service IFD only to create planned equipment with an equipment expectation.<p>The following attributes and relationships should be specified in the post request:<ul><li>userData<li>equipmentPlanned id relationship <li>a list of equipment expectation id relationship<li>the equipment planned content - specified in the included section with networkConstructRelationship<ul><li>location - management protocol used to retrieve the information and the physical location of the equipment such as its shelf, slot and subslot<li>Any base equipment attributes.<li>network construct id relationship<ul><li>the equipment expectation content - specified in the included section<ul><li>provisionedSpec - The provisioned specification (logical representation) of the equipment<li>installedSpec - The installed specification (physical representation) of the equipment<li>cardType<li>nativeName<li>category<li>validateParameters - The list of parameters (if any) to be validated against the expectation<ul><li>Valid parameters include all equipment expectation content as specified above.<li>Additionally, provisionedSpec and installedSpec can be validated against their sub-attributes. These include: <ul><li>hardwareVersion<li>serialNumber<li>manufacturer<li>type<li>partNumber<li>version<li>additionalAttributes<li>displayLabels</ul></ul></ul></ul><p>The response returns equipment that is created.<p>Here is an example request:</p><pre style='font-size: smaller'><code class='json'>{\n  \"data\": {\n    \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11\",\n    \"type\": \"equipment\",\n    \"attributes\": {\n    },\n    \"relationships\": {\n      \"equipmentExpectations\": {\n        \"data\": [\n          {\n            \"type\": \"equipmentExpectations\",\n            \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n          }\n        ]\n      },\n      \"equipmentPlanned\": {\n        \"data\": {\n          \"type\": \"equipmentPlanned\",\n          \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n        }\n      }\n    }\n  },\n  \"included\": [\n    {\n      \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11::6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\",\n      \"type\": \"equipmentExpectations\",\n      \"attributes\": {\n        \"provisionedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"installedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"cardType\": \"100GOCLD\",\n        \"validateParameters\": {\n          \"include\": \"provisionedSpec.partNumber, installedSpec.partNumber, cardType\"\n        }\n      },\n      \"relationships\": {\n        \"equipmentIntent\": {\n          \"data\": {\n            \"type\": \"equipmentIntents\",\n            \"id\": \"6825fda4-1e9f-4c5c-9e48-d5acb4d5b6b9\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8::EQPT_12_11\",\n      \"type\": \"equipmentPlanned\",\n      \"attributes\": {\n        \"provisionedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"installedSpec\": {\n          \"partNumber\": \"NTK539UJ\"\n        },\n        \"cardType\": \"100GOCLD\"\n      },\n      \"relationships\": {\n      \"networkConstruct\": {\n        \"data\": {\n          \"type\": \"networkConstructs\",\n          \"id\": \"aca92325-0c37-45b4-815d-df8c2c4e7da8\"\n         }\n        }\n      }\n    }\n  ]\n}</code></pre><p>The following characters are not supported in any id values, userData keys or identifier keys: { } : ? /",
+          "operationId" : "postEquipment",
+          "consumes" : [ "application/json" ],
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "in" : "body",
+            "name" : "body",
+            "description" : "Equipment to create or update",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/definitions/EquipmentRO"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "Successfully created the equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentRO"
+              }
+            },
+            "400" : {
+              "description" : " Input validation error.",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            },
+            "500" : {
+              "description" : "Failed to create the equipment",
+              "schema" : {
+                "$ref" : "#/definitions/ErrorsRO"
+              }
+            }
+          }
+        }
+      },
+      "/nsi/api/v5/equipment" : {
+        "get" : {
+          "tags" : [ "995 - nsiapiv5equipment" ],
+          "summary" : "Retrieves the equipment satisfying the query parameters",
+          "description" : "List of equipment returned in JSON format.<p>Only one of the following parameters must be specified:<ul><li>networkConstruct.id<li>equipmentExpectations.equipmentIntent.id<li>id</ul>",
+          "operationId" : "getEquipmentV5",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "id",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment identifiers to retrieve",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "networkConstruct.id",
+            "in" : "query",
+            "description" : "(Optional) Network Construct identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectations.equipmentIntent.id",
+            "in" : "query",
+            "description" : "(Optional) Equipment Intent Identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "fields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "offset",
+            "in" : "query",
+            "description" : "Offset for the second page",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "The size of a returned page. Defaulted ALL to return all Equipment at once.",
+            "required" : false,
+            "type" : "string",
+            "default" : "ALL"
+          }, {
+            "name" : "include",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, equipmentDiscovered, equipmentPlanned",
+            "required" : false,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentListRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            }
+          },
+          "deprecated" : true
+        }
+      },
+      "/nsi/api/v6/equipment" : {
+        "get" : {
+          "tags" : [ "994 - nsiapiv6equipment" ],
+          "summary" : "Retrieves the equipment satisfying the query parameters",
+          "description" : "List of equipment returned in JSON format.<p>Only one of the following parameters must be specified:<ul><li>networkConstruct.id<li>equipmentExpectations.equipmentIntent.id<li>id</ul>",
+          "operationId" : "getEquipmentV6",
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "id",
+            "in" : "query",
+            "description" : "(Optional) Comma separated list of equipment identifiers to retrieve",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "networkConstruct.id",
+            "in" : "query",
+            "description" : "(Optional) Network Construct identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "equipmentExpectations.equipmentIntent.id",
+            "in" : "query",
+            "description" : "(Optional) Equipment Intent Identifier",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "fields",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated fields to be included in the response. Fields require full path (i.e. data.attributes.field)",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "offset",
+            "in" : "query",
+            "description" : "Offset for the second page",
+            "required" : false,
+            "type" : "string"
+          }, {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "The size of a returned page. Defaulted to return 30 Equipments at once.",
+            "required" : false,
+            "type" : "string",
+            "default" : "30"
+          }, {
+            "name" : "include",
+            "in" : "query",
+            "description" : "(Optional) List of comma separated resources to be side-loaded. The allowed values are: expectations, equipmentDiscovered, equipmentPlanned",
+            "required" : false,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Successfully retrieved the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/EquipmentListRO"
+              }
+            },
+            "400" : {
+              "description" : "Invalid value specified for a query parameter, or an invalid query parameter is specified",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            },
+            "500" : {
+              "description" : "Failed to retrieve the requested equipment.",
+              "schema" : {
+                "$ref" : "#/definitions/Errors"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions" : {
+      "AdditionalAttributesRO" : {
+        "type" : "object"
+      },
+      "AggregationBucketRO" : {
+        "type" : "object",
+        "properties" : {
+          "bucketKey" : {
+            "type" : "string",
+            "description" : "The key of the aggregation criteria"
+          },
+          "bucketValue" : {
+            "type" : "string",
+            "description" : "The result of the aggregation"
+          },
+          "absoluteTotal" : {
+            "type" : "string",
+            "description" : "The unfiltered total number of entities in the data"
+          },
+          "subAggregations" : {
+            "description" : "The aggregated data based on a requested aggregation name and criteria",
+            "$ref" : "#/definitions/AggregationRO"
+          }
+        }
+      },
+      "AggregationRO" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "The name of the aggregation"
+          },
+          "buckets" : {
+            "type" : "array",
+            "description" : "Aggregation results for different criteria",
+            "items" : {
+              "$ref" : "#/definitions/AggregationBucketRO"
+            }
+          }
+        }
+      },
+      "AttributeMatchingRuleRO" : {
+        "type" : "object",
+        "properties" : {
+          "matchingScope" : {
+            "type" : "string",
+            "enum" : [ "e2e", "local" ]
+          },
+          "matchRequired" : {
+            "type" : "boolean",
+            "default" : false
+          },
+          "impact" : {
+            "type" : "string",
+            "enum" : [ "trafficImpactingWithNoMatch", "noTrafficImpactWithNoMatch" ]
+          }
+        }
+      },
+      "AttributeModificationRuleRO" : {
+        "type" : "object",
+        "properties" : {
+          "permittedOperation" : {
+            "type" : "string",
+            "enum" : [ "writeAtCreationTime", "readWrite", "readOnly" ]
+          },
+          "constraint" : {
+            "type" : "string",
+            "enum" : [ "writeAtFarEnd" ]
+          }
+        }
+      },
+      "AttributePoliciesRO" : {
+        "type" : "object",
+        "properties" : {
+          "defaultAttributeSourcePolicy" : {
+            "type" : "string",
+            "description" : "Source of attribute.",
+            "enum" : [ "plannedOverDiscovered", "discoveredOverPlanned" ]
+          },
+          "overrides" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/AttributePolicyOverrideRO"
+            }
+          }
+        }
+      },
+      "AttributePolicyOverrideRO" : {
+        "type" : "object",
+        "properties" : {
+          "attributeName" : {
+            "type" : "string",
+            "description" : "Attribute path(e.g. attribute.customerCode or relationship.endpoints)"
+          },
+          "policies" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "plannedOverDiscovered", "discoveredOverPlanned" ]
+            }
+          },
+          "attributeSource" : {
+            "type" : "string",
+            "description" : "Attribute source, in case it has the value from some other references, (e.g. attributes.srlg is relationships.srlgs.id"
+          }
+        }
+      },
+      "AttributeSpecRO" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of attribute."
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Location of attribute, using dot notation e.g. attributes.layerTerminations[DSR].additionalAttributes."
+          },
+          "format" : {
+            "type" : "string",
+            "description" : "Format of attribute."
+          },
+          "defaultValue" : {
+            "type" : "string",
+            "description" : "Default value for attribute."
+          },
+          "modificationRules" : {
+            "type" : "array",
+            "description" : "List of operations that are permitted on the attribute.",
+            "items" : {
+              "$ref" : "#/definitions/AttributeModificationRuleRO"
+            }
+          },
+          "displayRules" : {
+            "type" : "array",
+            "description" : "Display rules applicable for the attribute.",
+            "items" : {
+              "$ref" : "#/definitions/DisplayRuleRO"
+            }
+          },
+          "valueOptions" : {
+            "description" : "Provides a means to specify the possible values for an attribute.",
+            "$ref" : "#/definitions/AttributeValueOptionRO"
+          },
+          "matchingRules" : {
+            "type" : "array",
+            "description" : "List of matching rules that apply to this attribute.",
+            "items" : {
+              "$ref" : "#/definitions/AttributeMatchingRuleRO"
+            }
+          }
+        }
+      },
+      "AttributeValueOptionRO" : {
+        "type" : "object",
+        "properties" : {
+          "selectFrom" : {
+            "type" : "array",
+            "description" : "A comma separated list of the choices available for selection.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "range" : {
+            "type" : "string",
+            "description" : "A range of values in the format of '<from>,<to>,[step]' whereby from is the initial value, to is the end value, and an optional step value to indicate the increment."
+          }
+        }
+      },
+      "CapabilitySpecRO" : {
+        "type" : "object",
+        "properties" : {
+          "attributeSpecs" : {
+            "type" : "array",
+            "description" : "List of attributes defined in the capability specification that can be acted upon.",
+            "items" : {
+              "$ref" : "#/definitions/AttributeSpecRO"
+            }
+          }
+        }
+      },
+      "DisplayLabelMapRO" : {
+        "type" : "object"
+      },
+      "DisplayRuleRO" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of attribute."
+          },
+          "disabled" : {
+            "type" : "boolean",
+            "description" : "Describes whether attribute is disabled or not.",
+            "default" : false
+          }
+        }
+      },
+      "EquipmentAttributesRO" : {
+        "type" : "object",
+        "properties" : {
+          "displayData" : {
+            "description" : "The equipment display data",
+            "$ref" : "#/definitions/EquipmentDisplayDataRO"
+          },
+          "userData" : {
+            "description" : "User data",
+            "$ref" : "#/definitions/UserDataRO"
+          },
+          "identifiers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/IdentifierRO"
+            }
+          },
+          "specificationMismatch" : {
+            "type" : "boolean",
+            "description" : "Indicates if there's a mismatch between either the planned, installed, or provisioned specifications",
+            "default" : false
+          },
+          "specificationMismatchStatus" : {
+            "type" : "string",
+            "description" : "Indicates the status of a mismatch between either the planned, installed, or provisioned specifications"
+          },
+          "state" : {
+            "type" : "string",
+            "description" : "The primary state of the equipment",
+            "enum" : [ "IS", "OOS", "OOS_AU", "OOS_MA", "OOS_AUMA" ]
+          },
+          "neContactState" : {
+            "type" : "string",
+            "description" : "The connection status of a shelf",
+            "enum" : [ "IN", "OUT" ]
+          },
+          "syncScopes" : {
+            "type" : "array",
+            "description" : "The sync scope for the equipment",
+            "items" : {
+              "$ref" : "#/definitions/SyncScopeRO"
+            }
+          },
+          "capabilitySpecification" : {
+            "description" : "Defines a capability specification; normally for a TPE but can be utilized elsewhere in the future.",
+            "$ref" : "#/definitions/CapabilitySpecRO"
+          },
+          "resourceState" : {
+            "type" : "string",
+            "description" : "Nsi Resource State.",
+            "enum" : [ "root", "planned", "discovered", "plannedAndDiscovered", "unknown" ]
+          },
+          "policies" : {
+            "description" : "Policies for attributes.",
+            "$ref" : "#/definitions/AttributePoliciesRO"
+          },
+          "locations" : {
+            "type" : "array",
+            "description" : "The list of locations associated with the equipment",
+            "items" : {
+              "$ref" : "#/definitions/LocationRO"
+            }
+          },
+          "category" : {
+            "type" : "string",
+            "description" : "The equipment category",
+            "enum" : [ "rack", "shelf", "pluggable", "standalone" ]
+          },
+          "nativeName" : {
+            "type" : "string",
+            "description" : "The native name of the equipment"
+          },
+          "provisionedSpec" : {
+            "description" : "An equipment specification. Is either an installed specification (physical representation) or a provisioned specification (logical representation) of an equipment",
+            "$ref" : "#/definitions/EquipmentSpecRO"
+          },
+          "installedSpec" : {
+            "description" : "An equipment specification. Is either an installed specification (physical representation) or a provisioned specification (logical representation) of an equipment",
+            "$ref" : "#/definitions/EquipmentSpecRO"
+          },
+          "secondaryState" : {
+            "type" : "string",
+            "description" : "The secondary state of the equipment"
+          },
+          "availabilityState" : {
+            "type" : "string",
+            "description" : "The availability state of the equipment",
+            "enum" : [ "PLANNED", "AVAILABLE", "UNVALIDATED", "INUSE" ]
+          },
+          "reservationState" : {
+            "type" : "string",
+            "description" : "The reservation state of the equipment",
+            "enum" : [ "UNKNOWN", "NOT_RESERVED", "RESERVED_FOR_MAINTENANCE", "RESERVED_FOR_FACILITY", "RESERVED_FOR_REVERSION" ]
+          },
+          "cardType" : {
+            "type" : "string",
+            "description" : "The card type"
+          },
+          "siteName" : {
+            "type" : "string",
+            "description" : "The site name associated with the equipment"
+          },
+          "siteId" : {
+            "type" : "string",
+            "description" : "The site identifier associated with the equipment"
+          },
+          "maintenanceMode" : {
+            "type" : "boolean",
+            "description" : "Maintenance mode to indicate if the equipment is available or not to MCP. While in maintenance mode, MCP will not provision anything against this equipment (including TPE information)",
+            "default" : false
+          },
+          "additionalAttributes" : {
+            "description" : "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+            "$ref" : "#/definitions/AdditionalAttributesRO"
+          },
+          "validationState" : {
+            "type" : "string",
+            "description" : "Validation state is used by RNC to denote that this equipment has either not been examined by RNC, or been examined by RNC and found to match (valid) or not match (invalid) customer expectations",
+            "enum" : [ "UNSET", "VALID", "INVALID" ]
+          },
+          "resourcePartitionInfo" : {
+            "type" : "array",
+            "description" : "It represents which partition the associated NE belongs to.",
+            "uniqueItems" : true,
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "customerCode" : {
+            "type" : "string",
+            "description" : "Customer code"
+          },
+          "srlg" : {
+            "type" : "array",
+            "description" : "Shared risk link group is used by the path computation engine to ensure that the alternate links involved in a service do not share the same shared risk link group.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "EquipmentDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "description" : "A metadata object that contains non-standard meta information",
+            "$ref" : "#/definitions/ResourceMetaDataRO"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The unique identifier for the equipment resource"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The equipment resource type",
+            "enum" : [ "equipment" ]
+          },
+          "attributes" : {
+            "description" : "The equipment attributes",
+            "$ref" : "#/definitions/EquipmentAttributesRO"
+          },
+          "relationships" : {
+            "description" : "The equipment relationships",
+            "$ref" : "#/definitions/EquipmentRelationshipsRO"
+          }
+        }
+      },
+      "EquipmentDisplayDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "description" : "Display name of the equipment"
+          },
+          "displayNameFormat" : {
+            "type" : "string",
+            "description" : "Format of the display name"
+          },
+          "displayAvailabilityState" : {
+            "type" : "string",
+            "description" : "Display name of the equipment availability state",
+            "enum" : [ "PLANNED", "AVAILABLE", "UNVALIDATED", "IN_USE" ]
+          },
+          "displayState" : {
+            "type" : "string",
+            "description" : "Display state of the equipment",
+            "enum" : [ "IS", "OOS", "OOS_AU", "OOS_MA", "OOS_AUMA" ]
+          }
+        }
+      },
+      "EquipmentExpectationAttributesRO" : {
+        "type" : "object",
+        "properties" : {
+          "validateParameters" : {
+            "description" : "Attribute containing the list of parameters (if any) to be validated against the expectation",
+            "$ref" : "#/definitions/ValidateParametersRO"
+          },
+          "startDate" : {
+            "type" : "string",
+            "description" : "The scheduled start date and time of the expectation, with RFC 3339 date-time format"
+          },
+          "endDate" : {
+            "type" : "string",
+            "description" : "The scheduled end date and time of the expectation, with RFC 3339 date-time format"
+          },
+          "locations" : {
+            "type" : "array",
+            "description" : "The list of locations associated with the equipment",
+            "items" : {
+              "$ref" : "#/definitions/LocationRO"
+            }
+          },
+          "category" : {
+            "type" : "string",
+            "description" : "The equipment category",
+            "enum" : [ "rack", "shelf", "pluggable", "standalone" ]
+          },
+          "nativeName" : {
+            "type" : "string",
+            "description" : "The native name of the equipment"
+          },
+          "provisionedSpec" : {
+            "description" : "An equipment specification. Is either an installed specification (physical representation) or a provisioned specification (logical representation) of an equipment",
+            "$ref" : "#/definitions/EquipmentSpecRO"
+          },
+          "installedSpec" : {
+            "description" : "An equipment specification. Is either an installed specification (physical representation) or a provisioned specification (logical representation) of an equipment",
+            "$ref" : "#/definitions/EquipmentSpecRO"
+          },
+          "secondaryState" : {
+            "type" : "string",
+            "description" : "The secondary state of the equipment"
+          },
+          "availabilityState" : {
+            "type" : "string",
+            "description" : "The availability state of the equipment",
+            "enum" : [ "PLANNED", "AVAILABLE", "UNVALIDATED", "INUSE" ]
+          },
+          "reservationState" : {
+            "type" : "string",
+            "description" : "The reservation state of the equipment",
+            "enum" : [ "UNKNOWN", "NOT_RESERVED", "RESERVED_FOR_MAINTENANCE", "RESERVED_FOR_FACILITY", "RESERVED_FOR_REVERSION" ]
+          },
+          "cardType" : {
+            "type" : "string",
+            "description" : "The card type"
+          },
+          "siteName" : {
+            "type" : "string",
+            "description" : "The site name associated with the equipment"
+          },
+          "siteId" : {
+            "type" : "string",
+            "description" : "The site identifier associated with the equipment"
+          },
+          "maintenanceMode" : {
+            "type" : "boolean",
+            "description" : "Maintenance mode to indicate if the equipment is available or not to MCP. While in maintenance mode, MCP will not provision anything against this equipment (including TPE information)",
+            "default" : false
+          },
+          "additionalAttributes" : {
+            "description" : "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+            "$ref" : "#/definitions/AdditionalAttributesRO"
+          },
+          "validationState" : {
+            "type" : "string",
+            "description" : "Validation state is used by RNC to denote that this equipment has either not been examined by RNC, or been examined by RNC and found to match (valid) or not match (invalid) customer expectations",
+            "enum" : [ "UNSET", "VALID", "INVALID" ]
+          },
+          "resourcePartitionInfo" : {
+            "type" : "array",
+            "description" : "It represents which partition the associated NE belongs to.",
+            "uniqueItems" : true,
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "customerCode" : {
+            "type" : "string",
+            "description" : "Customer code"
+          },
+          "srlg" : {
+            "type" : "array",
+            "description" : "Shared risk link group is used by the path computation engine to ensure that the alternate links involved in a service do not share the same shared risk link group.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "EquipmentExpectationDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The unique identifier for the equipment expectation"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The equipment resource type",
+            "enum" : [ "equipmentExpectations" ]
+          },
+          "attributes" : {
+            "description" : "The equipment expectation attributes",
+            "$ref" : "#/definitions/EquipmentExpectationAttributesRO"
+          },
+          "relationships" : {
+            "description" : "The equipment expectation relationships",
+            "$ref" : "#/definitions/EquipmentExpectationRelationshipsRO"
+          }
+        }
+      },
+      "EquipmentExpectationListRO" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "The list of equipment expectation",
+            "items" : {
+              "$ref" : "#/definitions/EquipmentExpectationDataRO"
+            }
+          }
+        }
+      },
+      "EquipmentExpectationRO" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "description" : "The equipment expectation data",
+            "$ref" : "#/definitions/EquipmentExpectationDataRO"
+          },
+          "included" : {
+            "type" : "array",
+            "description" : "Side loaded relationship resources",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "EquipmentExpectationRelationshipsRO" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentIntent" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "intent" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "networkConstruct" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "equipmentHolder" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "srlg" : {
+            "description" : "The SRLGone-to-many relationship",
+            "$ref" : "#/definitions/SRLGOneToManyRelationshipRO"
+          }
+        }
+      },
+      "EquipmentListRO" : {
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "description" : "A metadata object that contains non-standard meta information",
+            "$ref" : "#/definitions/MetaDataRO"
+          },
+          "links" : {
+            "description" : "Links related to the resource",
+            "$ref" : "#/definitions/LinksRO"
+          },
+          "data" : {
+            "type" : "array",
+            "description" : "A list of equipment",
+            "items" : {
+              "$ref" : "#/definitions/EquipmentDataRO"
+            }
+          },
+          "included" : {
+            "type" : "array",
+            "description" : "Resources related to equipment, such as EquipmentExpectationData",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "EquipmentPatchOperationRO" : {
+        "type" : "object",
+        "properties" : {
+          "op" : {
+            "type" : "string",
+            "description" : "supported operation on an Equipment resource",
+            "enum" : [ "replace" ]
+          },
+          "attributes" : {
+            "description" : "The equipment attributes",
+            "$ref" : "#/definitions/EquipmentAttributesRO"
+          },
+          "attribute" : {
+            "type" : "string",
+            "description" : "name of an attribute to be deleted"
+          },
+          "path" : {
+            "type" : "string",
+            "description" : "path of the object/attribute to be patched"
+          },
+          "keys" : {
+            "type" : "array",
+            "description" : "Used to target specific key(s) of the attribute to be deleted",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "relationships" : {
+            "description" : "The equipment planned relationships",
+            "$ref" : "#/definitions/EquipmentPlannedRelationshipsRO"
+          }
+        }
+      },
+      "EquipmentPatchRO" : {
+        "type" : "object",
+        "properties" : {
+          "operations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/EquipmentPatchOperationRO"
+            }
+          }
+        }
+      },
+      "EquipmentPlannedAttributesRO" : {
+        "type" : "object",
+        "properties" : {
+          "locations" : {
+            "type" : "array",
+            "description" : "The list of locations associated with the equipment",
+            "items" : {
+              "$ref" : "#/definitions/LocationRO"
+            }
+          },
+          "category" : {
+            "type" : "string",
+            "description" : "The equipment category",
+            "enum" : [ "rack", "shelf", "pluggable", "standalone" ]
+          },
+          "nativeName" : {
+            "type" : "string",
+            "description" : "The native name of the equipment"
+          },
+          "provisionedSpec" : {
+            "description" : "An equipment specification. Is either an installed specification (physical representation) or a provisioned specification (logical representation) of an equipment",
+            "$ref" : "#/definitions/EquipmentSpecRO"
+          },
+          "installedSpec" : {
+            "description" : "An equipment specification. Is either an installed specification (physical representation) or a provisioned specification (logical representation) of an equipment",
+            "$ref" : "#/definitions/EquipmentSpecRO"
+          },
+          "secondaryState" : {
+            "type" : "string",
+            "description" : "The secondary state of the equipment"
+          },
+          "availabilityState" : {
+            "type" : "string",
+            "description" : "The availability state of the equipment",
+            "enum" : [ "PLANNED", "AVAILABLE", "UNVALIDATED", "INUSE" ]
+          },
+          "reservationState" : {
+            "type" : "string",
+            "description" : "The reservation state of the equipment",
+            "enum" : [ "UNKNOWN", "NOT_RESERVED", "RESERVED_FOR_MAINTENANCE", "RESERVED_FOR_FACILITY", "RESERVED_FOR_REVERSION" ]
+          },
+          "cardType" : {
+            "type" : "string",
+            "description" : "The card type"
+          },
+          "siteName" : {
+            "type" : "string",
+            "description" : "The site name associated with the equipment"
+          },
+          "siteId" : {
+            "type" : "string",
+            "description" : "The site identifier associated with the equipment"
+          },
+          "maintenanceMode" : {
+            "type" : "boolean",
+            "description" : "Maintenance mode to indicate if the equipment is available or not to MCP. While in maintenance mode, MCP will not provision anything against this equipment (including TPE information)",
+            "default" : false
+          },
+          "additionalAttributes" : {
+            "description" : "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+            "$ref" : "#/definitions/AdditionalAttributesRO"
+          },
+          "validationState" : {
+            "type" : "string",
+            "description" : "Validation state is used by RNC to denote that this equipment has either not been examined by RNC, or been examined by RNC and found to match (valid) or not match (invalid) customer expectations",
+            "enum" : [ "UNSET", "VALID", "INVALID" ]
+          },
+          "resourcePartitionInfo" : {
+            "type" : "array",
+            "description" : "It represents which partition the associated NE belongs to.",
+            "uniqueItems" : true,
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "customerCode" : {
+            "type" : "string",
+            "description" : "Customer code"
+          },
+          "srlg" : {
+            "type" : "array",
+            "description" : "Shared risk link group is used by the path computation engine to ensure that the alternate links involved in a service do not share the same shared risk link group.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "EquipmentPlannedDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The unique identifier for the planned equipment"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The equipment resource type",
+            "enum" : [ "equipmentPlanned" ]
+          },
+          "attributes" : {
+            "description" : "The equipment planned attributes that are set by REST API and used to validate the expectation",
+            "$ref" : "#/definitions/EquipmentPlannedAttributesRO"
+          },
+          "relationships" : {
+            "description" : "The equipment planned relationships",
+            "$ref" : "#/definitions/EquipmentPlannedRelationshipsRO"
+          }
+        }
+      },
+      "EquipmentPlannedRO" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "description" : "The equipment planned data",
+            "$ref" : "#/definitions/EquipmentPlannedDataRO"
+          },
+          "included" : {
+            "type" : "array",
+            "description" : "Side loaded relationship resources",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "EquipmentPlannedRelationshipsRO" : {
+        "type" : "object",
+        "properties" : {
+          "manualSRLG" : {
+            "description" : "The SRLGone-to-many relationship",
+            "$ref" : "#/definitions/SRLGOneToManyRelationshipRO"
+          },
+          "dynamicAutoSRLG" : {
+            "description" : "The SRLGone-to-many relationship",
+            "$ref" : "#/definitions/SRLGOneToManyRelationshipRO"
+          },
+          "dynamicInheritedSRLG" : {
+            "description" : "The SRLGone-to-many relationship",
+            "$ref" : "#/definitions/SRLGOneToManyRelationshipRO"
+          },
+          "dynamicPropagatedSRLG" : {
+            "description" : "The SRLGone-to-many relationship",
+            "$ref" : "#/definitions/SRLGOneToManyRelationshipRO"
+          },
+          "networkConstruct" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "equipmentHolder" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "srlg" : {
+            "description" : "The SRLGone-to-many relationship",
+            "$ref" : "#/definitions/SRLGOneToManyRelationshipRO"
+          }
+        }
+      },
+      "EquipmentRO" : {
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "description" : "A metadata object that contains non-standard meta information",
+            "$ref" : "#/definitions/MetaDataRO"
+          },
+          "data" : {
+            "description" : "The equipment data",
+            "$ref" : "#/definitions/EquipmentDataRO"
+          },
+          "included" : {
+            "type" : "array",
+            "description" : "Resources related to equipment, such as EquipmentExpectationData",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "EquipmentRelationshipsRO" : {
+        "type" : "object",
+        "properties" : {
+          "equipmentPlanned" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "equipmentExpectations" : {
+            "description" : "The one-to-many relationship",
+            "$ref" : "#/definitions/OneToManyRelationshipRO"
+          },
+          "equipmentDiscovered" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "networkConstruct" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "equipmentHolder" : {
+            "description" : "The one-to-one relationship",
+            "$ref" : "#/definitions/OneToOneRelationshipRO"
+          },
+          "srlg" : {
+            "description" : "The SRLGone-to-many relationship",
+            "$ref" : "#/definitions/SRLGOneToManyRelationshipRO"
+          }
+        }
+      },
+      "EquipmentSpecRO" : {
+        "type" : "object",
+        "properties" : {
+          "hardwareVersion" : {
+            "type" : "string",
+            "description" : "The hardware version"
+          },
+          "serialNumber" : {
+            "type" : "string",
+            "description" : "The serial number"
+          },
+          "manufacturer" : {
+            "type" : "string",
+            "description" : "The manufacturer"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The type of equipment"
+          },
+          "modemType" : {
+            "type" : "string",
+            "description" : "The type of modem"
+          },
+          "partNumber" : {
+            "type" : "string",
+            "description" : "The part number"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "The software version"
+          },
+          "displayLabels" : {
+            "description" : "Display label key/value pair map",
+            "$ref" : "#/definitions/DisplayLabelMapRO"
+          },
+          "additionalAttributes" : {
+            "description" : "Various miscellaneous attributes that do not necessarily belong in the parent resource. Attributes are populated dynamically and therefore cannot be documented here.",
+            "$ref" : "#/definitions/AdditionalAttributesRO"
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "type" : "string"
+          },
+          "errorMessage" : {
+            "type" : "string"
+          },
+          "errorDescription" : {
+            "type" : "string"
+          },
+          "msgAttributes" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          },
+          "meta" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "ErrorRO" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Error code"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Error title"
+          },
+          "detail" : {
+            "type" : "string",
+            "description" : "Error details"
+          },
+          "source" : {
+            "description" : "Error source",
+            "$ref" : "#/definitions/ErrorSourceRO"
+          }
+        }
+      },
+      "ErrorSourceRO" : {
+        "type" : "object",
+        "properties" : {
+          "pointer" : {
+            "type" : "string",
+            "description" : "JSON Pointer to the associated entity in the request document"
+          },
+          "parameter" : {
+            "type" : "string",
+            "description" : "URI query parameter that caused the error"
+          }
+        }
+      },
+      "Errors" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "ErrorsRO" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "description" : "A list of errors",
+            "items" : {
+              "$ref" : "#/definitions/ErrorRO"
+            }
+          }
+        }
+      },
+      "IdentifierRO" : {
+        "type" : "object"
+      },
+      "LinksRO" : {
+        "type" : "object",
+        "properties" : {
+          "self" : {
+            "type" : "string",
+            "format" : "uri",
+            "description" : "A `self` member, whose value is a URL for the relationship itself (a \"relationship URL\"). This URL allows the client to directly manipulate the relationship. For example, it would allow a client to remove an `author` from an `article` without deleting the people resource itself."
+          },
+          "first" : {
+            "type" : "string",
+            "format" : "uri",
+            "description" : "The first page of data"
+          },
+          "last" : {
+            "type" : "string",
+            "format" : "uri",
+            "description" : "The last page of data"
+          },
+          "prev" : {
+            "type" : "string",
+            "format" : "uri",
+            "description" : "The previous page of data"
+          },
+          "next" : {
+            "type" : "string",
+            "format" : "uri",
+            "description" : "The next page of data"
+          },
+          "current" : {
+            "type" : "string",
+            "format" : "uri",
+            "description" : "The current page of data"
+          }
+        }
+      },
+      "LocationIndexesRO" : {
+        "type" : "object"
+      },
+      "LocationRO" : {
+        "type" : "object",
+        "properties" : {
+          "managementType" : {
+            "type" : "string",
+            "description" : "Management protocol type",
+            "enum" : [ "tl1", "saos", "netconf", "rest", "corba", "submarineConf" ]
+          },
+          "fic" : {
+            "type" : "string",
+            "description" : "Frame identification code"
+          },
+          "baynum" : {
+            "type" : "string",
+            "description" : "Bay number"
+          },
+          "sncId" : {
+            "type" : "string",
+            "description" : "Snc id number"
+          },
+          "rack" : {
+            "type" : "string"
+          },
+          "shelf" : {
+            "type" : "string"
+          },
+          "subshelf" : {
+            "type" : "string"
+          },
+          "slot" : {
+            "type" : "string"
+          },
+          "subslot" : {
+            "type" : "string"
+          },
+          "subsubslot" : {
+            "type" : "string"
+          },
+          "port" : {
+            "type" : "string"
+          },
+          "subport" : {
+            "type" : "string"
+          },
+          "instance" : {
+            "type" : "string"
+          },
+          "logicalPortName" : {
+            "type" : "string"
+          },
+          "logicalId" : {
+            "type" : "string"
+          },
+          "channel" : {
+            "type" : "string"
+          },
+          "wavelength" : {
+            "type" : "string"
+          },
+          "index" : {
+            "type" : "string"
+          },
+          "odu2_index" : {
+            "type" : "string"
+          },
+          "odu4_index" : {
+            "type" : "string"
+          },
+          "oduCn_index" : {
+            "type" : "string"
+          },
+          "eth_index" : {
+            "type" : "string"
+          },
+          "vlan" : {
+            "type" : "string",
+            "description" : "The VLAN ID of the CTP entity"
+          },
+          "vce" : {
+            "type" : "string",
+            "description" : "The VS name of the CTP entity"
+          },
+          "eqptGrp" : {
+            "type" : "string",
+            "description" : "The group ID obtained from RTRV-EQPTGRP for the SAOS card on which the entity resides"
+          },
+          "peerAs" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Autonomous System number of the BGP peer"
+          },
+          "peerIp" : {
+            "type" : "string",
+            "description" : "Address of the BGP peer"
+          },
+          "frequency" : {
+            "type" : "string",
+            "description" : "The frequency of the channel"
+          },
+          "mcId" : {
+            "type" : "string",
+            "description" : "The identifier of the media channel"
+          },
+          "pseudoWireId" : {
+            "type" : "string",
+            "description" : "DEPRECATED The identifier of Pseudo-Wire CTP"
+          },
+          "pseudoWireName" : {
+            "type" : "string",
+            "description" : "The name of the Pseudo-Wire on the CTP"
+          },
+          "interfaceName" : {
+            "type" : "string",
+            "description" : "Interface name of the IP FTP"
+          },
+          "interfaceIp" : {
+            "type" : "string",
+            "description" : "DEPRECATED The IP address of MPLS interface"
+          },
+          "primaryLspName" : {
+            "type" : "string",
+            "description" : "The primary MPLS tunnel name"
+          },
+          "tunnelRole" : {
+            "type" : "string",
+            "description" : "MPLS tunnel role",
+            "enum" : [ "headEnd", "tailEnd", "transit" ]
+          },
+          "lspName" : {
+            "type" : "string",
+            "description" : "MPLS tunnel name"
+          },
+          "protectionRole" : {
+            "type" : "string",
+            "description" : "Protection role",
+            "enum" : [ "primary", "backup" ]
+          },
+          "mplsLabel" : {
+            "type" : "string",
+            "description" : "MPLS tunnel forward/reverse in/out label"
+          },
+          "lagName" : {
+            "type" : "string",
+            "description" : "Name of the LAG"
+          },
+          "mgmtMcId" : {
+            "type" : "string",
+            "description" : "TBD"
+          },
+          "nmcId" : {
+            "type" : "string",
+            "description" : "OSTi CTP for the SNC"
+          },
+          "mgmtNmcId" : {
+            "type" : "string",
+            "description" : "TBD"
+          },
+          "neName" : {
+            "type" : "string",
+            "description" : "Name of the networkConstruct. For example, the OSRP node name in controlPlane."
+          },
+          "locationIndex" : {
+            "type" : "array",
+            "description" : "List of location indexes",
+            "items" : {
+              "$ref" : "#/definitions/LocationIndexesRO"
+            }
+          },
+          "srcIp" : {
+            "type" : "string",
+            "description" : "Source IP of the node"
+          },
+          "leg" : {
+            "type" : "string",
+            "description" : "Branching Unit (BU) leg e.g. Trunk, A1 or A2",
+            "enum" : [ "trunk", "a1", "a2" ]
+          },
+          "fiberPairTermination" : {
+            "type" : "string",
+            "description" : "The terminating fiber pair id within a Branching Unit (BU)"
+          },
+          "direction" : {
+            "type" : "string",
+            "description" : "The direction of the traffic flow e.g. Tx or Rx",
+            "enum" : [ "tx", "rx" ]
+          },
+          "iclName" : {
+            "type" : "string",
+            "description" : "Name of the ICL"
+          },
+          "virtualRingName" : {
+            "type" : "string",
+            "description" : "Name of the virtual ring"
+          },
+          "ringId" : {
+            "type" : "string",
+            "description" : "ID of the ring"
+          },
+          "rapsVid" : {
+            "type" : "string",
+            "description" : "R-APS VID"
+          }
+        }
+      },
+      "MetaDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "total" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "The total number of entities in the data"
+          },
+          "absoluteTotal" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "The unfiltered total number of entities in the data"
+          },
+          "aggregations" : {
+            "type" : "array",
+            "description" : "The aggregated data based on a requested aggregation name and criteria",
+            "items" : {
+              "$ref" : "#/definitions/AggregationRO"
+            }
+          },
+          "missingReferences" : {
+            "type" : "boolean",
+            "description" : "boolean detailing if the GET FRE tree has any missing references",
+            "default" : false
+          },
+          "missingReferenceIds" : {
+            "type" : "array",
+            "description" : "The list of missing resource IDs",
+            "items" : {
+              "$ref" : "#/definitions/RelationshipDataRO"
+            }
+          },
+          "filtered" : {
+            "type" : "boolean",
+            "description" : "Flags whether the current object is filtered using `fields` query param or not",
+            "default" : false
+          }
+        }
+      },
+      "OneToManyRelationshipRO" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "The one-to-many relationship",
+            "items" : {
+              "$ref" : "#/definitions/RelationshipDataRO"
+            }
+          },
+          "meta" : {
+            "description" : "The relationship type and identifier",
+            "$ref" : "#/definitions/RelationshipMetaDataRO"
+          }
+        }
+      },
+      "OneToOneRelationshipRO" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "description" : "The relationship type and identifier",
+            "$ref" : "#/definitions/RelationshipDataRO"
+          },
+          "meta" : {
+            "description" : "The relationship type and identifier",
+            "$ref" : "#/definitions/RelationshipMetaDataRO"
+          }
+        }
+      },
+      "RelationshipDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "description" : "The relationship resource type"
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "The unique identifier for the referenced resource."
+          }
+        }
+      },
+      "RelationshipMetaDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "partiallyPopulated" : {
+            "type" : "boolean",
+            "description" : "Flags whether the included relationship object is partially populated or not",
+            "default" : false
+          }
+        }
+      },
+      "ResourceMetaDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "partiallyPopulated" : {
+            "type" : "boolean",
+            "description" : "Flags whether the current object is partially populated or not",
+            "default" : false
+          }
+        }
+      },
+      "SRLGDataRO" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "description" : "The identifier value of the SRLG. It's same as the native value of structured srlg attributes"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "The SRLG Attribute type",
+            "enum" : [ "SRLG" ]
+          }
+        }
+      },
+      "SRLGOneToManyRelationshipRO" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "The SRLG one-to-many relationship",
+            "items" : {
+              "$ref" : "#/definitions/SRLGDataRO"
+            }
+          }
+        }
+      },
+      "SyncScopeRO" : {
+        "type" : "object",
+        "properties" : {
+          "context" : {
+            "type" : "string",
+            "description" : "The synchronization scope context"
+          },
+          "name" : {
+            "type" : "array",
+            "description" : "The synchronization scope name",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "UserDataRO" : {
+        "type" : "object"
+      },
+      "ValidateParametersRO" : {
+        "type" : "object",
+        "properties" : {
+          "include" : {
+            "type" : "string",
+            "description" : "The list of comma separated parameters (if any) to be validated against the expectation"
+          }
+        }
+      }
+    }
+  }

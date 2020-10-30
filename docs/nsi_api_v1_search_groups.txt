@@ -1,0 +1,71 @@
+> NSI_API_V1_SEARCH_GROUPS
+
+        Handle resource of type nsi_api_v1_search_groups
+
+OPTIONS (= is mandatory):
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- groupType
+        (Optional) Comma separated list of groupTypes to retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        (Optional) Comma separated list of Group identifiers to
+        retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- name
+        (Optional) Comma separated list of group names to retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        (Optional) Offset for current index of data to return
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- parentGroup
+        (Optional) Comma separated list of parentGroups to retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search with,
+        combined with searchText. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

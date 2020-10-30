@@ -1,0 +1,67 @@
+> RESOURCES_AUDIT
+
+        Handle resource of type resources_audit
+
+OPTIONS (= is mandatory):
+
+- domainId
+        Identifier of the domain whose resources should be audited
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- exactTypeId
+        Option to limit the audit to one or more resource types
+        specified (takes precedence over resourceTypeId). Use a comma-
+        separated string to specify multiple resource types.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- p
+        Optional query parameter to define a partial string match
+        filter using property:value syntax
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- productId
+        Identifier of the product whose resources should be audited
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- resourceProviderId
+        Identifier of the provider whose resources should be audited
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- resourceTypeId
+        Option to limit the audit to one or more resource types
+        specified and their derived types. Use a comma-separated
+        string to specify multiple resource types.
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- tags
+        Optional query parameter to define a tag filter using
+        tagKey:tagValue syntax
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

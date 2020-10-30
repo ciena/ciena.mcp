@@ -1,0 +1,19 @@
+> RESOURCES_BY_RESOURCEID_REASSEMBLE
+
+        Handle resource of type resources_by_resourceid_reassemble
+
+OPTIONS (= is mandatory):
+
+- resourceId
+        Identifier of the resource who needs to be reassembled
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

@@ -1,0 +1,279 @@
+> NSI_API_SEARCH_TPES
+
+        Handle resource of type nsi_api_search_tpes
+
+OPTIONS (= is mandatory):
+
+- active
+        (Optional) The active state of the resource
+        Used by `state=['get']'
+        (Choices: false, true)[Default: (null)]
+        type: str
+
+- adjacencyType
+        (optional) The adjacencyType. When combined with the layerRate
+        queryParam, only looks for thespecified list of adjacencyTypes
+        within the specified layerRate.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- bookingData.lockout
+        (Optional)  Flag that enables/disables a link from having
+        additional tunnel BW being consumed
+        Used by `state=['get']'
+        (Choices: false, true)[Default: (null)]
+        type: str
+
+- concrete
+        (Optional) Id of the concrete tpe
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- content
+        (Optional) The TPE content level
+        Used by `state=['get']'
+        (Choices: detail, summary)[Default: (null)]
+        type: str
+
+- endDateMax
+        (Optional) Maximum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- endDateMin
+        (Optional) Minimum value of endDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- equipmentId
+        (Optional) Equipment identifier. In case of usage with limit
+        parameter, paging will be enabled.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- fields
+        (Optional) List of comma separated fields to be included in
+        the response. Fields require full path (i.e.
+        data.attributes.field)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- gneSubnetName
+        (Optional) GNE Subnet name of the TPE
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- id
+        (Optional) Comma separated list of TPE identifiers to retrieve
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- identifierKey
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- identifierValue
+        (Optional) The comma separated identifier value set
+        Used by `state=['get']'
+        [Default: (null)]
+        type: list
+
+- include
+        (Optional) List of comma separated resources to be side-
+        loaded. The allowed values are: expectations, concrete,
+        networkConstructs
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- layerRate
+        (optional) The layerRate. When combined with the adjacencyType
+        queryParam, only looks for thespecified list of adjacencyTypes
+        within the specified layerRate.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The size of a returned page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- location
+        (Optional) TPE location delimited by dashes
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- locationFormat
+        (Optional) Format for the given location; when not given,
+        assume location is [[shelf-]slot-]port
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataFields
+        (Optional) List of meta data to be included. The allowed
+        values are: stackDirection, layerRate, state, cardType,
+        structureType, structureSubType, resourceState
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- metaDataQualifiers
+        (Optional) List of meta data options. The allowed values are:
+        absoluteTotals
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- modelType
+        (Optional) modelType parameter used to filter results
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- namedQuery
+        (Optional) Comma-separated named query id list; The allowed
+        values are: ptpEthernetNoClients, portsEthernetAvailableAll,
+        portsL2AvailableAll, portsL2ApplicableEPLUni,
+        portsL2ApplicableEVPLUni, portsL2ApplicableEnni,
+        portsL2ApplicableEPLUniWithMcLag,
+        portsL2ApplicableEVPLUniWithMcLag,
+        portsL2ApplicableEnniWithMcLag, portsTunnelsL2ApplicableAll,
+        portsTunnelsL2ApplicableAllWithFtpIpData,
+        portsTDMCEApplicableAll, channelTxPorts, channelRxPorts,
+        linePorts, matedTpes<br><br>matedTpes cannot be used in
+        combination with other named queries and can not be used
+        alone, namedQueryParam1(tpeId),namedQueryParam2(Allowed values
+        can be CHANNEL/OTN_ACCESS) and namedQueryParam3(Allowed values
+        can be Working/Protect) must be provided with this named
+        query.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- namedQueryParam1
+        First param to be used by defined namedQuery.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- namedQueryParam2
+        Second param to be used by defined namedQuery.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- namedQueryParam3
+        Third param to be used by defined namedQuery.
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- networkConstruct.id
+        (Optional) Network Construct identifier
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- offset
+        Offset for the second page
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- resourceState
+        (Optional) List of networkConstruct planning states. By
+        default, if no value for this parameter is specified, root and
+        unknown states are filtered out. The allowed values are: root,
+        planned, discovered, plannedAndDiscovered, unknown
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchFields
+        (Optional) List of comma separated fields to search on. If
+        none are specified, all supported fields are implied. Fields
+        require full path (e.g. data.attributes.name)
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- searchText
+        (Optional) The searchable text
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- sortBy
+        (Optional) List of comma separated fields by which to sort the
+        result. Fields require full path (i.e. data.attributes.field).
+        A dash or negative sign before a field indicates descending
+        order; by default ascending order is used
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMax
+        (Optional) Maximum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- startDateMin
+        (Optional) Minimum value of startDate, format is: yyyy-MM-
+        dd'T'HH:mm:ss.SSSZ
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get)[Default: (null)]
+        type: str
+
+- structureType
+        (Optional) Comma separated list of TPE structure types
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tpeExpectations.equipmentIntent.id
+        (Optional) The equipment intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tpeExpectations.intent.id
+        (Optional) The intent id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tpeExpectations.intent.type
+        (Optional) The intent type
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+- tpeExpectations.serviceIntent.id
+        (Optional) The service intent Id
+        Used by `state=['get']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

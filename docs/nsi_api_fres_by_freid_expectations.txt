@@ -1,0 +1,35 @@
+> NSI_API_FRES_BY_FREID_EXPECTATIONS
+
+        Handle resource of type nsi_api_fres_by_freid_expectations
+
+OPTIONS (= is mandatory):
+
+- data
+        Validate attributes are:
+         - `attributes' (dict):
+         - `id' (str): The unique identifier of the fre expectation
+         - `relationships' (dict):
+         - `type' (str): The fre expectation type
+        Used by `state=['post']'
+        [Default: (null)]
+        type: dict
+
+- freId
+        Identifier of the FRE under which to create the expectation
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- included
+        Side loaded relationship resources
+        Used by `state=['post']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

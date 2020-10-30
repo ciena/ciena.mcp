@@ -1,0 +1,40 @@
+> REST_PERMISSION
+
+        Handle resource of type rest_permission
+
+OPTIONS (= is mandatory):
+
+- Mac
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- authType
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- method
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- path
+        Required with `state=['post']'
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: post)[Default: (null)]
+        type: str
+
+- token
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6

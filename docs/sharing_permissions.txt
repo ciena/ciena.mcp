@@ -1,0 +1,79 @@
+> SHARING_PERMISSIONS
+
+        Handle resource of type sharing_permissions
+
+OPTIONS (= is mandatory):
+
+- deletableBySubTenants
+        Whether subject is deletable by subtenants if shared
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- description
+        Description of the permission
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- id
+        Unique id of the permission
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- label
+        Label of the permission
+        Used by `state=['post']'
+        [Default: (null)]
+        type: str
+
+- limit
+        The maximum number of elements to return in a single paged
+        request
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- offset
+        Requested offset within the total result set to be the first
+        element in the paged response
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: int
+
+- pageToken
+        String pagination token returned from a previous query that
+        encodes query information in order to optimize a
+        subsequent request for a page of results. The token includes
+        the limit and offset parameters for the next page, but one or
+        both can be included to override the encoded values
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- q
+        Optional query parameter to define a query filter using
+        property:value syntax
+        Used by `state=['get', 'head']'
+        [Default: (null)]
+        type: str
+
+- state
+        (Choices: get, head, post)[Default: (null)]
+        type: str
+
+- updatableBySubTenants
+        Whether subject is updatable by subtenants if shared
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+- visibleToSubTenants
+        Whether subject is visible to subtenants if shared
+        Used by `state=['post']'
+        [Default: (null)]
+        type: bool
+
+
+REQUIREMENTS:  python >= 3.6

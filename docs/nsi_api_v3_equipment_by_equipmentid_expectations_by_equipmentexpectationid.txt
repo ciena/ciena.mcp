@@ -1,0 +1,32 @@
+> NSI_API_V3_EQUIPMENT_BY_EQUIPMENTID_EXPECTATIONS_BY_EQUIPMENTEXPECTATIONID
+
+        Handle resource of type nsi_api_v3_equipment_by_equipmentid_ex
+        pectations_by_equipmentexpectationid
+
+OPTIONS (= is mandatory):
+
+- equipmentExpectationId
+        The id of the equipmentExpectation to be updated
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- equipmentId
+        The id of the Equipment to be updated
+        Required with `state=['patch']'
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: str
+
+- operations
+        Used by `state=['patch']'
+        [Default: (null)]
+        type: list
+
+- state
+        (Choices: patch)[Default: (null)]
+        type: str
+
+
+REQUIREMENTS:  python >= 3.6
